@@ -1,0 +1,1042 @@
+<?xml version="1.0"?>
+<!DOCTYPE xAL SYSTEM "xAL.dtd">
+<xAL>
+	<!-- Level 12, 67 Albert Avenue
+        Chatswood
+        NSW 2067
+        Australia
+   -->
+	<AddressDetails>
+		<AddressLines>
+			<AddressLine>Level 12, 67 Albert Avenue</AddressLine>
+			<AddressLine>Chatswood</AddressLine>
+			<AddressLine>NSW 2209</AddressLine>
+			<AddressLine>Australia</AddressLine>
+		</AddressLines>
+	</AddressDetails>
+	<!-- Egis Building, Level 12, 67 Albert Avenue, 
+     Chatswood, NSW 2067, Australia -->
+	<AddressDetails AddressType="Residential" 
+					 CurrentStatus="Living"
+					 Usage="Postal"
+					 ValidFromDate="01 May 2002"> 
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Chatswood</LocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareNumber>67</ThoroughfareNumber>
+						<ThoroughfareName>Archer Street</ThoroughfareName>
+						<Premise Type="Building">
+							<BuildingName>Egis</BuildingName>
+							<SubPremise Type="LEVEL">
+								<SubPremiseNumber>12</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>2067</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- POBox: 773, Chatswood,NSW 2057, Australia -->
+	<AddressDetails AddressType="Postal" CurrentStatus="Investment" ValidFromDate="1 Jan 2000" ValidToDate="31 March 2000">
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>CHATSWOOD</LocalityName>
+					<PostBox Type="POBox">
+						<PostBoxNumber>773</PostBoxNumber>
+						<PostalCode>
+							<PostalCodeNumber>2057</PostalCodeNumber>
+						</PostalCode>
+					</PostBox>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- UNIT 12, 23 Archer Street, Chatswood, NSW 2067, Australia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>CHATSWOOD</LocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareNumber>23</ThoroughfareNumber>
+						<ThoroughfareName>ARCHER</ThoroughfareName>
+						<ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+						<Premise Type="UNIT">
+							<PremiseNumber>12</PremiseNumber>
+							<PostalCode>
+								<PostalCodeNumber>2067</PostalCodeNumber>
+							</PostalCode>
+						</Premise>
+					</Thoroughfare>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- block 2, RIPPON BUILDING Level 12, Suite 1A
+        47 Kinsgton Avenue North, North Ryde, NSW 2113, Australia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>NORTH RYDE</LocalityName>
+					<Thoroughfare Type="Avenue">
+						<ThoroughfareNumber>47</ThoroughfareNumber>
+						<ThoroughfareName>KINGSTON</ThoroughfareName>
+						<ThoroughfareTrailingType>AVENUE</ThoroughfareTrailingType>
+						<ThoroughfarePostDirection>NORTH</ThoroughfarePostDirection>
+						<Premise Type="BUILDING">
+							<PremiseName TypeOccurrence="After">RIPPON</PremiseName>
+							<SubPremise Type="BLOCK">
+								<SubPremiseNumber>2</SubPremiseNumber>
+								<SubPremise Type="LEVEL">
+									<SubPremiseNumber>2</SubPremiseNumber>
+									<SubPremise Type="SUITE">
+										<SubPremiseNumber>1</SubPremiseNumber>
+										<SubPremiseNumberSuffix>A</SubPremiseNumberSuffix>
+									</SubPremise>
+								</SubPremise>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>2113</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Level 12, 67 Albert Avenue, 
+     Chatswood, NSW 2067
+     PO Box: 773, Chatswood, NSW 2057
+     Australia
+-->
+	<AddressDetails AddressType="Primary and Residential">
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Chatswood</LocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareNumber>67</ThoroughfareNumber>
+						<ThoroughfareName>Archer Street</ThoroughfareName>
+						<Premise Type="Building">
+							<BuildingName>Egis</BuildingName>
+							<SubPremise Type="LEVEL">
+								<SubPremiseNumber>12</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>2067</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<AddressDetails AddressType="Secondary and POBox">
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>CHATSWOOD</LocalityName>
+					<PostBox Type="POBox">
+						<PostBoxNumber>773</PostBoxNumber>
+						<PostalCode>
+							<PostalCodeNumber>2057</PostalCodeNumber>
+						</PostalCode>
+					</PostBox>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!--- 1 College Green, Singapore 1129 -->
+	<AddressDetails>
+		<Country>
+			<CountryNameCode>SG</CountryNameCode>
+			<CountryName>Singapore</CountryName>
+			<Thoroughfare Type="Street">
+				<ThoroughfareNumber>1</ThoroughfareNumber>
+				<ThoroughfareName>College Green</ThoroughfareName>
+				<PostalCode>
+					<PostalCodeNumber>1129</PostalCodeNumber>
+				</PostalCode>
+			</Thoroughfare>
+		</Country>
+	</AddressDetails>
+	<!-- 1 Jalan Satu, Near Masjid, 3150 Tronoh, Perak, Malaysia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Malaysia</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>Perak</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Tronoh</LocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareNumber>1</ThoroughfareNumber>
+						<ThoroughfareName>Jalan Satu</ThoroughfareName>
+						<Premise Type="Mosque" PremiseDependency="STREET" PremiseDependencyType="NEAR">
+							<PremiseName>Masjid</PremiseName>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>3150</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- House No.10, Corner of North Usman Road and East Belinda Crescent,
+    Singapore 1123 -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Singapore</CountryName>
+			<Thoroughfare DependentThoroughfares="Yes" DependentThoroughfaresIndicator="CORNER OF" DependentThoroughfaresConnector="AND">
+				<ThoroughfarePreDirection>North</ThoroughfarePreDirection>
+				<ThoroughfareName>Usman</ThoroughfareName>
+				<ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+				<DependentThoroughfare>
+					<ThoroughfarePreDirection>East</ThoroughfarePreDirection>
+					<ThoroughfareName>Belinda</ThoroughfareName>
+					<ThoroughfareTrailingType>Cresent</ThoroughfareTrailingType>
+				</DependentThoroughfare>
+				<Premise Type="House">
+					<PremiseNumber Indicator="No." IndicatorOccurrence="Before">10</PremiseNumber>
+					<PostalCode>
+						<PostalCodeNumber>1123</PostalCodeNumber>
+					</PostalCode>
+				</Premise>
+			</Thoroughfare>
+		</Country>
+	</AddressDetails>
+	<!-- 21 Karpagambal Nagar, Via-Thiruvanmiyur, Kottivakkam (PO), Chennai 600041,
+   Tamilnadu, India -->
+	<AddressDetails>
+		<Country>
+			<CountryName>India</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName>Tamilnadu</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Thiruvanmiyur</LocalityName>
+					<PostOffice>
+						<PostOfficeName>Kottivakkam</PostOfficeName>
+						<PostalCode>
+							<PostalCodeNumber>600 041</PostalCodeNumber>
+						</PostalCode>
+					</PostOffice>
+					<DependentLocality Type="Suburb" Connector="Via">
+						<DependentLocalityName>Karpagambal Nagar</DependentLocalityName>
+						<Premise Type="House">
+							<PremiseNumber>21</PremiseNumber>
+						</Premise>
+					</DependentLocality>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Floor 4, Ste 5, Block C
+    Carnegie VIII
+    43 West Archer Street
+    Boulder, CO 80302-4598, USA -->
+	<AddressDetails>
+		<Country>
+			<CountryNameCode>US</CountryNameCode>
+			<CountryName>USA</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>COLORADO</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>BOULDER</LocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumber>43</ThoroughfareNumber>
+						<ThoroughfarePreDirection>WEST</ThoroughfarePreDirection>
+						<ThoroughfareName>ARCHER</ThoroughfareName>
+						<ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+						<Premise Type="BUILDING">
+							<PremiseName>CARNEGIE VIII</PremiseName>
+							<SubPremise Type="BLOCK">
+								<SubPremiseNumber>C</SubPremiseNumber>
+								<SubPremise Type="STE">
+									<SubPremiseNumber>5</SubPremiseNumber>
+									<SubPremise Type="FLOOR">
+										<SubPremiseNumber>4</SubPremiseNumber>
+									</SubPremise>
+								</SubPremise>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>80302</PostalCodeNumber>
+						<PostalCodeNumberExtension Type="DeliveryPointSuffix">4598</PostalCodeNumberExtension>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Officer Mess, RAAF, Townsville, Australia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Australia</CountryName>
+			<Locality>
+				<LocalityName>Townsville</LocalityName>
+				<LargeMailUser Type="Military">
+					<LargeMailUserName>RAAF</LargeMailUserName>
+					<Department>
+						<DepartmentName>Officer Mess</DepartmentName>
+					</Department>
+				</LargeMailUser>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 5 Aviation Regiment, RAAF Base, Milpo, Townsville 4814, Australia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Australia</CountryName>
+			<Locality>
+				<LocalityName>Townsville</LocalityName>
+				<DependentLocality>
+					<DependentLocalityName>Milpo</DependentLocalityName>
+					<LargeMailUser Type="Military">
+						<LargeMailUserName>RAAF</LargeMailUserName>
+						<LargeMailUserIdentifier>5 Aviation Regiment</LargeMailUserIdentifier>
+					</LargeMailUser>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>4814</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- Building 429 Lavarack Barracks, RAAF, Milpo, Townsville -->
+	<AddressDetails>
+		<Locality>
+			<LocalityName>Townsville</LocalityName>
+			<DependentLocality>
+				<DependentLocalityName>Milpo</DependentLocalityName>
+				<LargeMailUser Type="Military">
+					<LargeMailUserName>RAAF</LargeMailUserName>
+					<LargeMailUserIdentifier Type="BuildingNumber">429</LargeMailUserIdentifier>
+					<BuildingName>Lavarack Barracks</BuildingName>
+				</LargeMailUser>
+			</DependentLocality>
+		</Locality>
+	</AddressDetails>
+	<!-- Chatswood Grove, Block A, Level 2, Suite 1A, 12-14 Malvern Avenue, 
+     Adjacent to Chatswood Chase, 
+     Chatswood, NSW 2067, Australia -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Australia</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>NSW</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Chatswood</LocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumberRange Type="EVEN">
+							<ThoroughfareNumberFrom>
+								<ThoroughfareNumber>12</ThoroughfareNumber>
+							</ThoroughfareNumberFrom>
+							<ThoroughfareNumberTo>
+								<ThoroughfareNumber>14</ThoroughfareNumber>
+							</ThoroughfareNumberTo>
+						</ThoroughfareNumberRange>
+						<ThoroughfareName>Malvern</ThoroughfareName>
+						<ThoroughfareTrailingType>Avenue</ThoroughfareTrailingType>
+						<Premise Type="Building">
+							<BuildingName>CHASTWOOD GROVE</BuildingName>
+							<SubPremise Type="BLOCK">
+								<SubPremiseNumber>A</SubPremiseNumber>
+								<SubPremise Type="LEVEL">
+									<SubPremiseNumber>2</SubPremiseNumber>
+									<SubPremise Type="SUITE">
+										<SubPremiseNumber>1</SubPremiseNumber>
+										<SubPremiseNumberSuffix>A</SubPremiseNumberSuffix>
+									</SubPremise>
+								</SubPremise>
+							</SubPremise>
+							<Premise Type="SHOPPING CENTRE" PremiseDependency="PREMISE" PremiseDependencyType="ADJACENT TO">
+								<PremiseName>Chatswood Grove</PremiseName>
+							</Premise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>2067</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Japan 530-0001 Osaka Prefecture Oasaka City North Ku Plum Rice Field
+     1-2-2 the 2nd Building before the Oasaka Station -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Japan</CountryName>
+			<AdministrativeArea Type="Province">
+				<AdministrativeAreaName>OSAKA</AdministrativeAreaName>
+				<Locality Type="City">
+					<LocalityName>OSAKA</LocalityName>
+					<DependentLocality Type="Ward">
+						<DependentLocalityName>North Ku</DependentLocalityName>
+						<DependentLocality Type="SubDivision">
+							<DependentLocalityName>Plum Rice Field</DependentLocalityName>
+							<Premise Type="Building">
+								<SubPremise Type="Block">
+									<SubPremiseNumber>1</SubPremiseNumber>
+									<SubPremise Type="Unit">
+										<SubPremiseNumber>2</SubPremiseNumber>
+										<SubPremise Type="Level">
+											<SubPremiseNumber>2</SubPremiseNumber>
+										</SubPremise>
+									</SubPremise>
+								</SubPremise>
+								<Premise Type="STATION" PremiseDependency="PREMISE" PremiseDependencyType="2nd BUILDING BEFORE">
+									<PremiseName>OSAKA</PremiseName>
+								</Premise>
+							</Premise>
+						</DependentLocality>
+					</DependentLocality>
+					<PostalCode>
+						<PostalCodeNumber>530-0001</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- LOT 1
+	 DIGGLES ROAD MS 62
+	 MOUNT MARSHALL VIA WARWICK
+	 QLD    4370 -->
+	<AddressDetails>
+		<AdministrativeArea Type="State">
+			<AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+			<Locality>
+				<LocalityName>WARWICK</LocalityName>
+				<DependentLocality Connector="VIA" Type="Town">
+					<DependentLocalityName>MOUNT MARSHALL</DependentLocalityName>
+					<PostOffice Type="Mail Service">
+						<PostOfficeNumber Indicator="MS">62</PostOfficeNumber>
+					</PostOffice>
+					<Thoroughfare>
+						<ThoroughfareName>DIGGLES</ThoroughfareName>
+						<ThoroughfareTrailingType>ROAD</ThoroughfareTrailingType>
+						<Premise Type="LOT">
+							<PremiseNumber>1</PremiseNumber>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>4370</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</AdministrativeArea>
+	</AddressDetails>
+	<!-- SADDLETON ROAD RD4 PUKEKOHE NEW ZEALAND -->
+	<AddressDetails>
+		<Country>
+			<CountryName>NEW ZEALAND</CountryName>
+			<Locality Type="Town">
+				<LocalityName>PUKEKOHE</LocalityName>
+				<PostOffice Type="Rural Delivery">
+					<PostOfficeNumber Indicator="RD">4</PostOfficeNumber>
+				</PostOffice>
+				<Thoroughfare>
+					<ThoroughfareName>SADDLETON ROAD</ThoroughfareName>
+				</Thoroughfare>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- "KARINYA" M/S 172, ALLORA QLD 4362 -->
+	<AddressDetails>
+		<AdministrativeArea Type="State">
+			<AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+			<Locality Type="Town">
+				<LocalityName>ALLORA</LocalityName>
+				<PostOffice Type="MailService">
+					<PostOfficeNumber Indicator="M/S">172</PostOfficeNumber>
+				</PostOffice>
+				<Premise Type="Farm">
+					<PremiseName>KARINYA</PremiseName>
+				</Premise>
+			</Locality>
+		</AdministrativeArea>
+	</AddressDetails>
+	<!--     
+      46 Brynmaer Road
+      Battersea
+      LONDON    SW11 4EW
+      United Kingdom
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>United Kingdom</CountryName>
+			<Locality Type="City">
+				<LocalityName>LONDON</LocalityName>
+				<DependentLocality Type="District">
+					<DependentLocalityName>BATTERSEA</DependentLocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumber>46</ThoroughfareNumber>
+						<ThoroughfareName>BRYNMAER ROAD</ThoroughfareName>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>SW11 4EW</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!--	  
+6 Meen Street
+Diplomatic Quarter
+Riyadh   SAUDI ARABIA
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>SAUDI ARABIA</CountryName>
+			<Locality Type="City">
+				<LocalityName>Riyadh</LocalityName>
+				<DependentLocality Type="District">
+					<DependentLocalityName>Diplomatic Quarter</DependentLocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumber>16</ThoroughfareNumber>
+						<ThoroughfareName>Meen Street</ThoroughfareName>
+					</Thoroughfare>
+				</DependentLocality>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!--
+   13 Libertad St.
+   Tugatog, Malabon, MM
+   4013 Philippines
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Philippines</CountryName>
+			<AdministrativeArea Type="Region">
+				<AdministrativeAreaName Type="Abbreviation">MM</AdministrativeAreaName>
+				<AdministrativeAreaName Type="Full Name">
+      Metropolitian Manila</AdministrativeAreaName>
+				<Locality Type="Province">
+					<LocalityName>Tugatog</LocalityName>
+					<DependentLocality Type="Area">
+						<DependentLocalityName>Malabon</DependentLocalityName>
+						<Thoroughfare>
+							<ThoroughfareNumber>13</ThoroughfareNumber>
+							<ThoroughfareName>Libertad St.</ThoroughfareName>
+						</Thoroughfare>
+					</DependentLocality>
+					<PostalCode>
+						<PostalCodeNumber>4013</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!--      
+    Office of the Dean
+	College of Arts and Sciences
+	University of the Philippines
+	Diliman Quezon City
+	4022 Philippines
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Philippines</CountryName>
+			<Locality Type="City">
+				<LocalityName>Diliman Quezon City</LocalityName>
+				<Premise Type="University">
+					<PremiseName>Uinversity of the Philippines</PremiseName>
+					<SubPremise Type="College">
+						<SubPremiseName>College of Arts and Sciences</SubPremiseName>
+						<SubPremise Type="Office">
+							<SubPremiseName>Office of the Dean</SubPremiseName>
+						</SubPremise>
+					</SubPremise>
+				</Premise>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!--
+Edificio La Riviera      (Building)
+310                      (Apartment no)
+Rambla de los Argentinos (Street)
+y Celedonio Rojas        (Cross street)
+Piriapolis               (Suburb)
+Uruguay                  (Country)
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Uruguay</CountryName>
+			<Locality Type="Suburb">
+				<LocalityName>Piriapolis</LocalityName>
+				<Thoroughfare DependentThoroughfares="Yes" DependentThoroughfaresIndicator="CORNER OF" DependentThoroughfaresConnector="y">
+					<ThoroughfareName>Rambla de los Argentions</ThoroughfareName>
+					<DependentThoroughfare>
+						<ThoroughfareName>Celedonis Rojas</ThoroughfareName>
+					</DependentThoroughfare>
+					<Premise Type="Building">
+						<PremiseName>Edificio La Riviera</PremiseName>
+						<SubPremise Type="Apartment">
+							<SubPremiseNumber>310</SubPremiseNumber>
+						</SubPremise>
+					</Premise>
+				</Thoroughfare>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!--
+Liniers 3234                   (Street name and no.)
+Ciudadela                      (Suburb)
+Provincia de Buenos Aires 1702 (a province just at the outskirts of Buenos Aires city)
+Argentina                      (Country) 
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Argentina</CountryName>
+			<Locality Type="City">
+				<LocalityName>Buenos Aires</LocalityName>
+				<DependentLocality Type="Suburb" Connector="Provincia de Buenos Aires">
+					<DependentLocalityName>Ciudadela</DependentLocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumber>3234</ThoroughfareNumber>
+						<ThoroughfareName>Liniers</ThoroughfareName>
+					</Thoroughfare>
+				</DependentLocality>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- Plot No: 421, Sector 5
+     Street No.26, K.K.Nagar
+     Chennai 600 078, India
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>India</CountryName>
+			<Locality Type="City">
+				<LocalityName>Chennai</LocalityName>
+				<DependentLocality Type="Suburb">
+					<DependentLocalityName Type="Abbreviation">K.K.Nagar</DependentLocalityName>
+					<DependentLocality Type="Area">
+						<DependentLocalityName>Sector</DependentLocalityName>
+						<DependentLocalityNumber NameNumberOccurrence="Before">5</DependentLocalityNumber>
+						<Thoroughfare>
+							<ThoroughfareNumber>26</ThoroughfareNumber>
+							<ThoroughfareName>Street No.</ThoroughfareName>
+							<Premise Type="Plot">
+								<PremiseNumber Indicator="No." IndicatorOccurrence="Before">421</PremiseNumber>
+							</Premise>
+						</Thoroughfare>
+					</DependentLocality>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>600 078</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 47/1 Soi Petchkasem 3
+     Petchkasem Road
+     Bangkokyai, Bangkok 10600
+     Thailand 
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Thailand</CountryName>
+			<Locality Type="City">
+				<LocalityName>Bangkok</LocalityName>
+				<DependentLocality Type="Suburb">
+					<DependentLocalityName>Bangkokyai</DependentLocalityName>
+					<Thoroughfare Type="Road">
+						<ThoroughfareName>Petchkasem Road</ThoroughfareName>
+						<DependentLocality Type="Area">
+							<DependentLocalityName>Soi Petchkasem</DependentLocalityName>
+							<DependentLocalityNumber>3</DependentLocalityNumber>
+							<Premise Type="House">
+								<PremiseNumber>47/1</PremiseNumber>
+							</Premise>
+						</DependentLocality>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>10600</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!--
+
+NII Enterprise Promotion Association
+7F, No.317, Song-Chiang Road, Taipei 104, Taiwan
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Taiwan</CountryName>
+			<Locality Type="City">
+				<LocalityName>Taipei</LocalityName>
+				<Thoroughfare>
+					<ThoroughfareNumber Indicator="No." IndicatorOccurrence="Before">317
+       </ThoroughfareNumber>
+					<ThoroughfareName>Song-Chiang</ThoroughfareName>
+					<ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+					<Premise Type="Office">
+						<PremiseNumber>7</PremiseNumber>
+						<PremiseNumberSuffix>F</PremiseNumberSuffix>
+					</Premise>
+				</Thoroughfare>
+				<PostalCode>
+					<PostalCodeNumber>104</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- Jl. Thamrin no 27-37 C4
+Denpasar, Bali 22050, Indonesia
+Where:
+Jl. is equivalent to Street
+Thamrin is street name
+no 27-37 is street number
+C4 is block C
+Denpasar is locality -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Indonesia</CountryName>
+			<AdministrativeArea>
+				<AdministrativeAreaName>Bali</AdministrativeAreaName>
+				<Locality>
+					<LocalityName>Benpasar</LocalityName>
+					<Thoroughfare>
+						<ThoroughfareNumberRange Indicator="no">
+							<ThoroughfareNumberFrom>
+								<ThoroughfareNumber>27</ThoroughfareNumber>
+							</ThoroughfareNumberFrom>
+							<ThoroughfareNumberTo>
+								<ThoroughfareNumber>37</ThoroughfareNumber>
+							</ThoroughfareNumberTo>
+						</ThoroughfareNumberRange>
+						<ThoroughfareLeadingType>J1.</ThoroughfareLeadingType>
+						<ThoroughfareName>Thamrin</ThoroughfareName>
+						<Premise Type="Block">
+							<PremiseNumber>C</PremiseNumber>
+							<SubPremise>
+								<SubPremiseNumber>4</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+					<PostalCode>
+						<PostalCodeNumber>22050</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Level 39, JinMao Building,
+     2 Century Boulouvard
+	 PuDong new District
+	 Shanghai, 200120, China -->
+	<AddressDetails>
+		<Country>
+			<CountryName>China</CountryName>
+			<Locality Type="City">
+				<LocalityName>Shanghai</LocalityName>
+				<DependentLocality Type="New District">
+					<DependentLocalityName>PuDong</DependentLocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareNumber>2</ThoroughfareNumber>
+						<ThoroughfareName>Century</ThoroughfareName>
+						<ThoroughfareTrailingType>Boulouvard</ThoroughfareTrailingType>
+						<Premise Type="Building">
+							<PremiseName>JinMao</PremiseName>
+							<SubPremise Type="Level">
+								<SubPremiseNumber>39</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>200120</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 110-714
+	 19th Floor, Kyobo Building 1, 
+	 1-Ka Chongno,
+	 Chongno district,
+	 Seoul, Korea
+"Ka" is a geographic concept that is smaller than a
+district, and smaller than a suburb. Literally, "Ka"
+means a street, but in an address, it means a
+geographic entity that is larger than a street and
+smaller than a suburb. 110-714 is area code. 
+-->
+	<AddressDetails>
+		<Country>
+			<CountryName>Korea</CountryName>
+			<Locality Type="City">
+				<LocalityName>Seoul</LocalityName>
+				<DependentLocality Type="District">
+					<DependentLocalityName>Chongno</DependentLocalityName>
+					<DependentLocality Type="Area">
+						<DependentLocalityName>1-Ka Chongo</DependentLocalityName>
+						<Premise Type="Building">
+							<PremiseName>Kyobo</PremiseName>
+							<PremiseNumber NumberTypeOccurrence="After">1</PremiseNumber>
+							<SubPremise Type="Floor">
+								<SubPremiseNumber Indicator="TH" IndicatorOccurrence="After">19</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</DependentLocality>
+				</DependentLocality>
+				<PostalCode Type="Area Code">
+					<PostalCodeNumber>110-714</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- Rua de Martinho Montenegro 31 R/C
+     Macau -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Macua</CountryName>
+			<Thoroughfare>
+				<ThoroughfareNumber>31</ThoroughfareNumber>
+				<ThoroughfareLeadingType>Rua de</ThoroughfareLeadingType>
+				<ThoroughfareName>Martinho Montenegro</ThoroughfareName>
+				<Premise Type="Apartment">
+					<PremiseLocation>R/C</PremiseLocation>
+				</Premise>
+			</Thoroughfare>
+		</Country>
+	</AddressDetails>
+	<!--  Kungsholmsgatan 19B
+	  Stockholm 112 27
+	  SWEDEN -->
+	<AddressDetails>
+		<Country>
+			<CountryName>SWEDEN</CountryName>
+			<Locality Type="City">
+				<LocalityName>Stockholm</LocalityName>
+				<Thoroughfare Type="Street">
+					<ThoroughfareNumber>19</ThoroughfareNumber>
+					<ThoroughfareNumberSuffix>B</ThoroughfareNumberSuffix>
+					<ThoroughfareName>Kungsholmsgatan</ThoroughfareName>
+				</Thoroughfare>
+				<PostalCode>
+					<PostalCodeNumber>112 27</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 823 Pear Court NE
+	 Olympia, WA 98506
+	 USA -->
+	<AddressDetails>
+		<Country>
+			<CountryName>USA</CountryName>
+			<Locality Type="State">
+				<LocalityName Type="Abbreviation">WA</LocalityName>
+				<DependentLocality Type="Town">
+					<DependentLocalityName>Olympia</DependentLocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareName>Pear</ThoroughfareName>
+						<ThoroughfareTrailingType>Court</ThoroughfareTrailingType>
+						<ThoroughfarePostDirection>NE</ThoroughfarePostDirection>
+						<Premise>
+							<PremiseNumber>823</PremiseNumber>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>98506</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 201/2288 Pine Street
+	 Vancouver, BC
+	 V6J 5G4
+	 Canada -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Canada</CountryName>
+			<Locality Type="State">
+				<LocalityName Type="Abbreviation">BC</LocalityName>
+				<LocalityName Type="Full Name">BRITISH COLUMBIA</LocalityName>
+				<DependentLocality Type="City">
+					<DependentLocalityName>Vancouver</DependentLocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareName>Pine Street</ThoroughfareName>
+						<Premise Type="Apartment Building">
+							<PremiseNumber>2288</PremiseNumber>
+							<SubPremise Type="Unit">
+								<SubPremiseNumber>201</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>V6J 5G4</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- #108-8310 130th Street
+	 Surrey, B.C.
+	 V3W 8J9
+	 Canada -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Canada</CountryName>
+			<Locality Type="State">
+				<LocalityName Type="Abbreviation">BC</LocalityName>
+				<DependentLocality Type="City">
+					<DependentLocalityName>Surrey</DependentLocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfareName>130th</ThoroughfareName>
+						<ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+						<Premise Type="House">
+							<PremiseNumber Indicator="#" IndicatorOccurrence="Before">108-8310</PremiseNumber>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+				<PostalCode>
+					<PostalCodeNumber>V3W 8J9</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 15 Merrion Park
+	 South Hill Ave
+	 Blackrock
+	 Co. Dublin
+	 Ireland -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Ireland</CountryName>
+			<Locality Type="County">
+				<LocalityName>Dublin</LocalityName>
+				<DependentLocality Type="Suburb">
+					<DependentLocalityName>Blackrock</DependentLocalityName>
+					<Thoroughfare Type="Street">
+						<ThoroughfarePreDirection>South</ThoroughfarePreDirection>
+						<ThoroughfareName>Hill</ThoroughfareName>
+						<ThoroughfareTrailingType>Avenue</ThoroughfareTrailingType>
+						<Premise Type="Estate">
+							<PremiseName>Merrion Park</PremiseName>
+							<SubPremise Type="Apartment">
+								<SubPremiseNumber>15</SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</Thoroughfare>
+				</DependentLocality>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 279 Maruhity
+     Kathmandu 14
+     Nepal -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Nepal</CountryName>
+			<Locality Type="City">
+				<LocalityName>Kathmandu</LocalityName>
+				<Thoroughfare Type="Street">
+					<ThoroughfareNumber>279</ThoroughfareNumber>
+					<ThoroughfareName>Maruhity</ThoroughfareName>
+				</Thoroughfare>
+				<PostalCode>
+					<PostalCodeNumber>14</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+	<!-- 140/C Unit No.7/D
+     Latifabad, Hyderabad
+     Sind, Pakistan -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Pakistan</CountryName>
+			<AdministrativeArea Type="Province">
+				<AdministrativeAreaName>Sind</AdministrativeAreaName>
+				<Locality Type="City">
+					<LocalityName>Hyderabad</LocalityName>
+					<DependentLocality Type="Suburb">
+						<DependentLocalityName>Latifabad</DependentLocalityName>
+						<Premise Type="Building">
+							<PremiseNumber>140/C</PremiseNumber>
+							<SubPremise Type="Unit">
+								<SubPremiseNumber Indicator="No." IndicatorOccurrence="Before">7/D
+          </SubPremiseNumber>
+							</SubPremise>
+						</Premise>
+					</DependentLocality>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- SBN 2 - Quadra 23 - Bloco 7 - 1o andar
+     79800-122 BRASILLIA-DF
+     BRASIL -->
+	<AddressDetails>
+		<Country>
+			<CountryName>BRASIL</CountryName>
+			<AdministrativeArea Type="State">
+				<AdministrativeAreaName Type="Code">DF</AdministrativeAreaName>
+				<Locality Type="City">
+					<LocalityName>BRASILLIA</LocalityName>
+					<DependentLocality Type="Setore">
+						<!-- Setore = Sector -->
+						<DependentLocalityName>SBN</DependentLocalityName>
+						<DependentLocalityNumber>2</DependentLocalityNumber>
+						<DependentLocality Type="Quadra">
+							<DependentLocalityName>Quadra</DependentLocalityName>
+							<DependentLocalityNumber>23</DependentLocalityNumber>
+							<Premise Type="Bloco">
+								<!-- Bloco = Block -->
+								<PremiseNumber>7</PremiseNumber>
+								<SubPremise Type="Andar">
+									<!-- andar = Floor" -->
+									<SubPremiseNumber Indicator="o">1</SubPremiseNumber>
+								</SubPremise>
+							</Premise>
+						</DependentLocality>
+					</DependentLocality>
+					<PostalCode>
+						<PostalCodeNumber>79800-122</PostalCodeNumber>
+					</PostalCode>
+				</Locality>
+			</AdministrativeArea>
+		</Country>
+	</AddressDetails>
+	<!-- Alkamenou 37
+      117 80 ATHINAI, GREECE 
+ -->
+	<AddressDetails>
+		<Country>
+			<CountryName>Greece</CountryName>
+			<Locality Type="Town">
+				<LocalityName>ATHINAI</LocalityName>
+				<Thoroughfare>
+					<ThoroughfareName>37</ThoroughfareName>
+				</Thoroughfare>
+				<PostalCode>
+					<PostalCodeNumber>117 80</PostalCodeNumber>
+				</PostalCode>
+			</Locality>
+		</Country>
+	</AddressDetails>
+</xAL>

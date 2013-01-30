@@ -1,0 +1,1278 @@
+<?xml version='1.0'?> 
+<!-- AUSTRALIAN ADDRESS EXAMPLES -->
+<!-- XMLification of COMPLEX AUSTRALIAN ADDRESSES -->
+<!-- Examples in this document were taken from:
+     "FINAL DRAFT AUSTRALIAN/NEW ZEALAND STANDARD:
+     Geographic Information – Rural and Urban Addressing".
+     This draft Standard was prepared by the Street Address 
+     Working Group of the Intergovernmental Committee on 
+     Surveying and Mapping. -->
+
+<!DOCTYPE xAL SYSTEM "xAL.dtd">
+<xAL> 
+ 
+<!-- ***************** AIRPORT ************************* -->
+<!--
+Warehouse 2
+Eagle Drive
+Jandakot Airport
+200 Hope Road
+JANDAKOT WA 6164
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>JANDAKOT</LocalityName>
+   <Thoroughfare Type="Street"> 
+    <ThoroughfareNumber>200</ThoroughfareNumber>
+    <ThoroughfareName>Hope</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Airport">
+     <DependentLocalityName>Jandokot Airport</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Eagle Drive</ThoroughfareName>
+      <Premise>
+       <PremiseName>Warehouse 2</PremiseName>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>6164</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+     
+<!--
+Shed 4
+Ansett Terminal
+Jandakot Airport
+200 Hope Road
+JANDAKOT WA 6164
+-->
+
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>JANDAKOT</LocalityName>
+   <Thoroughfare Type="Street"> 
+    <ThoroughfareNumber>200</ThoroughfareNumber>
+    <ThoroughfareName>Hope</ThoroughfareName> 
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Airport">
+     <DependentLocalityName>Jandokot Airport</DependentLocalityName>
+     <Premise>
+      <PremiseName>Ansett Terminal</PremiseName> 
+      <SubPremise>
+       <SubPremiseName>Shed 4</SubPremiseName> 
+      </SubPremise>
+     </Premise>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>6164</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+     
+
+<!-- ****************** BUSINESS/COMMERCIAL PARKS ***************** -->
+<!--
+Toshiba Building
+Fifth Avenue
+Technology Park
+200-350 Dandenong Road
+CLAYTON VIC 3168
+--> 
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>CLAYTON</LocalityName>
+   <Thoroughfare Type="Street">
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>200</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>350</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Dandenong</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Technology Park</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Fifth Avenue</ThoroughfareName>
+      <Premise Type="Building">
+       <PremiseName>Toshiba Building</PremiseName>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3168</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+     
+<!--
+Suite 10
+Coles-Myer Complex
+380 Frankston Road
+DANDENONG VIC 3175
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>DANDENONG</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>380</ThoroughfareNumber> 
+    <ThoroughfareName>Frankston Road</ThoroughfareName> 
+    <DependentLocality Type="Complex">
+     <DependentLocalityName>Coles-Myer Complex</DependentLocalityName>
+     <Premise Type="Suite">
+      <PremiseNumber>10</PremiseNumber>
+     </Premise>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3175</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- **************** CARAVAN PARKS ***************** -->
+<!--
+Site 10
+Outer Road
+Paradise Caravan Park
+45-67 Smith Street
+HERVEY BAY QLD 4655
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>HERVEY BAY</LocalityName>
+   <Thoroughfare Type="Street">
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>45</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>57</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Smith</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Caravan Park</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Outer</ThoroughfareName>
+      <Premise Type="Caravan">
+       <PremiseName>Site 10</PremiseName> 
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>4655</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Unit 4
+Palms Caravan Park
+39 Williams Road
+SEMAPHORE SA 5019
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">SA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>SEMAPHORE</LocalityName>
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber>39</ThoroughfareNumber> 
+    <ThoroughfareName>Williams</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Palms Caravan Park</DependentLocalityName> 
+     <Premise Type="Caravan">
+      <PremiseName>Unit 4</PremiseName> 
+     </Premise> 
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>5019</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ******************** COMMUNITY DEVELOPMENTS *************** -->
+<!--
+House 5
+Peace Road
+Heavenly Community Village
+Cairns Road
+NIMBIN NSW 2480
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>NIMBIN</LocalityName>
+   <Thoroughfare Type="Road">
+    <ThoroughfareName>Cairns Road</ThoroughfareName> 
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Heavenly Community Village</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Peace Road</ThoroughfareName>
+      <Premise Type="House">
+       <PremiseName>House 5</PremiseName>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>2480</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- **************** EDUCATIONAL INSTITUTIONS ************** -->
+<!--
+Office 2
+Graphic Arts Building
+O'Briens Walk
+Swinburne University
+130-150 High Street
+PRAHRAN VIC 3181
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>PRAHRAN</LocalityName>
+   <Thoroughfare Type="Street">
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>130</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>150</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>High</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Swinburne University</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>O'Briens Walk</ThoroughfareName>
+      <Premise Type="Building">
+       <PremiseName>Graphic Arts Building</PremiseName>
+       <SubPremise>
+        <SubPremiseName>Office 2</SubPremiseName>
+       </SubPremise>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3181</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Storey Hall
+RMIT
+200-270 LaTrobe Street
+MELBOURNE VIC 3000
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="City">
+   <LocalityName>MELBOURNE</LocalityName>
+   <Thoroughfare Type="Street">
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>200</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>270</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange> 
+    <ThoroughfareName>LaTrobe</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <Premise Type="University">
+     <PremiseName>RMIT</PremiseName>
+     <SubPremise>
+      <SubPremiseName>Storey Hall</SubPremiseName>
+     </SubPremise>
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>3000</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+<!-- ***************** ENTERTAINMENT/RECREATIONAL PARKS **************** -->
+<!--
+Studio 8
+Hollywood Boulevard
+Fox Studios
+470-570 Pacific Highway
+BROADBEACH QLD 4218
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>BROADBEACH</LocalityName>
+   <Thoroughfare Type="Highway"> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom> 
+    	<ThoroughfareNumber>470</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo> 
+    	<ThoroughfareNumber>570</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Pacific</ThoroughfareName>
+    <ThoroughfareTrailingType>Highway</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Fox Studios</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Hollywood</ThoroughfareName>
+      <ThoroughfareTrailingType>Boulevard</ThoroughfareTrailingType>
+      <Premise>
+       <PremiseName>Studio 8</PremiseName> 
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>4218</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Kiosk 2
+Luna Park
+34-66 Beaconsfield Parade
+ST KILDA VIC 3182
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>ST KILDA</LocalityName>
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber NumberType="Range">34-66</ThoroughfareNumber>
+    <ThoroughfareName>Beaconsfield</ThoroughfareName>
+    <ThoroughfareTrailingType>Parade</ThoroughfareTrailingType> 
+    <Premise Type="Park">
+     <PremiseName>Luna Park</PremiseName> 
+     <SubPremise Type="Kiosk Machine">
+      <SubPremiseName>Kiosk 2</SubPremiseName> 
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3182</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ***************** HOSPITALS ****************** -->
+
+<!--
+Room 48
+Department of Surgery
+Royal North Shore Hospital
+1-35 Herbert Street
+ST LEONARDS NSW 2065
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>ST LEONARDS</LocalityName>
+   <Thoroughfare Type="Street"> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>1</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>35</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Herbert</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <Premise Type="Hostpital">
+     <PremiseName>Royal North Shore Hospital</PremiseName> 
+     <SubPremise Type="Department">
+      <SubPremiseName>Department of Surgery</SubPremiseName> 
+      <SubPremise Type="Room">
+       <SubPremiseNumber NumberTypeOccurrence="After">48</SubPremiseNumber>
+      </SubPremise>
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>2065</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Suite 16
+Level 5
+Burnett Building
+Park Alley
+Northern Private Hospital
+580-780 Plenty Road
+BUNDOORA VIC 3083
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>BUNDOORA</LocalityName>
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>580</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+    	<ThoroughfareNumber>780</ThoroughfareNumber>
+    </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Plenty</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Hostpital">
+     <DependentLocalityName>Northern Private Hostpital</DependentLocalityName> 
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Park</ThoroughfareName>
+      <ThoroughfareTrailingType>Alley</ThoroughfareTrailingType>
+      <Premise Type="Building">
+       <PremiseName>Burnett Building</PremiseName>
+       <SubPremise Type="Level"> 
+        <SubPremiseNumber NumberTypeOccurrence="After">5</SubPremiseNumber>
+        <SubPremise Type="Suite">
+         <SubPremiseNumber NumberTypeOccurrence="After">16</SubPremiseNumber>
+        </SubPremise>
+       </SubPremise>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality> 
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3083</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- **************** MARINAS ***************** -->
+<!--
+Marine Berth 15
+St Kilda Marina
+36-38 Beaconsfield Parade
+ST KILDA VIC 3182
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>ST KILDA</LocalityName>
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>36</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>38</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Beaconsfield</ThoroughfareName>
+    <ThoroughfareTrailingType>Parade</ThoroughfareTrailingType>
+    <Premise Type="Marina">
+     <PremiseName>St Kilda Marina</PremiseName>
+     <SubPremise Type="Marine Berth">
+      <SubPremiseNumber NumberTypeOccurrence="After">15</SubPremiseNumber>
+     </SubPremise>
+    </Premise>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3182</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+ 
+<!-- ***************** MILITARY BASES ****************** -->
+<!--
+Sergeants' Mess
+Blamey Road
+Simpson Army Barracks
+185 Greensborough Road
+YALLAMBIE VIC 3085
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>YALLAMBIE</LocalityName>
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber>185</ThoroughfareNumber>
+    <ThoroughfareName>Greensborough</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <DependentLocality Type="Army Barracks">
+     <DependentLocalityName>Simpsons Army Barracks</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Blamey Road</ThoroughfareName>
+      <Premise>
+       <PremiseName>Sergeant's Mess</PremiseName>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>3085</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Shed 1
+Charlesworth Parade
+RAAF Williams Laverton Base
+LAVERTON VIC 3028
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>LAVERTON</LocalityName> 
+    <DependentLocality Type="Military Base">
+     <DependentLocalityName>RAAF Williams Laverton Base</DependentLocalityName>
+     <Thoroughfare Type="Road">
+      <ThoroughfareName>Charlestown</ThoroughfareName>
+      <ThoroughfareTrailingType>Parade</ThoroughfareTrailingType>
+      <Premise Type="Shed">
+       <PremiseNumber NumberTypeOccurrence="After">1</PremiseNumber>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality> 
+   <PostalCode>
+    <PostalCodeNumber>3028</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ****************** PORTS ********************* -->
+<!--
+Shed 6F
+Overseas Cargo Terminal
+42 Victoria Quay Road
+FREMANTLE WA 6160
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>FREMANTLE</LocalityName> 
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber>42</ThoroughfareNumber> 
+    <ThoroughfareName>Victoria Quay</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <Premise Type="Port">
+     <PremiseName>Overseas Cargo Terminal</PremiseName>
+     <SubPremise Type="Shed">
+      <SubPremiseNumber NumberTypeOccurrence="After">1</SubPremiseNumber>
+      <SubPremiseNumberSuffix>F</SubPremiseNumberSuffix>
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>6160</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Office 2
+Station Pier
+30-48 The Esplanade
+PORT MELBOURNE VIC 3207
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Port">
+   <LocalityName>PORT MELBOURNE</LocalityName> 
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber NumberType="Range">30-48</ThoroughfareNumber> 
+    <ThoroughfareName>The Esplanade</ThoroughfareName>
+    <Premise>
+     <PremiseName>Station Pier</PremiseName>
+     <SubPremise Type="Office">
+      <SubPremiseNumber NumberTypeOccurrence="After">2</SubPremiseNumber> 
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>3207</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ***************** RETIREMENT VILLAGES **************** -->
+<!--
+Unit 6
+Centre Drive
+AP Retirement Village
+45-55 Jones Road
+SANDY BAY TAS 7005
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">TAS</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>SANDY BAY</LocalityName> 
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber NumberType="Range">45-55</ThoroughfareNumber> 
+    <ThoroughfareName>Jones Road</ThoroughfareName> 
+    <DependentLocality Type="Area">
+     <DependentLocalityName>AP Retirement Village</DependentLocalityName>
+     <Thoroughfare>
+      <ThoroughfareName>Centre Drive</ThoroughfareName>
+      <Premise Type="Unit">
+       <PremiseNumber NumberTypeOccurrence="After">6</PremiseNumber> 
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>7005</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Apartment 34
+Sea View Retirement Complex
+34-38 Fraser Street
+PALMERSTON NT 0830
+-->
+<AddressDetails>
+ <AdministrativeArea Type="Territory">
+  <AdministrativeAreaName Type="Abbreviation">NT</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>PALMERSTON</LocalityName> 
+   <Thoroughfare Type="Street"> 
+    <ThoroughfareNumber NumberType="Range">34-38</ThoroughfareNumber> 
+    <ThoroughfareName>Fraser</ThoroughfareName> 
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <Premise Type="Complex">
+     <PremiseName>Sea View Retirement Complex</PremiseName> 
+     <SubPremise Type="Apartment">
+      <SubPremiseNumber NumberTypeOccurrence="After">34</SubPremiseNumber> 
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>0830</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ****************** RESORTS ********************** -->
+<!--
+Apartment 3
+Seaspray Grove
+Palms Holiday Resort
+DUNK ISLAND QLD 4816
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>DUNK ISLAND</LocalityName>  
+   <DependentLocality Type="Resort">
+    <DependentLocalityName>Palms Holiday Resort</DependentLocalityName> 
+    <Premise>
+     <PremiseName>Seaspray Grove</PremiseName>
+     <SubPremise Type="Apartment">
+      <SubPremiseNumber NumberTypeOccurrence="After">3</SubPremiseNumber>
+     </SubPremise> 
+    </Premise> 
+   </DependentLocality>  
+   <PostalCode>
+    <PostalCodeNumber>4816</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Suite 5A
+Paradise Holiday Village
+55-65 Beach Road
+HERVEY BAY QLD 4655
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>HERVEY BAY</LocalityName> 
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber NumberType="Range">55-65</ThoroughfareNumber> 
+    <ThoroughfareName>Beach</ThoroughfareName> 
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <Premise Type="Village">
+     <PremiseName>Paradise Holiday Village</PremiseName> 
+     <SubPremise Type="Suite">
+      <SubPremiseNumber NumberTypeOccurrence="After">5A</SubPremiseNumber> 
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>4655</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ***************** SHOPPING CENTRES ************** -->
+<!--
+Shop 45
+The Mall
+Casuarina Shopping Centre
+48-64 Dripstone Road
+NAKARA NT 0810
+-->
+<AddressDetails>
+ <AdministrativeArea Type="Territory">
+  <AdministrativeAreaName Type="Abbreviation">NT</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>NAKARA</LocalityName> 
+   <Thoroughfare Type="Road"> 
+    <ThoroughfareNumber NumberType="Range">48-64</ThoroughfareNumber> 
+    <ThoroughfareName>Dripstone</ThoroughfareName> 
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <Premise Type="Shopping Centre">
+     <PremiseName>Casuarina Shopping Centre</PremiseName> 
+     <SubPremise Type="Mall">
+      <SubPremiseName>The Mall</SubPremiseName>
+      <SubPremise Type="Shop">
+       <SubPremiseNumber NumberTypeOccurrence="After">45</SubPremiseNumber>
+      </SubPremise>
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>0810</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Shop 56
+Level 2
+Tuggeranong Hyperdome
+56-84 Reed Street
+TUGGERANONG ACT 2900
+-->
+<AddressDetails>
+ <AdministrativeArea Type="Territory">
+  <AdministrativeAreaName Type="Abbreviation">ACT</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>TUGGERANONG</LocalityName> 
+   <Thoroughfare>
+    <ThoroughfareName>Reed Street</ThoroughfareName>  
+    <Premise Type="Shopping Centre">
+     <PremiseName>Tuggeranong Hyperdome</PremiseName> 
+     <SubPremise Type="Level">
+      <SubPremiseNumber NumberTypeOccurrence="After">2</SubPremiseNumber>
+      <SubPremise Type="Shop">
+       <SubPremiseNumber NumberTypeOccurrence="After">56</SubPremiseNumber>
+      </SubPremise>
+     </SubPremise>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>2900</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ***************** SPORTING VENUES ****************** -->
+<!--
+Office 1
+Netball Stadium
+Second Street
+Outdoor Sports Complex
+26-78 Clarence Street
+BELLERIVE TAS 7018
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">TAS</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>BELLERIVE</LocalityName>
+   <Thoroughfare Type="Street"> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>26</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>78</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange>
+    <ThoroughfareName>Clarence</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <DependentLocality Type="Area">
+     <DependentLocalityName>Outdoor Sports Complex</DependentLocalityName>
+     <Thoroughfare Type="Street">
+      <ThoroughfareName>Second Street</ThoroughfareName>
+      <Premise Type="Stadium">
+       <PremiseName>Netball Stadium</PremiseName>
+       <SubPremise Type="Office">
+        <SubPremiseNumber NumberTypeOccurrence="After">1</SubPremiseNumber>
+       </SubPremise>
+      </Premise>
+     </Thoroughfare>
+    </DependentLocality>
+   </Thoroughfare>
+   <PostalCode>
+    <PostalCodeNumber>7018</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- **************** TOWNHOUSE DEVELOPMENTS ***************** -->
+<!--
+Unit 4
+First Avenue
+34-56 Brighton Avenue
+GLENELG SA 5045
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">SA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>GLENELG</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>34</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>56</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange> 
+    <ThoroughfareName>Brighton</ThoroughfareName>
+    <ThoroughfareTrailingType>Avenue</ThoroughfareTrailingType>
+    <Premise Type="Apartment">
+     <PremiseName>First Avenue</PremiseName>
+     <SubPremise Type="Unit">
+      <SubPremiseNumber NumberTypeOccurrence="After">4</SubPremiseNumber>
+     </SubPremise>
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>5045</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Townhouse 8
+245 Smith Street
+MANLY NSW 2095
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>MANLY</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>245</ThoroughfareNumber> 
+    <ThoroughfareName>Smith</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType> 
+    <Premise Type="Townhouse">
+     <PremiseNumber NumberTypeOccurrence="After">8</PremiseNumber> 
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>2095</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ****************** RURAL ADDRESS WITH LAND ACCESS ********** -->
+<!--
+399 Carlton Road
+KALGOORLIE WA 6430
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>KALGOORLIE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>399</ThoroughfareNumber>  
+    <ThoroughfareName>Carlton</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>6430</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+
+<!-- ******* RURAL ADDRESS WITH LAND AND WATER/AIR ACCESS ******* -->
+<!--
+Mpwellarre
+AKA Walkabout Bore
+150km south Alice Springs
+On Hugh River Stock Route -->
+
+<AddressDetails>
+ <AddressLines>
+  <AddressLine>On Hugh River Stock Route</AddressLine>
+  <AddressLine>150km south Alice Springs</AddressLine>
+  <AddressLine>AKA Walkabout Bore</AddressLine>
+  <AddressLine>Mpwellarre</AddressLine>
+ </AddressLines>
+</AddressDetails>
+  
+<!-- ****** RURAL ADDRESS INCORPORATING A HABITATION NAME ****** -->
+<!--
+The Ponderosa
+438 Coastal Highway
+PARRAMATTA NSW 2835
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>PARAMATTA</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>438</ThoroughfareNumber>  
+    <ThoroughfareName>Coastal</ThoroughfareName>
+    <ThoroughfareTrailingType>Highway</ThoroughfareTrailingType> 
+    <Premise Type="Property">
+     <PremiseName>The Ponderosa</PremiseName>
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>2835</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ******** RURAL MAILING ADDRESS ******* -->
+<!--
+Yarrawonga
+4526 Barrier Highway
+CUBBA NSW 2835 
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>CUBBA</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>4526</ThoroughfareNumber>  
+    <ThoroughfareName>Barrier</ThoroughfareName>
+    <ThoroughfareTrailingType>Highway</ThoroughfareTrailingType> 
+    <Premise Type="Property">
+     <PremiseName>Yarrawonga</PremiseName>
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>2835</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+634 Clifford Road
+Mangawai
+RD5
+KAIWAKA 0582
+-->
+<AddressDetails> 
+  <Locality Type="Town">
+   <LocalityName>KAIWAKA</LocalityName>  
+   <PostOffice Type="Rural Delivery">
+    <PostOfficeNumber Indicator="RD"
+                      IndicatorOccurrence="Before">5</PostOfficeNumber>
+   </PostOffice>
+   <DependentLocality Type="Area">
+    <DependentLocalityName>Mangawai</DependentLocalityName>
+    <Thoroughfare> 
+     <ThoroughfareNumber>634</ThoroughfareNumber>
+     <ThoroughfareName>Clifford</ThoroughfareName>
+     <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    </Thoroughfare>
+   </DependentLocality>
+  </Locality>
+</AddressDetails>
+
+<!--
+Glenrowan Pastoral Company
+353 Hen and Chicken Lane
+PERTHVILLE NSW 2795
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">NSW</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>PERTHVILLE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>353</ThoroughfareNumber>  
+    <ThoroughfareName>Hen and Chicken</ThoroughfareName>
+    <ThoroughfareTrailingType>Lange</ThoroughfareTrailingType> 
+    <Firm Type="Company">
+     <FirmName>Glenrowan Pastoral Company</FirmName>
+    </Firm>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>2795</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ******** NON COMPLEX OR SIMPLE URBAN ADDRESS ******* -->
+<!--
+16 Patterson Street   
+OCEAN REEF WA 6027 
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>OCEAN REEF</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>16</ThoroughfareNumber>   
+    <ThoroughfareName>Patterson</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>6027</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+233 Dune Road
+KENMORE QLD 4069
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>KENMORE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>233</ThoroughfareNumber>   
+    <ThoroughfareName>Dune</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>4069</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ******** COMPLEX URBAN ADDRESS ********* -->
+<!--
+Unit 2 
+Orchard Boulevard    
+Elegant Apartments  
+12 Parkway Drive
+TOORAK VIC 3142
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>TOORAK</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>12</ThoroughfareNumber> 
+    <ThoroughfareName>Parkway</ThoroughfareName>
+    <ThoroughfareTrailingType>Drive</ThoroughfareTrailingType> 
+    <Premise Type="Apartment">
+     <PremiseName>Elegant Apartments</PremiseName> 
+     <SubPremise Type="Unit">
+      <AddressLine Type="SupplementaryInfo">Orchard Boulevard</AddressLine>
+      <SubPremiseNumber NumberTypeOccurrence="After">2</SubPremiseNumber>
+     </SubPremise>
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>3142</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ********* UTILITY URBAN ADDRESS ******** -->
+<!--
+Barbecue site 1  
+Baltusrol Park  
+14 Baltusrol Way  
+CONNOLLY WA 6027
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">WA</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>CONNOLLY</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>14</ThoroughfareNumber> 
+    <ThoroughfareName>Baltusrol</ThoroughfareName>
+    <ThoroughfareTrailingType>Way</ThoroughfareTrailingType> 
+    <DependentLocality Type="Park">
+     <DependentLocalityName>Baltusrol Park</DependentLocalityName> 
+     <Premise Type="Barbeque site">
+      <PremiseNumber NumberTypeOccurrence="After">1</PremiseNumber>
+     </Premise>
+    </DependentLocality>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>6027</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Substation C
+17 James Street
+SPRINGVALE VIC 3171
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">VIC</AdministrativeAreaName>
+  <Locality Type="Suburb">
+   <LocalityName>SPRINGVALE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumber>17</ThoroughfareNumber> 
+    <ThoroughfareName>James</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType> 
+    <Premise Type="Substation">
+     <PremiseNumber NumberTypeOccurrence="After">C</PremiseNumber>
+    </Premise> 
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>3171</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!-- ******** RANGED URBAN ADDRESS ********** -->
+<!--
+Empire Building
+20-26 Fisher Street
+ADELAIDE SA 5000
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">SA</AdministrativeAreaName>
+  <Locality Type="City">
+   <LocalityName>ADELAIDE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>20</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>26</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange> 
+    <ThoroughfareName>Fisher</ThoroughfareName>
+    <ThoroughfareTrailingType>Street</ThoroughfareTrailingType>
+    <Premise Type="Building">
+     <PremiseName>Empire Building</PremiseName> 
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>5000</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+
+<!--
+Unit A 7-13 Nathan Road
+BRISBANE QLD 4000
+-->
+<AddressDetails>
+ <AdministrativeArea Type="State">
+  <AdministrativeAreaName Type="Abbreviation">QLD</AdministrativeAreaName>
+  <Locality Type="City">
+   <LocalityName>BRISBANE</LocalityName>
+   <Thoroughfare> 
+    <ThoroughfareNumberRange Separator="-">
+     <ThoroughfareNumberFrom>
+     	<ThoroughfareNumber>7</ThoroughfareNumber>
+     </ThoroughfareNumberFrom>
+     <ThoroughfareNumberTo>
+     	<ThoroughfareNumber>13</ThoroughfareNumber>
+     </ThoroughfareNumberTo>
+    </ThoroughfareNumberRange> 
+    <ThoroughfareName>Nathan</ThoroughfareName>
+    <ThoroughfareTrailingType>Road</ThoroughfareTrailingType>
+    <Premise Type="Unit">
+     <PremiseNumber>A</PremiseNumber> 
+    </Premise>
+   </Thoroughfare> 
+   <PostalCode>
+    <PostalCodeNumber>4000</PostalCodeNumber>
+   </PostalCode>
+  </Locality>
+ </AdministrativeArea>
+</AddressDetails> 
+</xAL>

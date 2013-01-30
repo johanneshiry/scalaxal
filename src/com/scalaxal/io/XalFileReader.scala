@@ -39,98 +39,98 @@ import scala.xml.Source._
 import scala.language.postfixOps
 /**
  * @author Ringo Wathelet
- * Date: 12/12/12
+ * Date: 01/02/13
  * Version: 1
  */
 
 /**
- * the extraction/creation of a kml root element object from an xml node sequence
- * Specifically getting a kml root object from <kml> ... </kml> nodeSeq
+ * the extraction/creation of a xAL root element object from an xml node sequence
+ * Specifically getting a xAL root object from <xAL> ... </xAL> nodeSeq
  */
 trait XalExtractor {
   def makeXAL(nodeSeq: NodeSeq): Option[XAL]
 }
 
 /**
- * Reads a kml root element (Kml) from various file, string and NodeSeq input sources
+ * Reads a xAL root element (XAL) from various file, string and NodeSeq input sources
  *
- * @param xalExtractor the KmlExtractor object used to extract kml from xml, default KmlFromXml
+ * @param xalExtractor the xALExtractor object used to extract xAL from xml, default xALFromXml
  * @param parser the SAX XML parser, default scala.xml.XML.parser
- * @see KmlFromXml
+ * @see xALFromXml
  */
 
 class KmlFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
                     parser: scala.xml.SAXParser = scala.xml.XML.parser) {
 
   /**
-   * get a Kml root element from the input source
+   * get a xAL root element from the input source
    *
-   * @param source kml input source, such as a file, a file name, a file descriptor
-   * @return a Kml root element option
+   * @param source xAL input source, such as a file, a file name, a file descriptor
+   * @return a xAL root element option
    */
-  def loadKml(source: InputSource): Option[XAL] = {
+  def loadXal(source: InputSource): Option[XAL] = {
     Some(loadXML(source, parser)) match {
-      case Some(nodeSeq) => getKml(nodeSeq)
+      case Some(nodeSeq) => getXal(nodeSeq)
       case _ => None
     }
   }
 
   /**
-   * get a sequence of Kml root element options from the input kmz file
+   * get a sequence of Xal root element options from the input kmz file
    * @param file the input kmz file
-   * @return a sequence of Kml root element options
+   * @return a sequence of Xal root element options
    */
-  def getKmlFromKmzFile(file: File): Seq[Option[XAL]] = {
+  def getXalFromZipFile(file: File): Seq[Option[XAL]] = {
     import scala.collection.JavaConversions._
-    if (!file.getName.toLowerCase.endsWith(".kmz")) Seq.empty
+    if (!file.getName.toLowerCase.endsWith(".zip")) Seq.empty
     else {
       (new java.util.zip.ZipFile(file).entries.
-        filter(_.getName.toLowerCase.endsWith(".kml")).
-        collect { case kmlFile => getKmlFromFile(kmlFile.getName) } toSeq)
+        filter(_.getName.toLowerCase.endsWith(".xml")).
+        collect { case xmlFile => getXalFromFile(xmlFile.getName) } toSeq)
     }
   }
 
   /**
-   * get a Kml root element from the input file
+   * get a Xal root element from the input file
    * @param file the input xml file
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  def getKmlFromFile(file: File): Option[XAL] = loadKml(fromFile(file))
+  def getKmlFromFile(file: File): Option[XAL] = loadXal(fromFile(file))
 
   /**
-   * get a Kml root element from the input file descriptor
+   * get a Xal root element from the input file descriptor
    * @param fd the input xml file descriptor
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  def getKmlFromFile(fd: FileDescriptor): Option[XAL] = loadKml(fromFile(fd))
+  def getXalFromFile(fd: FileDescriptor): Option[XAL] = loadXal(fromFile(fd))
 
   /**
-   * get a Kml root element from the input file name
+   * get a Xal root element from the input file name
    * @param name the input file name
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  def getKmlFromFile(name: String): Option[XAL] = loadKml(fromFile(name))
+  def getXalFromFile(name: String): Option[XAL] = loadXal(fromFile(name))
 
   /**
-   * get a Kml root element from its input string representation
+   * get a Xal root element from its input string representation
    * @param xmlString the input xml string
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  def getKmlFromString(xmlString: String): Option[XAL] = getKml(XML.loadString(xmlString))
+  def getXalFromString(xmlString: String): Option[XAL] = getXal(XML.loadString(xmlString))
 
   /**
-   * get a Kml root element from its kml NodeSeq
+   * get a Xal root element from its kml NodeSeq
    * @param nodeSeq the input xml node sequence
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  def getKmlFromNodeSeq(nodeSeq: scala.xml.NodeSeq): Option[XAL] = getKml(nodeSeq)
+  def getXalFromNodeSeq(nodeSeq: scala.xml.NodeSeq): Option[XAL] = getXal(nodeSeq)
 
   /**
-   * creates a Kml root element from the Node Sequence
+   * creates a Xal root element from the Node Sequence
    * @param nodeSeq the xml node sequence
-   * @return a Kml root element option
+   * @return a Xal root element option
    */
-  private def getKml(nodeSeq: scala.xml.NodeSeq): Option[XAL] = {
+  private def getXal(nodeSeq: scala.xml.NodeSeq): Option[XAL] = {
     xalExtractor match {
       case Some(extractor) => extractor.makeXAL(nodeSeq)
       case _ => None

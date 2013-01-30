@@ -40,14 +40,6 @@ import scala.reflect.runtime.universe._
  * Date: 01/02/13
  * Version: 1
  *
- * Reference: OGC 07-147r2 Version: 2.2.0, Category: OGC Standard, Editor: Tim Wilson, at
- * http://www.opengeospatial.org/standards/kml
- * also
- * Google developers KML Reference, at
- * https://developers.google.com/kml/documentation/kmlreference
- * also
- * xAL: eXtensible Address Language at: http://www.oasis-open.org/committees/ciq
- *
  */
 
 /** Factory for creating xAL objects instances from scala xml NodeSeq */
@@ -81,7 +73,6 @@ object XalFromXml extends XalExtractor {
           case x if x == typeOf[String] => Some(node).asInstanceOf[Option[A]]
           case x if x == typeOf[Double] => try { Some(node.toDouble).asInstanceOf[Option[A]] } catch { case _: Throwable => None }
           case x if x == typeOf[Int] => try { Some(node.toInt).asInstanceOf[Option[A]] } catch { case _: Throwable => None }
-          // TODO is this correct use of 1 and 0 or should it be true and false
           case x if x == typeOf[Boolean] => node.toLowerCase match {
             case "1" | "true" => Some(true).asInstanceOf[Option[A]]
             case "0" | "false" => Some(false).asInstanceOf[Option[A]]
@@ -154,25 +145,6 @@ object XalFromXml extends XalExtractor {
       any = Seq.empty,
       attributes = Map()))
   }
-
-//  case class Thoroughfare(addressLine: Seq[AddressLine] = Nil,
-//                          thoroughfareTypeSeq: Seq[ThoroughfareType] = Nil,
-//                          thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
-//                          thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
-//                          thoroughfarePreDirection: Option[ContentType] = None,
-//                          thoroughfareLeadingType: Option[ContentType] = None,
-//                          thoroughfareName: Seq[ContentType] = Nil,
-//                          thoroughfareTrailingType: Option[ContentType] = None,
-//                          thoroughfarePostDirection: Option[ContentType] = None,
-//                          dependentThoroughfare: Option[DependentThoroughfare] = None,
-//                          thoroughfareType: Option[ThoroughfareType] = None,
-//                          any: Seq[Any] = Nil,
-//                          objectType: Option[String] = None,
-//                          dependentThoroughfares: Option[DependentThoroughfares] = None,
-//                          dependentThoroughfaresIndicator: Option[String] = None,
-//                          dependentThoroughfaresConnector: Option[String] = None,
-//                          dependentThoroughfaresType: Option[String] = None,
-//                          attributes: Map[String, QName])
 
   def makeThoroughfare(nodeSeq: NodeSeq): Option[Thoroughfare] = {
     if (nodeSeq.isEmpty) None else Some(new Thoroughfare(

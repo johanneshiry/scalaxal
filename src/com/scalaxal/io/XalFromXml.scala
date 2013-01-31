@@ -58,7 +58,7 @@ object XalFromXml extends XalExtractor {
     if (nodeSeq.isEmpty) None else
       (nodeSeq \\ "xAL") match {
         case x if (x.isEmpty) => None
-        case x => Some(new XAL(addressDetails = makeAddressDetailsSet(x),
+        case x => Some(new XAL(addressDetails = makeAddressDetailsSet(x \ "AddressDetails"),
           any = Seq.empty,
           version = getFromNode[String](nodeSeq \ "@Version"),
           attributes = Map()))
@@ -91,7 +91,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeAddressDetailsSet(nodeSeq: NodeSeq): Seq[AddressDetails] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeAddressDetails(x \ "AddressDetails") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeAddressDetails(x) } flatten)
   }
 
   def makeAddressDetails(nodeSeq: NodeSeq): Option[AddressDetails] = {

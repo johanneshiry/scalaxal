@@ -59,7 +59,7 @@ trait XalExtractor {
  * @see xALFromXml
  */
 
-class KmlFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
+class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
                     parser: scala.xml.SAXParser = scala.xml.XML.parser) {
 
   /**
@@ -95,7 +95,7 @@ class KmlFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
    * @param file the input xml file
    * @return a Xal root element option
    */
-  def getKmlFromFile(file: File): Option[XAL] = loadXal(fromFile(file))
+  def getXalFromFile(file: File): Option[XAL] = loadXal(fromFile(file))
 
   /**
    * get a Xal root element from the input file descriptor

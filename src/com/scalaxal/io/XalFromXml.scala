@@ -98,7 +98,7 @@ object XalFromXml extends XalExtractor {
     if (nodeSeq.isEmpty) None
     else Some(new AddressDetails(
       postalServiceElements = makePostalServiceElements(nodeSeq \ "PostalServiceElements"),
-      addressDetailsOption = makeAddressDetailsType(nodeSeq),
+      addressDetailsType = makeAddressDetailsType(nodeSeq),
       addressType = getFromNode[String](nodeSeq \ "@AddressType"),
       currentStatus = getFromNode[String](nodeSeq \ "@CurrentStatus"),
       validFromDate = getFromNode[String](nodeSeq \ "@ValidFromDate"),
@@ -110,15 +110,26 @@ object XalFromXml extends XalExtractor {
       any = Seq.empty))
   }
 
+  def makeAddressDetailsType(nodeSeq: NodeSeq): Option[AddressDetailsType] = {
+    if (nodeSeq.isEmpty) None else {
+      // just pick the first match
+      for (x <- AddressDetailsTypeSet.values) {
+        val address = makeAddressDetailsType(nodeSeq \ x.toString, x)
+        if(address.isDefined) return address
+      }
+    }
+    None
+  }
+
   def makeAddressDetailsType(nodeSeq: NodeSeq, addressType: AddressDetailsTypeSet): Option[AddressDetailsType] = {
    if (nodeSeq.isEmpty) None else {
      addressType match {
-          case AddressDetailsTypeSet.Address => makeAddress(nodeSeq \ "Address")
-          case AddressDetailsTypeSet.AddressLines => makeAddressLines(nodeSeq \ "AddressLines")
+          case AddressDetailsTypeSet.Address => makeAddress(nodeSeq)
+          case AddressDetailsTypeSet.AddressLines => makeAddressLines(nodeSeq)
           case AddressDetailsTypeSet.AdministrativeArea => makeAdministrativeArea(nodeSeq)
-          case AddressDetailsTypeSet.Country => makeCountry(nodeSeq \"Country")
-          case AddressDetailsTypeSet.Locality => makeLocality(nodeSeq \"Locality")
-          case AddressDetailsTypeSet.Thoroughfare => makeThoroughfare(nodeSeq \"Thoroughfare")
+          case AddressDetailsTypeSet.Country => makeCountry(nodeSeq)
+          case AddressDetailsTypeSet.Locality => makeLocality(nodeSeq)
+          case AddressDetailsTypeSet.Thoroughfare => makeThoroughfare(nodeSeq)
           case _ => None
         }
       }
@@ -133,14 +144,14 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeCountryNameCodeSet(nodeSeq: NodeSeq): Seq[CountryNameCode] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeCountryNameCode(x \ "CountryNameCode") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeCountryNameCode(x) } flatten)
   }
 
   def makeCountry(nodeSeq: NodeSeq): Option[Country] = {
     if (nodeSeq.isEmpty) None else Some(new Country(
-      addressLine = makeAddressLineSet(nodeSeq),
-      countryNameCode = makeCountryNameCodeSet(nodeSeq),
-      countryName = makeContentTypeSet(nodeSeq \ "CountryName"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      countryNameCode = makeCountryNameCodeSet(nodeSeq \ "CountryNameCode"),
+      countryName = makeContentSet(nodeSeq \ "CountryName"),
       countryType = makeCountryType(nodeSeq),
       any = Seq.empty,
       attributes = Map()))
@@ -148,15 +159,15 @@ object XalFromXml extends XalExtractor {
 
   def makeThoroughfare(nodeSeq: NodeSeq): Option[Thoroughfare] = {
     if (nodeSeq.isEmpty) None else Some(new Thoroughfare(
-      addressLine = makeAddressLineSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       thoroughfareTypeSeq = makeThoroughfareTypeSeq(nodeSeq),
       thoroughfareNumberPrefix = makeThoroughfareNumberPrefixSet(nodeSeq \ "ThoroughfareNumberPrefix"),
       thoroughfareNumberSuffix = makeThoroughfareNumberSuffixSet(nodeSeq \ "ThoroughfareNumberSuffix"),
-      thoroughfarePreDirection = makeContentType(nodeSeq \ "ThoroughfarePreDirection"),
-      thoroughfareLeadingType = makeContentType(nodeSeq \ "ThoroughfareLeadingType"),
-      thoroughfareName = makeContentTypeSet(nodeSeq \ "ThoroughfareName"),
-      thoroughfareTrailingType = makeContentType(nodeSeq \ "ThoroughfareTrailingType"),
-      thoroughfarePostDirection = makeContentType(nodeSeq \ "ThoroughfarePostDirection"),
+      thoroughfarePreDirection = makeContent(nodeSeq \ "ThoroughfarePreDirection"),
+      thoroughfareLeadingType = makeContent(nodeSeq \ "ThoroughfareLeadingType"),
+      thoroughfareName = makeContentSet(nodeSeq \ "ThoroughfareName"),
+      thoroughfareTrailingType = makeContent(nodeSeq \ "ThoroughfareTrailingType"),
+      thoroughfarePostDirection = makeContent(nodeSeq \ "ThoroughfarePostDirection"),
       dependentThoroughfare = makeDependentThoroughfare(nodeSeq \ "DependentThoroughfare"),
       thoroughfareType = makeThoroughfareType(nodeSeq),
       dependentThoroughfares = makeMode[DependentThoroughfares](nodeSeq \ "@DependentThoroughfare", DependentThoroughfares),
@@ -170,12 +181,12 @@ object XalFromXml extends XalExtractor {
 
   def makeDependentThoroughfare(nodeSeq: NodeSeq): Option[DependentThoroughfare] = {
     if (nodeSeq.isEmpty) None else Some(new DependentThoroughfare(
-      addressLine = makeAddressLineSet(nodeSeq),
-      thoroughfarePreDirection = makeContentType(nodeSeq \ "ThoroughfarePreDirection"),
-      thoroughfareLeadingType = makeContentType(nodeSeq \ "ThoroughfareLeadingType"),
-      thoroughfareName = makeContentTypeSet(nodeSeq \ "ThoroughfareName"),
-      thoroughfareTrailingType = makeContentType(nodeSeq \ "ThoroughfareTrailingType"),
-      thoroughfarePostDirection = makeContentType(nodeSeq \ "ThoroughfarePostDirection"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      thoroughfarePreDirection = makeContent(nodeSeq \ "ThoroughfarePreDirection"),
+      thoroughfareLeadingType = makeContent(nodeSeq \ "ThoroughfareLeadingType"),
+      thoroughfareName = makeContentSet(nodeSeq \ "ThoroughfareName"),
+      thoroughfareTrailingType = makeContent(nodeSeq \ "ThoroughfareTrailingType"),
+      thoroughfarePostDirection = makeContent(nodeSeq \ "ThoroughfarePostDirection"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       attributes = Map()))
@@ -191,7 +202,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeThoroughfareNumberPrefixSet(nodeSeq: NodeSeq): Seq[ThoroughfareNumberPrefix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeThoroughfareNumberPrefix(x \ "ThoroughfareNumberPrefix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeThoroughfareNumberPrefix(x) } flatten)
   }
 
   def makeThoroughfareNumberSuffix(nodeSeq: NodeSeq): Option[ThoroughfareNumberSuffix] = {
@@ -204,7 +215,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeThoroughfareNumberSuffixSet(nodeSeq: NodeSeq): Seq[ThoroughfareNumberSuffix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeThoroughfareNumberSuffix(x \ "ThoroughfareNumberSuffix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeThoroughfareNumberSuffix(x) } flatten)
   }
 
   def makeThoroughfareNumber(nodeSeq: NodeSeq): Option[ThoroughfareNumber] = {
@@ -219,11 +230,12 @@ object XalFromXml extends XalExtractor {
       attributes = Map()))
   }
 
+  // TODO deal with mandatory fields
   def makeThoroughfareNumberRange(nodeSeq: NodeSeq): Option[ThoroughfareNumberRange] = {
     if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumberRange(
-      addressLine = makeAddressLineSet(nodeSeq),
-      thoroughfareNumberFrom = makeContentType(nodeSeq \ "ThoroughfareNumberFrom").get,   // <-------need to fix this
-      thoroughfareNumberTo = makeContentType(nodeSeq \ "ThoroughfareNumberTo").get,  // <-------need to fix this
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      thoroughfareNumberFrom = makeContent(nodeSeq \ "ThoroughfareNumberFrom"),   // mandatory
+      thoroughfareNumberTo = makeContent(nodeSeq \ "ThoroughfareNumberTo"),       // mandatory
       rangeType = makeMode[RangeType](nodeSeq \ "RangeType", RangeType),
       separator = getFromNode[String](nodeSeq \ "@SeparatorType"),
       indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
@@ -291,11 +303,11 @@ object XalFromXml extends XalExtractor {
 
   def makePremise(nodeSeq: NodeSeq): Option[Premise] = {
     if (nodeSeq.isEmpty) None else Some(new Premise(
-      addressLine = makeAddressLineSet(nodeSeq),
-      premiseName = makePremiseNameSet(nodeSeq),
-      premiseLocation = makePremiseLocationSet(nodeSeq),
-      premiseNumberPrefix = makePremiseNumberPrefixSet(nodeSeq),
-      premiseNumberSuffix = makePremiseNumberSuffixSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      premiseName = makePremiseNameSet(nodeSeq \ "PremiseName"),
+      premiseLocation = makePremiseLocationSet(nodeSeq \ "PremiseLocation"),
+      premiseNumberPrefix = makePremiseNumberPrefixSet(nodeSeq \ "PremiseNumberPrefix"),
+      premiseNumberSuffix = makePremiseNumberSuffixSet(nodeSeq \ "PremiseNumberSuffix"),
       buildingName = makeBuildingNameSet(nodeSeq \ "BuildingName"),
       premiseFirmOrSubPremiseType = makePremiseType2Set(nodeSeq),
       mailStop = makeMailStop(nodeSeq \ "MailStop"),
@@ -309,23 +321,13 @@ object XalFromXml extends XalExtractor {
       attributes = Map()))
   }
 
-  def makePremiseType2(nodeSeq: NodeSeq, premiseType: PremiseTypeSet2): Option[PremiseType2] = {
-    if (nodeSeq.isEmpty) None else {
-      premiseType match {
-        case PremiseTypeSet2.Firm => makeFirm(nodeSeq)
-        case PremiseTypeSet2.SubPremise => makeSubPremise(nodeSeq)
-        case _ => None
-      }
-    }
-  }
-
   def makeSubPremise(nodeSeq: NodeSeq): Option[SubPremise] = {
     if (nodeSeq.isEmpty) None else Some(new SubPremise(
-      addressLine = makeAddressLineSet(nodeSeq),
-      subPremiseName = makeSubPremiseNameSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      subPremiseName = makeSubPremiseNameSet(nodeSeq \ "SubPremiseName"),
       subPremiseType = makeSubPremiseTypeSet(nodeSeq),
-      subPremiseNumberPrefix = makeSubPremiseNumberPrefixSet(nodeSeq),
-      subPremiseNumberSuffix = makeSubPremiseNumberSuffixSet(nodeSeq),
+      subPremiseNumberPrefix = makeSubPremiseNumberPrefixSet(nodeSeq \ "SubPremiseNumberPrefix"),
+      subPremiseNumberSuffix = makeSubPremiseNumberSuffixSet(nodeSeq \ "SubPremiseNumberSuffix"),
       buildingName = makeBuildingNameSet(nodeSeq \ "BuildingName"),
       firm = makeFirm(nodeSeq \ "Firm"),
       mailStop = makeMailStop(nodeSeq \ "MailStop"),
@@ -390,7 +392,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeSubPremiseNumberPrefixSet(nodeSeq: NodeSeq): Seq[SubPremiseNumberPrefix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseNumberPrefix(x \ "SubPremiseNumberPrefix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseNumberPrefix(x) } flatten)
   }
 
   def makeSubPremiseNumberSuffix(nodeSeq: NodeSeq): Option[SubPremiseNumberSuffix] = {
@@ -403,7 +405,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeSubPremiseNumberSuffixSet(nodeSeq: NodeSeq): Seq[SubPremiseNumberSuffix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseNumberSuffix(x \ "SubPremiseNumberSuffix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseNumberSuffix(x) } flatten)
   }
 
   def makeSubPremiseName(nodeSeq: NodeSeq): Option[SubPremiseName] = {
@@ -416,7 +418,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeSubPremiseNameSet(nodeSeq: NodeSeq): Seq[SubPremiseName] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseName(x \ "SubPremiseName") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeSubPremiseName(x) } flatten)
   }
 
   def makePremiseType2(nodeSeq: NodeSeq): Option[PremiseType2] = {
@@ -435,6 +437,16 @@ object XalFromXml extends XalExtractor {
       (PremiseTypeSet2.values.flatMap(x => makePremiseType2(nodeSeq \ x.toString, x)).toSeq)
   }
 
+  def makePremiseType2(nodeSeq: NodeSeq, premiseType: PremiseTypeSet2): Option[PremiseType2] = {
+    if (nodeSeq.isEmpty) None else {
+      premiseType match {
+        case PremiseTypeSet2.Firm => makeFirm(nodeSeq)
+        case PremiseTypeSet2.SubPremise => makeSubPremise(nodeSeq)
+        case _ => None
+      }
+    }
+  }
+
   def makePremiseLocation(nodeSeq: NodeSeq): Option[PremiseLocation] = {
     if (nodeSeq.isEmpty) None else Some(new PremiseLocation(
       content = getFromNode[String](nodeSeq),
@@ -443,7 +455,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makePremiseLocationSet(nodeSeq: NodeSeq): Seq[PremiseLocation] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseLocation(x \ "PremiseLocation") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseLocation(x) } flatten)
   }
 
 def makePremiseNumberPrefix(nodeSeq: NodeSeq): Option[PremiseNumberPrefix] = {
@@ -456,7 +468,7 @@ def makePremiseNumberPrefix(nodeSeq: NodeSeq): Option[PremiseNumberPrefix] = {
 }
 
   def makePremiseNumberPrefixSet(nodeSeq: NodeSeq): Seq[PremiseNumberPrefix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumberPrefix(x \ "PremiseNumberPrefix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumberPrefix(x) } flatten)
   }
 
   def makePremiseNumberSuffix(nodeSeq: NodeSeq): Option[PremiseNumberSuffix] = {
@@ -469,7 +481,7 @@ def makePremiseNumberPrefix(nodeSeq: NodeSeq): Option[PremiseNumberPrefix] = {
   }
 
   def makePremiseNumberSuffixSet(nodeSeq: NodeSeq): Seq[PremiseNumberSuffix] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumberSuffix(x \ "PremiseNumberSuffix") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumberSuffix(x) } flatten)
   }
 
 def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
@@ -482,13 +494,13 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
 }
 
   def makePremiseNameSet(nodeSeq: NodeSeq): Seq[PremiseName] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseName(x \ "PremiseName") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseName(x) } flatten)
   }
 
   def makeAdministrativeArea(nodeSeq: NodeSeq): Option[AdministrativeArea] = {
     if (nodeSeq.isEmpty) None else Some(new AdministrativeArea(
-      addressLine = makeAddressLineSet(nodeSeq),
-      administrativeAreaName = makeContentTypeSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      administrativeAreaName = makeContentSet(nodeSeq \ "AdministrativeAreaName"),
       subAdministrativeArea = makeSubAdministrativeArea(nodeSeq \ "SubAdministrativeArea"),
       administrativeAreaType = makeAdministrativeAreaType(nodeSeq \ "AdministrativeArea"),
       any = Seq.empty,
@@ -500,8 +512,8 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
 
   def makeSubAdministrativeArea(nodeSeq: NodeSeq): Option[SubAdministrativeArea] = {
     if (nodeSeq.isEmpty) None else Some(new SubAdministrativeArea(
-      addressLine = makeAddressLineSet(nodeSeq),
-      subAdministrativeAreaName = makeContentTypeSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      subAdministrativeAreaName = makeContentSet(nodeSeq \ "SubAdministrativeAreaName"),
       subAdministrativeAreaType = makeAdministrativeAreaType(nodeSeq \ "AdministrativeArea"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
@@ -534,13 +546,13 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
 
   def makeLocality(nodeSeq: NodeSeq): Option[Locality] = {
     if (nodeSeq.isEmpty) None else Some(new Locality(
-      addressLine = makeAddressLineSet(nodeSeq),
-      localityName = makeContentTypeSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      localityName = makeContentSet(nodeSeq \ "LocalityName"),
       localityType = makeLocalityType(nodeSeq),
-      thoroughfare = makeThoroughfare(nodeSeq),
+      thoroughfare = makeThoroughfare(nodeSeq \ "Thoroughfare"),
       premise = makePremise(nodeSeq \ "Premise"),
       dependentLocality = makeDependentLocality(nodeSeq \ "DependentLocality"),
-      postalCode = makePostalCode(nodeSeq),
+      postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -550,14 +562,14 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
 
   def makeDependentLocality(nodeSeq: NodeSeq): Option[DependentLocality] = {
     if (nodeSeq.isEmpty) None else Some(new DependentLocality(
-      addressLine = makeAddressLineSet(nodeSeq),
-      dependentLocalityName = makeContentTypeSet(nodeSeq),
-      dependentLocalityNumber = makeDependentLocalityNumber(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      dependentLocalityName = makeContentSet(nodeSeq \ "DependentLocalityName"),
+      dependentLocalityNumber = makeDependentLocalityNumber(nodeSeq \ "DependentLocalityNumber"),
       dependentLocalityType = makeDependentLocalityType(nodeSeq),
-      thoroughfare = makeThoroughfare(nodeSeq),
+      thoroughfare = makeThoroughfare(nodeSeq \ "Thoroughfare"),
       premise = makePremise(nodeSeq \ "Premise"),
       dependentLocality = makeDependentLocality(nodeSeq \ "DependentLocality"),
-      postalCode = makePostalCode(nodeSeq),
+      postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -591,18 +603,35 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   def makeDependentLocalityNumber(nodeSeq: NodeSeq): Option[DependentLocalityNumber] = {
     if (nodeSeq.isEmpty) None else Some(new DependentLocalityNumber(
       content = getFromNode[String](nodeSeq),
-      nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "NumberOccurrence", TypeOccurrence),
+      nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberNameOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = Map()))
   }
 
   def makePostalCode(nodeSeq: NodeSeq): Option[PostalCode] = {
     if (nodeSeq.isEmpty) None else Some(new PostalCode(
-      addressLine = makeAddressLineSet(nodeSeq),
-      postalCodeNumber = makeContentTypeSet(nodeSeq),
-      postalCodeNumberExtension = makePostalCodeNumberExtensionSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      postTown = makePostTown(nodeSeq \ "PostTown"),
+      postalCodeNumber = makeContentSet(nodeSeq \ "PostalCodeNumber"),
+      postalCodeNumberExtension = makePostalCodeNumberExtensionSet(nodeSeq \ "PostalCodeNumberExtension"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
+      attributes = Map()))
+  }
+
+  def makePostTown(nodeSeq: NodeSeq): Option[PostTown] = {
+    if (nodeSeq.isEmpty) None else Some(new PostTown(
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      postTownName = makeContentSet(nodeSeq \ "PostTownName"),
+      postTownSuffix = makePostTownSuffix(nodeSeq \ "PostTownSuffix"),
+      objectType = getFromNode[String](nodeSeq \ "@Type"),
+      attributes = Map()))
+  }
+
+  def makePostTownSuffix(nodeSeq: NodeSeq): Option[PostTownSuffix] = {
+    if (nodeSeq.isEmpty) None else Some(new PostTownSuffix(
+      content = getFromNode[String](nodeSeq),
+      code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = Map()))
   }
 
@@ -616,13 +645,13 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 }
 
   def makePostalCodeNumberExtensionSet(nodeSeq: NodeSeq): Seq[PostalCodeNumberExtension] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePostalCodeNumberExtension(x \ "makePostalCodeNumberExtension") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePostalCodeNumberExtension(x) } flatten)
   }
 
   def makePostOffice(nodeSeq: NodeSeq): Option[PostOffice] = {
     if (nodeSeq.isEmpty) None else Some(new PostOffice(
-      addressLine = makeAddressLineSet(nodeSeq),
-      postOfficeNumber = makePostOfficeNumberSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      postOfficeNumber = makePostOfficeNumber(nodeSeq \ "PostOfficeNumber"),
       postalRoute = makePostalRoute(nodeSeq\ "PostalRoute"),
       postBox = makePostBox(nodeSeq \ "PostalBox"),
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
@@ -642,16 +671,16 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
   }
 
   def makePostOfficeNumberSet(nodeSeq: NodeSeq): Seq[PostOfficeNumber] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePostOfficeNumber(x \ "PostOfficeNumber") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePostOfficeNumber(x) } flatten)
   }
 
   def makePostBox(nodeSeq: NodeSeq): Option[PostBox] = {
     if (nodeSeq.isEmpty) None else Some(new PostBox(
-      addressLine = makeAddressLineSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       postBoxNumber = makePostBoxNumber(nodeSeq \ "PostBoxNumber"),
       postBoxNumberPrefix = makePostBoxNumberPrefix(nodeSeq \ "PostBoxNumberPrefix"),
       postBoxNumberSuffix = makePostBoxNumberSuffix(nodeSeq \ "PostBoxNumberSuffix"),
-      postBoxNumberExtension = makePostBoxNumberExtension(nodeSeq),
+      postBoxNumberExtension = makePostBoxNumberExtension(nodeSeq \ "PostBoxNumberExtension"),
       firm = makeFirm(nodeSeq \ "Firm"),
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       any = Seq.empty,
@@ -662,9 +691,9 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 
   def makeFirm(nodeSeq: NodeSeq): Option[Firm] = {
     if (nodeSeq.isEmpty) None else Some(new Firm(
-      addressLine = makeAddressLineSet(nodeSeq),
-      firmName = makeContentTypeSet(nodeSeq),
-      department = makeDepartmentSet(nodeSeq),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      firmName = makeContentSet(nodeSeq \ "FirmName"),
+      department = makeDepartmentSet(nodeSeq \ "Department"),
       mailStop = makeMailStop(nodeSeq \ "MailStop"),
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
@@ -682,8 +711,8 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 
   def makeMailStop(nodeSeq: NodeSeq): Option[MailStop] = {
     if (nodeSeq.isEmpty) None else Some(new MailStop(
-      addressLine = makeAddressLineSet(nodeSeq),
-      mailStopName = makeContentType(nodeSeq \ "MailStopName"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      mailStopName = makeContent(nodeSeq \ "MailStopName"),
       mailStopNumber = makeMailStopNumber(nodeSeq \ "MailStopNumber"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
@@ -724,9 +753,9 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 
   def makePostalRoute(nodeSeq: NodeSeq): Option[PostalRoute] = {
     if (nodeSeq.isEmpty) None else Some(new PostalRoute(
-      addressLine = makeAddressLineSet(nodeSeq),
-      postalRouteName = makeContentType(nodeSeq \ "PostalRouteName"),
-      postalRouteNumber = makeContentType(nodeSeq \ "PostalRouteNumber"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      postalRouteName = makeContent(nodeSeq \ "PostalRouteName"),
+      postalRouteNumber = makeContent(nodeSeq \ "PostalRouteNumber"),
       postBox = makePostBox(nodeSeq \ "PostBox"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
@@ -748,8 +777,8 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 
   def makeDepartment(nodeSeq: NodeSeq): Option[Department] = {
     if (nodeSeq.isEmpty) None else Some(new Department(
-      addressLine = makeAddressLineSet(nodeSeq),
-      departmentName = makeContentTypeSet(nodeSeq \ "DepartmentName"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      departmentName = makeContentSet(nodeSeq \ "DepartmentName"),
       mailStop = makeMailStop(nodeSeq \ "MailStop"),
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
@@ -758,19 +787,19 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
   }
 
   def makeDepartmentSet(nodeSeq: NodeSeq): Seq[Department] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeDepartment(x \ "Department") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeDepartment(x) } flatten)
   }
 
   def makeLargeMailUser(nodeSeq: NodeSeq): Option[LargeMailUser] = {
     if (nodeSeq.isEmpty) None else Some(new LargeMailUser(
-      addressLine = makeAddressLineSet(nodeSeq),
-      largeMailUserName = makeContentTypeSet(nodeSeq \ "LargeMailUserName"),
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      largeMailUserName = makeContentSet(nodeSeq \ "LargeMailUserName"),
       largeMailUserIdentifier = makeLargeMailUserIdentifier(nodeSeq \ "LargeMailUserIdentifier"),
       buildingName = makeBuildingNameSet(nodeSeq \ "BuildingName"),
       department = makeDepartment(nodeSeq \ "Department"),
       postBox = makePostBox(nodeSeq \ "PostBox"),
       thoroughfare = makeThoroughfare(nodeSeq \"Thoroughfare"),
-      postalCode = makePostalCode(nodeSeq),
+      postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
       attributes = Map()))
@@ -826,36 +855,25 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
 
   def makeAddressLines(nodeSeq: NodeSeq): Option[AddressLines] = {
     if (nodeSeq.isEmpty) None else Some(new AddressLines(
-      addressLines = makeAddressLineSet(nodeSeq),
+      addressLines = makeAddressLineSet(nodeSeq \ "AddressLine"),
       any = Seq.empty,
       attributes = Map()))
   }
 
   def makeAddressLineSet(nodeSeq: NodeSeq): Seq[AddressLine] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeAddressLine(x \ "AddressLine") } flatten)
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeAddressLine(x) } flatten)
   }
 
-  def makeAddressDetailsType(nodeSeq: NodeSeq): Option[AddressDetailsType] = {
-    if (nodeSeq.isEmpty) None else {
-      // just pick the first match
-      for (x <- AddressDetailsTypeSet.values) {
-        val address = makeAddressDetailsType(nodeSeq \ x.toString, x)
-        if(address.isDefined) return address
-      }
-    }
-    None
-  }
-
-  def makeContentType(nodeSeq: NodeSeq): Option[ContentType] = {
-    if (nodeSeq.isEmpty) None else Some(new ContentType(
+  def makeContent(nodeSeq: NodeSeq): Option[Content] = {
+    if (nodeSeq.isEmpty) None else Some(new Content(
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = Map()))
   }
 
-  def makeContentTypeSet(nodeSeq: NodeSeq): Seq[ContentType] = {
-    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeContentType(x) } flatten)
+  def makeContentSet(nodeSeq: NodeSeq): Seq[Content] = {
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makeContent(x) } flatten)
   }
 
   def makeAddressIdentifier(nodeSeq: NodeSeq): Option[AddressIdentifier] = {
@@ -881,15 +899,15 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None
     else Some(new PostalServiceElements(
       addressIdentifier = makeAddressIdentifierSet(nodeSeq \ "AddressIdentifier"),
-      endorsementLineCode = makeContentType(nodeSeq \ "EndoresementLineCode"),
-      keyLineCode = makeContentType(nodeSeq \ "KeyLineCode"),
-      barcode = makeContentType(nodeSeq \ "Barcode"),
+      endorsementLineCode = makeContent(nodeSeq \ "EndoresementLineCode"),
+      keyLineCode = makeContent(nodeSeq \ "KeyLineCode"),
+      barcode = makeContent(nodeSeq \ "Barcode"),
       sortingCode = makeSortingCode(nodeSeq \ "SortingCode"),
-      addressLatitude = makeContentType(nodeSeq \ "AddressLatitude"),
-      addressLatitudeDirection = makeContentType(nodeSeq \ "AddressLatitudeDirection"),
-      addressLongitude = makeContentType(nodeSeq \ "AddressLongtitude"),
-      addressLongitudeDirection = makeContentType(nodeSeq \ "AddressLongtitudeDirection"),
-      supplementaryPostalServiceData = makeContentTypeSet(nodeSeq \"SupplementaryPostalServiceData"),
+      addressLatitude = makeContent(nodeSeq \ "AddressLatitude"),
+      addressLatitudeDirection = makeContent(nodeSeq \ "AddressLatitudeDirection"),
+      addressLongitude = makeContent(nodeSeq \ "AddressLongtitude"),
+      addressLongitudeDirection = makeContent(nodeSeq \ "AddressLongtitudeDirection"),
+      supplementaryPostalServiceData = makeContentSet(nodeSeq \"SupplementaryPostalServiceData"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       attributes = Map()))

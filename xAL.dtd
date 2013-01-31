@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+		xNL: extensible Address Language
+		This is an XML document type definition (DTD) for defining address(es).
+		One can also store more than one address with dates to keep track of
+		address changes. 
+		Date of Original Creation of xAL: 1 March 2001 
+		Copyright(c) 2000, OASIS. All Rights Reserved [http://www.oasis-open.org]
+		Contact: Customer Information Quality Technical Committee, OASIS
+		Version: 2.0 [MAJOR RELEASE] - Creation Date: 01 May 2002
+		Last Update: 24 July 2002
+		Last Modified By: Ram Kumar
+		Previous Version: 1.3
+     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<!-- Code : This attribute is used throughout the DTD. This attribute indicates the address element code used by
+            groups like ECCMA, ADIS, UN/PROLST, etc. for postal services 
+     Type - If not documented, then it means, possible values of Type not limited to: Official, Unique, 
+     		Abbreviation, Old name/number, Synonym, New name/number 
+-->
+
+<!-- Root Element -->
+<!ELEMENT xAL (AddressDetails+)>
+<!ATTLIST xAL			Version						CDATA #FIXED "2.0">
+
+<!--This container defines the details of the address-->
+<!ELEMENT AddressDetails (PostalServiceElements?, (Address | AddressLines | Country | AdministrativeArea | 
+						  Locality | Thoroughfare)?)>
+<!-- Track changes to customer address details -->
+<!--AddressType: Postal, residential,business, primary, secondary, etc-->
+<!--CurrentStatus: Moved, Living, Investment, Deceased, etc..-->
+<!--ValidFromDate: Start Date of the validity of address-->
+<!--ValidToDate: End date of the validity of address-->
+<!--Usage: Communication, Contact, etc.--> 
+<!--AddressDetailsKey: Key identifier for the element for not reinforced references from other elements. 
+					   Not required to be unique for the document to be valid, but application may get confused 
+					   if not unique. Extend this schema adding unique contraint if needed. -->
+<!ATTLIST AddressDetails
+	AddressType CDATA #IMPLIED
+	CurrentStatus CDATA #IMPLIED
+	ValidFromDate CDATA #IMPLIED
+	ValidToDate CDATA #IMPLIED
+	Usage CDATA #IMPLIED
+	Code CDATA #IMPLIED
+	AddressDetailsKey CDATA #IMPLIED
+>
+
+<!--Address as one line of free text-->
+<!ELEMENT Address (#PCDATA)>
+<!--Type: Postal, residential, corporate, etc--> 
+<!ATTLIST Address
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Container for Address lines-->
+<!ELEMENT AddressLines (AddressLine+)>
+
+<!--Free format address representation. An address can have more than one line. The order of the 
+	AddressLine elements must be preserved.-->
+<!ELEMENT AddressLine (#PCDATA)>
+<!--Type: Defines the type of address line. eg. Street, Address Line 1, etc.--> 
+<!ATTLIST AddressLine
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!-- ************************* POSTAL SERVICE ELEMENTS ********************************************************* -->
+<!--Postal authorities use specific postal service data to expedient delivery of mail-->
+<!ELEMENT PostalServiceElements (AddressIdentifier*, EndorsementLineCode?, KeyLineCode?, Barcode?, SortingCode?,
+								 AddressLatitude?, AddressLatitudeDirection?, AddressLongitude?, 
+								 AddressLongitudeDirection?, SupplementaryPostalServiceData*)>
+<!--Type: USPS, ECMA, UN/PROLIST, etc-->
+<!ATTLIST PostalServiceElements
+	Type CDATA #IMPLIED
+>
+<!--A unique identifier of an address assigned by postal authorities. Example: DPID in Australia-->
+<!ELEMENT AddressIdentifier (#PCDATA)>
+<!--IdentifierType: Type of identifier. eg. DPID as in Australia--> 
+<!ATTLIST AddressIdentifier
+	IdentifierType CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Directly affects postal service distribution-->
+<!ELEMENT EndorsementLineCode (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST EndorsementLineCode
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Required for some postal services-->
+<!ELEMENT KeyLineCode (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST KeyLineCode
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Required for some postal services-->
+<!ELEMENT Barcode (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST Barcode
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Used for sorting addresses. Values may for example be CEDEX 16 (France)-->
+<!ELEMENT SortingCode (#PCDATA)> 
+<!ATTLIST SortingCode
+	Code CDATA #IMPLIED
+>
+<!--Latitude of delivery address-->
+<!ELEMENT AddressLatitude (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST AddressLatitude
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Latitude direction of delivery address;N = North and S = South-->
+<!ELEMENT AddressLatitudeDirection (#PCDATA)>
+<!--Code: Used by postal services to encode the name of the element.-->
+<!ATTLIST AddressLatitudeDirection
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Longtitude of delivery address-->
+<!ELEMENT AddressLongitude (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST AddressLongitude
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Longtitude direction of delivery address;N=North and S=South-->
+<!ELEMENT AddressLongitudeDirection (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST AddressLongitudeDirection
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--any postal service elements not covered by the container can be represented using this element-->
+<!ELEMENT SupplementaryPostalServiceData (#PCDATA)>
+<!--Type: Specific to postal service--> 
+<!ATTLIST SupplementaryPostalServiceData
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ****************************************** COUNTRY ****************************************************** -->
+<!--Specification of a country-->
+<!ELEMENT Country (AddressLine*, CountryNameCode*, CountryName*, (AdministrativeArea | Locality | Thoroughfare)?)>
+<!--A country code according to the specified scheme-->
+<!ELEMENT CountryNameCode (#PCDATA)>
+<!--Scheme: Country code scheme possible values, but not limited to: iso.3166-2, iso.3166-3 for two and 
+			three character country codes.--> 
+<!ATTLIST CountryNameCode
+	Scheme CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Specification of the name of a country.-->
+<!ELEMENT CountryName (#PCDATA)> 
+<!ATTLIST CountryName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ****************************** ADMINISTRATIVE AREA / SUB ADMINISTRATIVE AREA *************************** -->
+<!--Examples of administrative areas are provinces counties, special regions (such as "Rijnmond"), etc.-->
+<!ELEMENT AdministrativeArea (AddressLine*, AdministrativeAreaName*, SubAdministrativeArea?, 
+							  (Locality | PostOffice | PostalCode)?)>
+<!--Type: Province or State or County or Kanton, etc-->
+<!--UsageType: Postal or Political - Sometimes locations must be distinguished between postal system, 
+			   and physical locations as defined by a political system-->
+<!--Indicator: Erode (Dist) where (Dist) is the Indicator-->
+<!ATTLIST AdministrativeArea
+	Type CDATA #IMPLIED
+	UsageType CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!-- Name of the administrative area. eg. MI in USA, NSW in Australia-->
+<!ELEMENT AdministrativeAreaName (#PCDATA)> 
+<!ATTLIST AdministrativeAreaName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!-- Specification of a sub-administrative area. An example of a sub-administrative areas is a county. 
+	 There are two places where the name of an administrative area can be specified and in this case, 
+	 one becomes sub-administrative area.-->
+<!ELEMENT SubAdministrativeArea (AddressLine*, SubAdministrativeAreaName*, (Locality | PostOffice | PostalCode)?)>
+<!--Type: Province or State or County or Kanton, etc-->
+<!--UsageType: Postal or Political - Sometimes locations must be distinguished between postal system, and 
+			   physical locations as defined by a political system-->
+<!--Indicator: Erode (Dist) where (Dist) is the Indicator-->
+<!ATTLIST SubAdministrativeArea
+	Type CDATA #IMPLIED
+	UsageType CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!-- Name of the sub-administrative area-->
+<!ELEMENT SubAdministrativeAreaName (#PCDATA)>
+<!--Code: Used by postal services to encode the name of the element.-->
+<!ATTLIST SubAdministrativeAreaName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ************************************ LOCALITY / DEPENDENT LOCALITY **************************************** -->
+<!--Locality is one level lower than adminisstrative area. Eg.: cities, reservations and any other built-up areas.-->
+<!ELEMENT Locality (AddressLine*, LocalityName*, (PostBox | LargeMailUser | PostOffice | PostalRoute)?, 
+					Thoroughfare?, Premise?, DependentLocality?, PostalCode?)>
+<!--Type: Possible values not limited to: City, IndustrialEstate, etc-->
+<!--UsageType: Postal or Political - Sometimes locations must be distinguished between postal system, and 
+			   physical locations as defined by a political system-->
+<!--Indicator: Erode (Dist) where (Dist) is the Indicator-->
+<!ATTLIST Locality
+	Type CDATA #IMPLIED
+	UsageType CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!--Name of the locality-->
+<!ELEMENT LocalityName (#PCDATA)> 
+<!ATTLIST LocalityName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!--Dependent localities are Districts within cities/towns, locality divisions, postal 
+	divisions of cities, suburbs, etc. DependentLocality is a recursive element, but no nesting deeper than 
+	two exists (Locality-DependentLocality-DependentLocality).-->
+<!ELEMENT DependentLocality (AddressLine*, DependentLocalityName*, DependentLocalityNumber?, 
+							 (PostBox | LargeMailUser | PostOffice | PostalRoute)?, Thoroughfare?, Premise?, 
+							 DependentLocality?, PostalCode?)>
+<!--Type: City or IndustrialEstate, etc-->
+<!--UsageType: Postal or Political - Sometimes locations must be distinguished between postal system, and 
+			   physical locations as defined by a political system-->
+<!--Connector: "VIA" as in Hill Top VIA Parish where Parish is a locality and Hill Top is a dependent locality-->
+<!--Indicator: Eg. Erode (Dist) where (Dist) is the Indicator-->
+<!ATTLIST DependentLocality
+	Type CDATA #IMPLIED
+	UsageType CDATA #IMPLIED
+	Connector CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!--Name of the dependent locality-->
+<!ELEMENT DependentLocalityName (#PCDATA)> 
+<!ATTLIST DependentLocalityName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Number of the dependent locality. Some areas are numbered. Eg. SECTOR 5 in a Suburb as in India 
+	or SOI SUKUMVIT 10 as in Thailand-->
+<!ELEMENT DependentLocalityNumber (#PCDATA)>
+<!--NameNumberOccurrence: Eg. SECTOR occurs before 5 in SECTOR 5--> 
+<!ATTLIST DependentLocalityNumber
+	NameNumberOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ******************************* THOROUGHFARE / DEPENDENT THPOROUGHFARE ************************************** -->
+<!--Specification of a thoroughfare. A thoroughfare could be a rd, street, canal, river, etc.  
+	Note dependentlocality in a street. For example, in some countries, a large street will 
+	have many subdivisions with numbers. Normally the subdivision name is the same as the road name, 
+	but with a number to identifiy it. Eg. SOI SUKUMVIT 3, SUKUMVIT RD, BANGKOK-->
+<!ELEMENT Thoroughfare (AddressLine*, (ThoroughfareNumber | ThoroughfareNumberRange)*, ThoroughfareNumberPrefix*, 
+						ThoroughfareNumberSuffix*, ThoroughfarePreDirection?, ThoroughfareLeadingType?, 
+						ThoroughfareName*, ThoroughfareTrailingType?, ThoroughfarePostDirection?, 
+						DependentThoroughfare?, (DependentLocality | Premise | Firm | PostalCode)?)>
+<!--Type : Type of thoroughfare - Street, Road, Lane, Highway, etc -->
+<!--DependentThoroughfares: Does this thoroughfare have a a dependent thoroughfare? Corner of street X, etc-->
+<!--DependentThoroughfaresIndicator: Corner of, Intersection of-->
+<!--DependentThoroughfaresConnector: Corner of Street1 AND Street 2 where AND is the Connector-->
+<!--DependentThoroughfaresType: STS in GEORGE and ADELAIDE STS, RDS IN A and B RDS, etc. Use only when both the street types are the same-->
+<!ATTLIST Thoroughfare
+	Type CDATA #IMPLIED
+	DependentThoroughfares (Yes | No) #IMPLIED
+	DependentThoroughfaresIndicator CDATA #IMPLIED
+	DependentThoroughfaresConnector CDATA #IMPLIED
+	DependentThoroughfaresType CDATA #IMPLIED
+>
+<!--Eg.: 23 Archer street or 25/15 Zero Avenue, etc-->
+<!ELEMENT ThoroughfareNumber (#PCDATA)>
+<!--NumberType: 12 Archer Street is "Single" and 12-14 Archer Street is "Range"-->
+<!--Type: Official, Old, New, etc -->
+<!--Indicator: No. in Street No.12 or "#" in Street # 12, etc.-->
+<!--IndicatorOccurrence: No.12 where "No." is before actual street number-->
+<!--NumberOccurrence: 23 Archer St, Archer Street 23, St Archer 23--> 
+<!ATTLIST ThoroughfareNumber
+	NumberType (Single | Range) #IMPLIED 
+	Type CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+	IndicatorOccurrence (Before | After) #IMPLIED
+	NumberOccurrence (BeforeName | AfterName | BeforeType | AfterType) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Prefix before the number. A in A12 Archer Street-->
+<!ELEMENT ThoroughfareNumberPrefix (#PCDATA)> 
+<!ATTLIST ThoroughfareNumberPrefix
+	NumberPrefixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Suffix after the number. A in 12A Archer Street-->
+<!ELEMENT ThoroughfareNumberSuffix (#PCDATA)>
+<!--NumberSuffixSeparator: NEAR, ADJACENT TO, etc--> 
+<!ATTLIST ThoroughfareNumberSuffix
+	NumberSuffixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Appears before the thoroughfare name. Ed. Spanish: Avenida Aurora, where Avenida is the leading type 
+	/ French: Rue Moliere, where Rue is the leading type.-->
+<!ELEMENT ThoroughfareLeadingType (#PCDATA)> 
+<!ATTLIST ThoroughfareLeadingType
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Specification of the name of a Thoroughfare (also dependant street name): street name, canal name, etc.-->
+<!ELEMENT ThoroughfareName (#PCDATA)> 
+<!ATTLIST ThoroughfareName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Appears after the thoroughfare name. Ed. British: Baker Lane, where Lane is the trailing type.-->
+<!ELEMENT ThoroughfareTrailingType (#PCDATA)> 
+<!ATTLIST ThoroughfareTrailingType
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--North Baker Street, where North is the pre-direction. The direction appears before the name.-->
+<!ELEMENT ThoroughfarePreDirection (#PCDATA)> 
+<!ATTLIST ThoroughfarePreDirection
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--221-bis Baker Street North, where North is the post-direction. The post-direction appears after the name.-->
+<!ELEMENT ThoroughfarePostDirection (#PCDATA)> 
+<!ATTLIST ThoroughfarePostDirection
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!--A container to represent a range of numbers (from x thru y)for a thoroughfare. eg. 1-2 Albert Av-->
+<!ELEMENT ThoroughfareNumberRange (AddressLine*, ThoroughfareNumberFrom, ThoroughfareNumberTo)>
+<!--RangeType: Thoroughfare number ranges are odd or even-->
+<!--Indicator: "No." No.12-13-->
+<!--Separator: "-" in 12-14  or "Thru" in 12 Thru 14 etc.-->
+<!--IndicatorOccurrence: No.12-14 where "No." is before actual street number-->
+<!--NumberRangeOccurrence: 23-25 Archer St, where number appears before name--> 
+<!ATTLIST ThoroughfareNumberRange
+	RangeType (Odd | Even) #IMPLIED
+	Indicator CDATA #IMPLIED
+	Separator CDATA #IMPLIED
+	IndicatorOccurrence (Before | After) #IMPLIED
+	NumberRangeOccurrence (BeforeName | AfterName | BeforeType | AfterType) #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Starting number in the range-->
+<!ELEMENT ThoroughfareNumberFrom (AddressLine*, ThoroughfareNumberPrefix*, ThoroughfareNumber+, 
+								  ThoroughfareNumberSuffix*)> 
+<!ATTLIST ThoroughfareNumberFrom
+	Code CDATA #IMPLIED
+>
+<!--Ending number in the range-->
+<!ELEMENT ThoroughfareNumberTo (AddressLine*, ThoroughfareNumberPrefix*, ThoroughfareNumber+, 
+								ThoroughfareNumberSuffix*)> 
+<!ATTLIST ThoroughfareNumberTo
+	Code CDATA #IMPLIED
+>
+
+<!--DependentThroughfare is related to a street; occurs in GB, IE, ES, PT-->
+<!ELEMENT DependentThoroughfare (AddressLine*, ThoroughfarePreDirection?, ThoroughfareLeadingType?, 
+		  						 ThoroughfareName*, ThoroughfareTrailingType?, ThoroughfarePostDirection?)>
+<!ATTLIST DependentThoroughfare
+	Type CDATA #IMPLIED
+>
+<!-- ****************************************** POSTAL CODE ******************************************************* -->
+<!--PostalCode is the container element for either simple or complex (extended) postal codes. Type: Area Code, 
+	Postcode, etc.-->
+<!ELEMENT PostalCode (AddressLine*, PostalCodeNumber*, PostalCodeNumberExtension*, PostTown?)>
+<!--Type: Area Code, Postcode, Delivery code as in NZ, etc-->
+<!ATTLIST PostalCode
+	Type CDATA #IMPLIED
+>
+<!--Specification of a postcode. The postcode is formatted according to country-specific rules. 
+	Example: SW3 0A8-1A, 600074, 2067-->
+<!ELEMENT PostalCodeNumber (#PCDATA)>
+<!--Type: Old Postal Code, new code, etc--> 
+<!ATTLIST PostalCodeNumber
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Examples are: 1234 (USA), 1G (UK), etc.-->
+<!ELEMENT PostalCodeNumberExtension (#PCDATA)>
+<!--Type: Delivery Point Suffix, New Postal Code, etc..-->
+<!--NumberExtensionSeparator: The separator between postal code number and the extension. Eg. "-"--> 
+<!ATTLIST PostalCodeNumberExtension
+	Type CDATA #IMPLIED
+	NumberExtensionSeparator CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ****************************************** POST OFFICE ******************************************************* -->
+<!--Specification of a post office. Examples are a rural post office where post is delivered and a 
+	post office containing post office boxes.-->
+<!ELEMENT PostOffice (AddressLine*, (PostOfficeName* | PostOfficeNumber?), PostalRoute?, PostBox?, PostalCode?)>
+<!--Type: Could be a Mobile Postoffice Van as in Isreal-->
+<!--Indicator: eg. Kottivakkam (P.O) here (P.O) is the Indicator-->
+<!ATTLIST PostOffice
+	Type CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!--Specification of the name of the post office. This can be a rural postoffice where post is delivered 
+	or a post office containing post office boxes.-->
+<!ELEMENT PostOfficeName (#PCDATA)> 
+<!ATTLIST PostOfficeName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Specification of the number of the postoffice. Common in rural postoffices-->
+<!ELEMENT PostOfficeNumber (#PCDATA)>
+<!--Indicator: MS in MS 62, # in MS # 12, etc.-->
+<!--IndicatorOccurrence: MS occurs before 62 in MS 62--> 
+<!ATTLIST PostOfficeNumber
+	Indicator CDATA #IMPLIED
+	IndicatorOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ******************************************** POST BOX ******************************************************** -->
+<!--Specification of a postbox like mail delivery point. Only a single postbox number can be specified. 
+	Examples of postboxes are POBox, free mail numbers, etc.-->
+<!ELEMENT PostBox (AddressLine*, PostBoxNumber, PostBoxNumberPrefix?, PostBoxNumberSuffix?, PostBoxNumberExtension?, 
+				   Firm?, PostalCode?)>
+<!--Type: Possible values are, not limited to: POBox and Freepost.-->
+<!--Indicator: LOCKED BAG NO:1234 where the Indicator is NO: and Type is LOCKED BAG-->
+<!ATTLIST PostBox
+	Type CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+>
+<!--Specification of the number of a postbox-->
+<!ELEMENT PostBoxNumber (#PCDATA)> 
+<!ATTLIST PostBoxNumber
+	Code CDATA #IMPLIED
+>
+<!--Specification of the prefix of the post box number. eg. A in POBox:A-123-->
+<!ELEMENT PostBoxNumberPrefix (#PCDATA)>
+<!--NumberPrefixSeparator: A-12 where 12 is number and A is prefix and "-" is the separator--> 
+<!ATTLIST PostBoxNumberPrefix
+	NumberPrefixSeparator CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Specification of the suffix of the post box number. eg. A in POBox:123A-->
+<!ELEMENT PostBoxNumberSuffix (#PCDATA)>
+<!--NumberSuffixSeparator: 12-A where 12 is number and A is suffix and "-" is the separator--> 
+<!ATTLIST PostBoxNumberSuffix
+	NumberSuffixSeparator CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Some countries like USA have POBox as 12345-123-->
+<!ELEMENT PostBoxNumberExtension (#PCDATA)>
+<!--NumberExtensionSeparator: "-" is the NumberExtensionSeparator in POBOX:12345-123-->
+<!ATTLIST PostBoxNumberExtension
+	NumberExtensionSeparator CDATA #IMPLIED
+>
+<!-- ******************************************** POSTAL ROUTE *************************************************** -->
+<!--A Postal van is specific for a route as in Is`rael, Rural route-->
+<!ELEMENT PostalRoute (AddressLine*, (PostalRouteName+ | PostalRouteNumber), PostBox?)>
+<!ATTLIST PostalRoute
+	Type CDATA #IMPLIED
+>
+<!-- Name of the Postal Route-->
+<!ELEMENT PostalRouteName (#PCDATA)> 
+<!ATTLIST PostalRouteName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Number of the Postal Route-->
+<!ELEMENT PostalRouteNumber (#PCDATA)> 
+<!ATTLIST PostalRouteNumber
+	Code CDATA #IMPLIED
+>
+<!-- ****************************************** POST TOWN ********************************************************* -->
+<!--A post town is not the same as a locality. A post town can encompass a collection of (small) localities. 
+	It can also be a subpart of a locality. An actual post town in Norway is "Bergen".-->
+<!ELEMENT PostTown (AddressLine*, PostTownName*, PostTownSuffix?)>
+<!--Type: eg. village, town, suburb, etc-->
+<!ATTLIST PostTown
+	Type CDATA #IMPLIED
+>
+<!--Name of the post town-->
+<!ELEMENT PostTownName (#PCDATA)> 
+<!ATTLIST PostTownName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--GENERAL PO in MIAMI GENERAL PO-->
+<!ELEMENT PostTownSuffix (#PCDATA)> 
+<!ATTLIST PostTownSuffix
+	Code CDATA #IMPLIED
+>
+<!-- ******************************************* PREMISE / SUB PREMISE ******************************************** -->
+<!--Specification of a single premise, for example a house or a building. The premise as a whole has a unique 
+	premise (house) number or a premise name.  There could be more than one premise in a street referenced in 
+	an address. For example a building address near a major shopping centre or raiwlay station-->
+<!ELEMENT Premise (AddressLine*, PremiseName*, (PremiseLocation | (PremiseNumber+ | PremiseNumberRange))?, 
+				   PremiseNumberPrefix*, PremiseNumberSuffix*, BuildingName*, (SubPremise* | Firm?), MailStop?, 
+				   PostalCode?, Premise?)>
+<!--Type: COMPLEXE in COMPLEX DES JARDINS, A building, station, etc-->
+<!--PremiseDependency: STREET, PREMISE, SUBPREMISE, PARK, FARM, etc-->
+<!--PremiseDependencyType: NEAR, ADJACENT TO, etc-->
+<!--PremiseThoroughfareConnector: DES, DE, LA, LA, DU in RUE DU BOIS. These terms connect a premise/thoroughfare 
+	type and premise/thoroughfare name. Terms may appear with names AVE DU BOIS-->
+<!ATTLIST Premise
+	Type CDATA #IMPLIED
+	PremiseDependency CDATA #IMPLIED
+	PremiseDependencyType CDATA #IMPLIED
+	PremiseThoroughfareConnector CDATA #IMPLIED
+>
+<!--Specification of the name of the premise (house, building, park, farm, etc). A premise name is specified 
+	when the premise cannot be addressed using a street name plus premise (house) number.-->
+<!ELEMENT PremiseName (#PCDATA)>
+<!--TypeOccurrence: EGIS Building where EGIS occurs before Building, DES JARDINS occurs after COMPLEXE DES JARDINS--> 
+<!ATTLIST PremiseName
+	Type CDATA #IMPLIED
+	TypeOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--LOBBY, BASEMENT, GROUND FLOOR, etc...-->
+<!ELEMENT PremiseLocation (#PCDATA)> 
+<!ATTLIST PremiseLocation
+	Code CDATA #IMPLIED
+>
+<!--Specification of the identifier of the premise (house, building, etc). Premises in a street are often uniquely 
+	identified by means of consecutive identifiers. The identifier can be a number, a letter or any combination of 
+	the two.-->
+<!ELEMENT PremiseNumber (#PCDATA)>
+<!--NumberType: Building 12-14 is "Range" and Building 12 is "Single"-->
+<!--Indicator: No. in House No.12, # in #12, etc.-->
+<!--IndicatorOccurrence: No. occurs before 12 No.12-->
+<!--NumberTypeOccurrence: 12 in BUILDING 12 occurs "after" premise type BUILDING--> 
+<!ATTLIST PremiseNumber
+	NumberType (Single | Range) #IMPLIED
+	Type CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+	IndicatorOccurrence (Before | After) #IMPLIED
+	NumberTypeOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--A in A12-->
+<!ELEMENT PremiseNumberPrefix (#PCDATA)>
+<!--NumberPrefixSeparator: A-12 where 12 is number and A is prefix and "-" is the separator--> 
+<!ATTLIST PremiseNumberPrefix
+	NumberPrefixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--A in 12A-->
+<!ELEMENT PremiseNumberSuffix (#PCDATA)>
+<!--NumberSuffixSeparator: 12-A where 12 is number and A is suffix and "-" is the separator--> 
+<!ATTLIST PremiseNumberSuffix
+	NumberSuffixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+
+<!--Specification for defining the premise number range. Some premises have number as Building C1-C7-->
+<!ELEMENT PremiseNumberRange (PremiseNumberRangeFrom, PremiseNumberRangeTo)>
+<!--RangeType: Eg. Odd or even number range-->
+<!--Indicator: Eg. No. in Building No:C1-C5-->
+<!--Separator: "-" in 12-14  or "Thru" in 12 Thru 14 etc.-->
+<!--IndicatorOccurence: No.12-14 where "No." is before actual street number-->
+<!--NumberRangeOccurence: Building 23-25 where the number occurs after building name-->
+<!ATTLIST PremiseNumberRange
+	RangeType CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+	Separator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	IndicatorOccurence (Before | After) #IMPLIED
+	NumberRangeOccurence (BeforeName | AfterName | BeforeType | AfterType) #IMPLIED
+>
+<!--Start number details of the premise number range-->
+<!ELEMENT PremiseNumberRangeFrom (AddressLine*, PremiseNumberPrefix*, PremiseNumber+, PremiseNumberSuffix*)>
+<!--End number details of the premise number range-->
+<!ELEMENT PremiseNumberRangeTo (AddressLine*, PremiseNumberPrefix*, PremiseNumber+, PremiseNumberSuffix*)>
+
+<!--Specification of a single sub-premise. Examples of sub-premises are apartments and suites. 
+	Each sub-premise should be uniquely identifiable.-->
+<!ELEMENT SubPremise (AddressLine*, SubPremiseName*, (SubPremiseLocation | SubPremiseNumber*)?, 
+					  SubPremiseNumberPrefix*, SubPremiseNumberSuffix*, BuildingName*, Firm?, MailStop?, 
+					  PostalCode?, SubPremise?)>
+<!ATTLIST SubPremise
+	Type CDATA #IMPLIED
+>
+<!-- Name of the SubPremise-->
+<!ELEMENT SubPremiseName (#PCDATA)>
+<!--TypeOccurrence: EGIS Building where EGIS occurs before Building--> 
+<!ATTLIST SubPremiseName
+	Type CDATA #IMPLIED
+	TypeOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Name of the SubPremise Location. eg. LOBBY, BASEMENT, GROUND FLOOR, etc...-->
+<!ELEMENT SubPremiseLocation (#PCDATA)> 
+<!ATTLIST SubPremiseLocation
+	Code CDATA #IMPLIED
+>
+<!-- Specification of the identifier of a sub-premise. Examples of sub-premises are apartments and suites. 
+	 sub-premises in a building are often uniquely identified by means of consecutive identifiers. The identifier 
+	 can be a number, a letter or any combination of the two. In the latter case, the identifier includes exactly 
+	 one variable (range) part, which is either a number or a single letter that is surrounded by fixed parts at 
+	 the left (prefix) or the right (postfix).-->
+<!ELEMENT SubPremiseNumber (#PCDATA)>
+<!--Indicator: "TH" in 12TH which is a floor number, "NO." in NO.1, "#" in APT #12, etc.-->
+<!--IndicatorOccurrence: "No." occurs before 1 in No.1, or TH occurs after 12 in 12TH-->
+<!--NumberTypeOccurrence: 12TH occurs "before" FLOOR (a type of subpremise) in 12TH FLOOR-->
+<!--PremiseNumberSeparator: "/" in 12/14 Archer Street where 12 is sub-premise number and 14 is premise number--> 
+<!ATTLIST SubPremiseNumber
+	Indicator CDATA #IMPLIED
+	IndicatorOccurrence (Before | After) #IMPLIED
+	NumberTypeOccurrence (Before | After) #IMPLIED
+	PremiseNumberSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Prefix of the sub premise number. eg. A in A-12-->
+<!ELEMENT SubPremiseNumberPrefix (#PCDATA)>
+<!--NumberPrefixSeparator: A-12 where 12 is number and A is prefix and "-" is the separator--> 
+<!ATTLIST SubPremiseNumberPrefix
+	NumberPrefixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- Suffix of the sub premise number. eg. A in 12A-->
+<!ELEMENT SubPremiseNumberSuffix (#PCDATA)>
+<!--NumberSuffixSeparator: 12-A where 12 is number and A is suffix and "-" is the separator--> 
+<!ATTLIST SubPremiseNumberSuffix
+	NumberSuffixSeparator CDATA #IMPLIED
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ******************************************* BUILDING NAME **************************************************** -->
+<!--Specification of the name of a building.-->
+<!ELEMENT BuildingName (#PCDATA)>
+<!--TypeOccurrence: Occurrence of the building name before/after the type. eg. EGIS BUILDING where name 
+	appears before type--> 
+<!ATTLIST BuildingName
+	Type CDATA #IMPLIED
+	TypeOccurrence (Before | After) #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ******************************************* FIRM ************************************************************ -->
+<!--Specification of a firm, company, organization, etc. It can be specified as part of an address that contains 
+	a street or a postbox. It is therefore different from a large mail user address, which contains no street.-->
+<!ELEMENT Firm (AddressLine*, FirmName*, Department*, MailStop?, PostalCode?)>
+<!ATTLIST Firm
+	Type CDATA #IMPLIED
+>
+<!--Name of the firm-->
+<!ELEMENT FirmName (#PCDATA)> 
+<!ATTLIST FirmName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ****************************************** DEPARTMENT ******************************************************* --> 
+<!--Subdivision in the firm: School of Physics at Victoria University (School of Physics is the department)-->
+<!ELEMENT Department (AddressLine*, DepartmentName*, MailStop?, PostalCode?)>
+<!--Type: School in Physics School, Division in Radiology division of school of physics-->
+<!ATTLIST Department
+	Type CDATA #IMPLIED
+>
+<!--Specification of the name of a department.-->
+<!ELEMENT DepartmentName (#PCDATA)> 
+<!ATTLIST DepartmentName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ***************************************** LARGE MAIL USER *************************************************** -->
+<!--Specification of a large mail user address. Examples of large mail users are postal companies, companies in 
+	France with a cedex number, hospitals and airports with their own post code. Large mail user addresses do not 
+	have a street name with premise name or premise number in countries like Netherlands. But they have a POBox 
+	and street also in countries like France-->
+<!ELEMENT LargeMailUser (AddressLine*, LargeMailUserName*, LargeMailUserIdentifier?, BuildingName*, Department?, 
+						 PostBox?, Thoroughfare?, PostalCode?)>
+<!ATTLIST LargeMailUser
+	Type CDATA #IMPLIED
+>
+<!--Name of the large mail user. eg. Smith Ford International airport-->
+<!ELEMENT LargeMailUserName (#PCDATA)>
+<!--Type: Airport, Hospital, etc-->
+<!ATTLIST LargeMailUserName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Specification of the identification number of a large mail user. An example are the Cedex codes in France.-->
+<!ELEMENT LargeMailUserIdentifier (#PCDATA)>
+<!--Type: CEDEX Code-->
+<!--Indicator: eg. Building 429 in which Building is the Indicator--> 
+<!ATTLIST LargeMailUserIdentifier
+	Type CDATA #IMPLIED
+	Indicator CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ******************************************* MAIL STOP ****************************************************** -->
+<!--A MailStop is where the the mail is delivered to within a premise/subpremise/firm or a facility.-->
+<!ELEMENT MailStop (AddressLine*, MailStopName?, MailStopNumber?)>
+<!ATTLIST MailStop
+	Type CDATA #IMPLIED
+>
+<!--Name of the the Mail Stop. eg. MSP, MS, etc-->
+<!ELEMENT MailStopName (#PCDATA)> 
+<!ATTLIST MailStopName
+	Type CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!--Number of the Mail stop. eg. 123 in MS 123-->
+<!ELEMENT MailStopNumber (#PCDATA)>
+<!--NameNumberSeparator: "-" in MS-123--> 
+<!ATTLIST MailStopNumber
+	NameNumberSeparator CDATA #IMPLIED
+	Code CDATA #IMPLIED
+>
+<!-- ************************************************************************************************************* -->
+
+ 

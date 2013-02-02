@@ -67,9 +67,9 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
   def this(fileName: String) = this(Option(fileName))
 
   /**
-   * writes the Kml element to xml
+   * writes the xal element to xml
    *
-   * @param value the Kml element option
+   * @param value the xal element option
    * @param pretty the pretty printer to use, default null
    */
   def write[A: XalToXml](value: A, pretty: PrettyPrinter = null) = {

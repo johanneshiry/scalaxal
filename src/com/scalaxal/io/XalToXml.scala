@@ -63,10 +63,39 @@ object XalToXml extends XmlExtractor {
     }
   }
 
+  implicit object AddressDetailsTypeToXml extends XalToXml[Option[AddressDetailsType]] {
+    def toXml(addressDetailsType: Option[AddressDetailsType]): NodeSeq = {
+      if (!addressDetailsType.isDefined) NodeSeq.Empty
+      else
+        addressDetailsType.get match {
+//          case address: Address => getXmlFrom(Option(address))
+//          case addressLines: AddressLines => getXmlFrom(Option(addressLines))
+//          case administrativeArea: AdministrativeArea => getXmlFrom(Option(administrativeArea))
+//          case country: Country => getXmlFrom(Option(country))
+//          case locality: Locality => getXmlFrom(Option(locality))
+//          case thoroughfare: Thoroughfare => getXmlFrom(Option(thoroughfare))
+          case _ => NodeSeq.Empty
+        }
+    }
+  }
+
+  implicit object PostalServiceElementsToXml extends XalToXml[Option[PostalServiceElements]] {
+    def toXml(postalServiceElementsOption: Option[PostalServiceElements]): NodeSeq = {
+      postalServiceElementsOption match {
+        case Some(addressDetails) =>
+          <postalServiceElements
+            Type={if (addressDetails.objectType.isDefined) addressDetails.objectType.get else null} >
+        </postalServiceElements>
+        case None => NodeSeq.Empty
+      }
+    }
+  }
+
   implicit object AddressDetailsToXml extends XalToXml[Option[AddressDetails]] {
     def toXml(addressDetailsOption: Option[AddressDetails]): NodeSeq = {
       addressDetailsOption match {
-        case Some(addressDetails) => <AddressDetails
+        case Some(addressDetails) =>
+          <AddressDetails
         AddressType={if (addressDetails.addressType.isDefined) addressDetails.addressType.get else null}
         CurrentStatus={if (addressDetails.currentStatus.isDefined) addressDetails.currentStatus.get else null}
         ValidFromDate={if (addressDetails.validFromDate.isDefined) addressDetails.validFromDate.get else null}
@@ -74,7 +103,8 @@ object XalToXml extends XmlExtractor {
         Usage={if (addressDetails.usage.isDefined) addressDetails.usage.get else null}
         Code={if (addressDetails.code.isDefined) addressDetails.code.get else null}
         AddressDetailsKey={if (addressDetails.addressDetailsKey.isDefined) addressDetails.addressDetailsKey.get else null}>
-          {"someting here"}
+          {getXmlFrom(addressDetails.postalServiceElements)}
+          {getXmlFrom(addressDetails.addressDetailsType)}
         </AddressDetails>
         case None => NodeSeq.Empty
       }

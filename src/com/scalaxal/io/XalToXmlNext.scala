@@ -20,7 +20,7 @@ case class TestAddress(outer: Option[String] = None,
 
 object XalToXmlNext {
 
-  // todo TypeOccurrence, content, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
+  // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
 
 
   def main(args: Array[String]) {
@@ -30,11 +30,9 @@ object XalToXmlNext {
       outMap = Seq("zztestString1", "zztestString2"), outCode = Some(true),
       addressLatitude = Some(Content(content=Some("zzblabla"),
         objectType=Some("zzobjectType"), code=Some("zzcode"), attributes = Map())),
-      outObject = Some(new TestInner(Some("inner"), inType= 5.6)))
+      outObject = Some(new TestInner(Some("zzinner"), inType= 5.6)))
 
-    val pretty = new PrettyPrinter(80, 3)
-
-    XalToXmlNext.toXml(address).foreach(x =>  println(pretty.format(x)))
+    XalToXmlNext.toXml(address).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
 
     println("\n....XalToXmlNext done...")
   }
@@ -80,7 +78,7 @@ object XalToXmlNext {
    }
  }
 
-  def contentToXml(name: String, value: Content)= {
+  def contentToXml(name: String, value: Content) = {
     val attributes = Attribute(None, "Code", Text(value.code.getOrElse("")),
       Attribute(None, "Type", Text(value.objectType.getOrElse("")), Null))
     new Elem(null, capitalise(name), attributes, TopScope, true, Text(value.content.getOrElse("")))

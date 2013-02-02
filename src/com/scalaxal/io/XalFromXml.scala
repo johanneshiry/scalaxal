@@ -61,7 +61,7 @@ object XalFromXml extends XalExtractor {
         case x => Some(new XAL(addressDetails = makeAddressDetailsSet(x \ "AddressDetails"),
           any = Seq.empty,
           version = getFromNode[String](nodeSeq \ "@Version"),
-          attributes = Map()))
+          attributes = None))
       }
   }
 
@@ -106,7 +106,7 @@ object XalFromXml extends XalExtractor {
       usage = getFromNode[String](nodeSeq \ "@Usage"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       addressDetailsKey = getFromNode[String](nodeSeq \ "@AddressDetailsKey"),
-      attributes = Map(),
+      attributes = None,
       any = Seq.empty))
   }
 
@@ -140,7 +140,7 @@ object XalFromXml extends XalExtractor {
       content = getFromNode[String](nodeSeq),
       scheme = getFromNode[String](nodeSeq \ "@Scheme"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeCountryNameCodeSet(nodeSeq: NodeSeq): Seq[CountryNameCode] = {
@@ -154,7 +154,7 @@ object XalFromXml extends XalExtractor {
       countryName = makeContentSet(nodeSeq \ "CountryName"),
       countryType = makeCountryType(nodeSeq),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeThoroughfare(nodeSeq: NodeSeq): Option[Thoroughfare] = {
@@ -176,7 +176,7 @@ object XalFromXml extends XalExtractor {
       dependentThoroughfaresType = getFromNode[String](nodeSeq \ "@DependentThoroughfaresType"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeDependentThoroughfare(nodeSeq: NodeSeq): Option[DependentThoroughfare] = {
@@ -189,7 +189,7 @@ object XalFromXml extends XalExtractor {
       thoroughfarePostDirection = makeContent(nodeSeq \ "ThoroughfarePostDirection"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeThoroughfareNumberPrefix(nodeSeq: NodeSeq): Option[ThoroughfareNumberPrefix] = {
@@ -198,7 +198,7 @@ object XalFromXml extends XalExtractor {
       numberPrefixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeThoroughfareNumberPrefixSet(nodeSeq: NodeSeq): Seq[ThoroughfareNumberPrefix] = {
@@ -211,7 +211,7 @@ object XalFromXml extends XalExtractor {
       numberSuffixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeThoroughfareNumberSuffixSet(nodeSeq: NodeSeq): Seq[ThoroughfareNumberSuffix] = {
@@ -227,7 +227,7 @@ object XalFromXml extends XalExtractor {
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   // TODO deal with mandatory fields
@@ -243,7 +243,7 @@ object XalFromXml extends XalExtractor {
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeThoroughfareType(nodeSeq: NodeSeq, thoroughfareType: ThoroughfareTypeSet): Option[ThoroughfareType] = {
@@ -318,7 +318,7 @@ object XalFromXml extends XalExtractor {
       premiseThoroughfareConnector = getFromNode[String](nodeSeq \ "@PremiseThoroughfareConnector"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremise(nodeSeq: NodeSeq): Option[SubPremise] = {
@@ -335,7 +335,7 @@ object XalFromXml extends XalExtractor {
       subPremise = makeSubPremise(nodeSeq \ "SubPremise"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremiseNumber(nodeSeq: NodeSeq): Option[SubPremiseNumber] = {
@@ -347,7 +347,7 @@ object XalFromXml extends XalExtractor {
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremiseLocation(nodeSeq: NodeSeq): Option[SubPremiseLocation] = {
@@ -388,7 +388,7 @@ object XalFromXml extends XalExtractor {
       numberPrefixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremiseNumberPrefixSet(nodeSeq: NodeSeq): Seq[SubPremiseNumberPrefix] = {
@@ -401,7 +401,7 @@ object XalFromXml extends XalExtractor {
       numberSuffixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremiseNumberSuffixSet(nodeSeq: NodeSeq): Seq[SubPremiseNumberSuffix] = {
@@ -414,7 +414,7 @@ object XalFromXml extends XalExtractor {
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubPremiseNameSet(nodeSeq: NodeSeq): Seq[SubPremiseName] = {
@@ -451,7 +451,7 @@ object XalFromXml extends XalExtractor {
     if (nodeSeq.isEmpty) None else Some(new PremiseLocation(
       content = getFromNode[String](nodeSeq),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePremiseLocationSet(nodeSeq: NodeSeq): Seq[PremiseLocation] = {
@@ -464,7 +464,7 @@ def makePremiseNumberPrefix(nodeSeq: NodeSeq): Option[PremiseNumberPrefix] = {
     numberPrefixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
     code = getFromNode[String](nodeSeq \ "@Code"),
     objectType = getFromNode[String](nodeSeq \ "@Type"),
-    attributes = Map()))
+    attributes = None))
 }
 
   def makePremiseNumberPrefixSet(nodeSeq: NodeSeq): Seq[PremiseNumberPrefix] = {
@@ -477,7 +477,7 @@ def makePremiseNumberPrefix(nodeSeq: NodeSeq): Option[PremiseNumberPrefix] = {
       numberSuffixSeparator =getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePremiseNumberSuffixSet(nodeSeq: NodeSeq): Seq[PremiseNumberSuffix] = {
@@ -490,7 +490,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
     objectType = getFromNode[String](nodeSeq \ "@Type"),
     typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
     code = getFromNode[String](nodeSeq \ "@Code"),
-    attributes = Map()))
+    attributes = None))
 }
 
   def makePremiseNameSet(nodeSeq: NodeSeq): Seq[PremiseName] = {
@@ -507,7 +507,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeSubAdministrativeArea(nodeSeq: NodeSeq): Option[SubAdministrativeArea] = {
@@ -519,7 +519,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeAdministrativeAreaType(nodeSeq: NodeSeq, addminType: AdministrativeAreaTypeSet): Option[AdministrativeAreaType] = {
@@ -557,7 +557,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeDependentLocality(nodeSeq: NodeSeq): Option[DependentLocality] = {
@@ -574,7 +574,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeDependentLocalityType(nodeSeq: NodeSeq): Option[DependentLocalityType] = {
@@ -605,7 +605,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       content = getFromNode[String](nodeSeq),
       nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberNameOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostalCode(nodeSeq: NodeSeq): Option[PostalCode] = {
@@ -616,7 +616,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       postalCodeNumberExtension = makePostalCodeNumberExtensionSet(nodeSeq \ "PostalCodeNumberExtension"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostTown(nodeSeq: NodeSeq): Option[PostTown] = {
@@ -625,14 +625,14 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       postTownName = makeContentSet(nodeSeq \ "PostTownName"),
       postTownSuffix = makePostTownSuffix(nodeSeq \ "PostTownSuffix"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostTownSuffix(nodeSeq: NodeSeq): Option[PostTownSuffix] = {
     if (nodeSeq.isEmpty) None else Some(new PostTownSuffix(
       content = getFromNode[String](nodeSeq),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
 def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExtension] = {
@@ -641,7 +641,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     numberExtensionSeparator = getFromNode[String](nodeSeq \ "@NumberExtensionSeparator"),
     code = getFromNode[String](nodeSeq \ "@Code"),
     objectType = getFromNode[String](nodeSeq \ "@Type"),
-    attributes = Map()))
+    attributes = None))
 }
 
   def makePostalCodeNumberExtensionSet(nodeSeq: NodeSeq): Seq[PostalCodeNumberExtension] = {
@@ -658,7 +658,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostOfficeNumber(nodeSeq: NodeSeq): Option[PostOfficeNumber] = {
@@ -667,7 +667,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
       indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostOfficeNumberSet(nodeSeq: NodeSeq): Seq[PostOfficeNumber] = {
@@ -686,7 +686,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeFirm(nodeSeq: NodeSeq): Option[Firm] = {
@@ -698,7 +698,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeMailStopNumber(nodeSeq: NodeSeq): Option[MailStopNumber] = {
@@ -706,7 +706,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       nameNumberSeparator = getFromNode[String](nodeSeq \ "@NameNumberSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeMailStop(nodeSeq: NodeSeq): Option[MailStop] = {
@@ -716,7 +716,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       mailStopNumber = makeMailStopNumber(nodeSeq \ "MailStopNumber"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostBoxNumberExtension(nodeSeq: NodeSeq): Option[PostBoxNumberExtension] = {
@@ -724,7 +724,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       numberExtensionSeparator = getFromNode[String](nodeSeq \ "@NumberExtensionSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostBoxNumberSuffix(nodeSeq: NodeSeq): Option[PostBoxNumberSuffix] = {
@@ -732,7 +732,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       numberSuffixSeparator = getFromNode[String](nodeSeq \ "@NumberSuffixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostBoxNumberPrefix(nodeSeq: NodeSeq): Option[PostBoxNumberPrefix] = {
@@ -740,7 +740,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       numberPrefixSeparator = getFromNode[String](nodeSeq \ "@NumberPrefixSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makePostBoxNumber(nodeSeq: NodeSeq): PostBoxNumber = {
@@ -748,7 +748,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map())
+      attributes = None)
   }
 
   def makePostalRoute(nodeSeq: NodeSeq): Option[PostalRoute] = {
@@ -759,7 +759,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       postBox = makePostBox(nodeSeq \ "PostBox"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeBuildingName(nodeSeq: NodeSeq): Option[BuildingName] = {
@@ -768,7 +768,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeBuildingNameSet(nodeSeq: NodeSeq): Seq[BuildingName] = {
@@ -783,7 +783,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeDepartmentSet(nodeSeq: NodeSeq): Seq[Department] = {
@@ -802,7 +802,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeLargeMailUserIdentifier(nodeSeq: NodeSeq): Option[LargeMailUserIdentifier] = {
@@ -811,7 +811,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeLocalityType(nodeSeq: NodeSeq, localType: LocalityTypeSet): Option[LocalityType] = {
@@ -842,7 +842,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeAddressLine(nodeSeq: NodeSeq): Option[AddressLine] = {
@@ -850,14 +850,14 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeAddressLines(nodeSeq: NodeSeq): Option[AddressLines] = {
     if (nodeSeq.isEmpty) None else Some(new AddressLines(
       addressLines = makeAddressLineSet(nodeSeq \ "AddressLine"),
       any = Seq.empty,
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeAddressLineSet(nodeSeq: NodeSeq): Seq[AddressLine] = {
@@ -869,7 +869,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeContentSet(nodeSeq: NodeSeq): Seq[Content] = {
@@ -882,7 +882,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
-      attributes = Map()))
+      attributes = None))
   }
 
   def makeAddressIdentifierSet(nodeSeq: NodeSeq): Seq[AddressIdentifier] = {
@@ -910,7 +910,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
       supplementaryPostalServiceData = makeContentSet(nodeSeq \"SupplementaryPostalServiceData"),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      attributes = Map()))
+      attributes = None))
   }
 
 }

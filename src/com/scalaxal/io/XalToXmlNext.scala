@@ -33,7 +33,7 @@ package com.scalaxal.io
 import xml._
 import scala.Predef._
 import scala.Some
-import com.scalaxal.xAL.Content
+import com.scalaxal.xAL.{AddressDetailsType, Content}
 
 /**
  * @author Ringo Wathelet
@@ -51,25 +51,17 @@ case class TestAddress(outer: Option[String] = None,
                        addressLatitude: Option[Content],
                        outObject: Option[TestInner])
 
-/** Factory to convert XAL object to scala xml NodeSeq */
+/** Factory to convert XAL objects to scala xml NodeSeq */
 object XalToXmlNext extends XmlExtractor {
 
   def getXmlFrom[A: XalToXml](xal: A) = XalToXmlNext.toXml(xal)
 
   // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
 
-
   def main(args: Array[String]) {
     println("....XalToXmlNext start...\n")
-
-    val address = new TestAddress(outer = Some("zzouterthing"),
-      outMap = Seq("zztestString1", "zztestString2"), outCode = Some(true),
-      addressLatitude = Some(Content(content=Some("zzblabla"),
-        objectType=Some("zzobjectType"), code=Some("zzcode"), attributes = Map())),
-      outObject = Some(new TestInner(Some("zzinner"), inType= 5.6)))
-
-    XalToXmlNext.toXml(address).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
-
+    val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
+    XalToXmlNext.toXml(xal.get).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
     println("\n....XalToXmlNext done...")
   }
 
@@ -83,7 +75,6 @@ object XalToXmlNext extends XmlExtractor {
       case _ => name
     }
   }
-
 
 //---------------------------------------------------------------------------------------------------
   def toXml(theObject: Any): NodeSeq = {
@@ -109,7 +100,7 @@ object XalToXmlNext extends XmlExtractor {
      case x: Int => new Elem(null, capitalise(name), Null, TopScope, true, Text(x.toString))
      case x: Boolean => new Elem(null, capitalise(name), Null, TopScope, true, Text(x.toString))
      case x: Double => new Elem(null, capitalise(name), Null, TopScope, true, Text(x.toString))
-     case x: Any => new Elem(null, capitalise(name), Null, TopScope, true, fieldsToXml(x): _*)
+     case x: Any => fieldsToXml(x) //new Elem(null, capitalise(name), Null, TopScope, true, fieldsToXml(x): _*)
      case _ => NodeSeq.Empty
    }
  }

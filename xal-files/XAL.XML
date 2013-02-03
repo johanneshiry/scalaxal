@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!-- <!DOCTYPE xAL SYSTEM "xAL.dtd">  -->
-<xAL>
+<xAL xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0 xAL.xsd">
 	<!-- Level 12, 67 Albert Avenue
         Chatswood
         NSW 2067
@@ -16,21 +16,18 @@
 	</AddressDetails>
 	<!-- Egis Building, Level 12, 67 Albert Avenue, 
      Chatswood, NSW 2067, Australia -->
-	<AddressDetails AddressType="Residential" 
-					 CurrentStatus="Living"
-					 Usage="Postal"
-					 ValidFromDate="01 May 2002"> 
+	<AddressDetails>
 		<Country>
 			<CountryName>Australia</CountryName>
 			<AdministrativeArea>
 				<AdministrativeAreaName>NSW</AdministrativeAreaName>
 				<Locality>
-					<LocalityName Code="somecode">Chatswood</LocalityName>
+					<LocalityName>Chatswood</LocalityName>
 					<Thoroughfare Type="Street">
 						<ThoroughfareNumber>67</ThoroughfareNumber>
 						<ThoroughfareName>Archer Street</ThoroughfareName>
 						<Premise Type="Building">
-							<BuildingName Type="zBuilding">Egis</BuildingName>
+							<BuildingName>Egis</BuildingName>
 							<SubPremise Type="LEVEL">
 								<SubPremiseNumber>12</SubPremiseNumber>
 							</SubPremise>
@@ -135,7 +132,7 @@
 						<ThoroughfareNumber>67</ThoroughfareNumber>
 						<ThoroughfareName>Archer Street</ThoroughfareName>
 						<Premise Type="Building">
-                            <BuildingName Code="zcode">Egis</BuildingName>
+							<BuildingName>Egis</BuildingName>
 							<SubPremise Type="LEVEL">
 								<SubPremiseNumber>12</SubPremiseNumber>
 							</SubPremise>

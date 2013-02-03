@@ -35,15 +35,16 @@ import scala.Predef._
 import scala.reflect.runtime.{universe => ru}
 import com.scalaxal.xAL._
 import java.lang.annotation.{RetentionPolicy, Retention, Annotation}
-import scala.Some
-import com.scalaxal.xAL.BuildingName
 import com.scalaxal.xAL.AttributeField
-import java.lang.reflect.Method
 import scala.Some
 import com.scalaxal.xAL.BuildingName
 
 /**
  * @author Ringo Wathelet
+ *
+ * private: set of ideas to convert xal objects to xml node sequences.
+ *
+ *
  * Date: 01/02/13
  * Version: 1
  */
@@ -58,10 +59,9 @@ object XalToXmlNext extends XmlExtractor {
 
   def getXmlFrom[A: XalToXml](xal: A) = XalToXmlNext.toXml(xal)
 
-  // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
-
   def main(args: Array[String]) {
     println("....XalToXmlNext start...\n")
+
     val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
     XalToXmlNext.toXml(xal.get).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
 
@@ -71,54 +71,37 @@ object XalToXmlNext extends XmlExtractor {
     println("\n....XalToXmlNext done...")
   }
 
+  //---------------------------------------------------------------------------------------------------
+  //-----------annotation tests------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------------
   def annotationTest(xal: TestAClass) {
-    import com.scalaxal.xAL.Types._
 
     val testClassSymbol = ru.typeOf[xal.type].typeSymbol.asClass
-
     println("testClassSymbol="+testClassSymbol)
 
     val testAnnotations = testClassSymbol.annotations
     println("testAnnotations="+testAnnotations)
 
-    val testAnnotationType = ru.typeOf[Attrib]
+    val testAnnotationType = ru.typeOf[AttributeField]
 
-    println("vvvvv==="+ru.typeOf[xal.type].typeSymbol.annotations)
-
+    println("typeSymbol.annotations="+ru.typeOf[xal.type].typeSymbol.annotations)
     println("testAnnotationType="+testAnnotationType+" test="+
       testAnnotations.find(a => a.tpe == testAnnotationType).isDefined)
 
-//   println("ttttt="+getMeAnnotation(xal, classOf[AttributeField]))
-
-    val fieldList = xal.getClass.getDeclaredFields.foreach(field => {
-      field.setAccessible(true)
-      println("field name = " + field.getName + "  field value = " + field.get(xal))
-
-      field.getAnnotations.foreach(x => println("x="+x))
-
- //     println(" anno = "+field.getAnnotation[AttributeField](classOf[AttributeField]))
-
- //     println(" anno = "+field.isAnnotationPresent(testAnnotationType) )
-
-    })
-
-         // .getAnnotations.foreach(x => println("x="+x))
-//    val field = xal.getClass.getField("version")
-//    field.setAccessible(true)
-//    println("field.getAnnotations="+field.getAnnotations.isEmpty)
-
- //   val anno = field.getAnnotation[AttributeField](classOf[AttributeField])
- //   println("anno="+anno.toString)
-
-//    for (anno <- field.getAnnotations) println(" anno = "+anno )
-
- //   field.getAnnotations.foreach(x => println(" anno = "+x ))
+    println("anonanon "+getAnnotations(xal))
 
   }
 
-  def getMeAnnotation[A <: Annotation](obj:Object, annotationCls:Class[A]) : Option[Annotation] = {
-    Option (obj.getClass.getAnnotation (annotationCls))
+  def getAnnotations[T: ru.TypeTag](obj: T) = {
+    ru.typeOf[T].members.foldLeft(Nil: List[ru.type#Annotation]) {
+      case (xs, x) if (x.annotations.isEmpty) => xs
+      case (xs, x) => x.annotations ::: xs
+    }
   }
+
+  //---------------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------------
 
   def capitalise(name: String) = {
     if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
@@ -128,6 +111,7 @@ object XalToXmlNext extends XmlExtractor {
     if (!name.isEmpty) name(0).toLower + name.substring(1) else name
   }
 
+  // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
   def lookupLabel(name: String):String = {
     name match {
       case "objectType" | "ObjectType" => "Type"
@@ -136,6 +120,7 @@ object XalToXmlNext extends XmlExtractor {
   }
 
   // DependentThoroughfares is both an attribute and a class
+  // alternative to using annotations
   def isAttribute(name: String):Boolean = {
     name match {
       case "Code" | "ObjectType" | "TypeOccurrence" | "CurrentStatus" |
@@ -148,7 +133,7 @@ object XalToXmlNext extends XmlExtractor {
     }
   }
 
-//---------------------------------------------------------------------------------------------------
+  // the main method
   def toXml(theObject: Any): NodeSeq = {
     NodeSeq fromSeq fieldsToXml(theObject)
   }
@@ -164,6 +149,14 @@ object XalToXmlNext extends XmlExtractor {
      new Elem(null, lookupLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
    }
 
+  def toXml(name: String, value: Any): NodeSeq = {
+    value match {
+      case Some(x) => doMatch(name, x)
+      case None => NodeSeq.Empty
+      case _ => doMatch(name, value)
+    }
+  }
+
  def doMatch(name: String, value: Any) = {
    value match {
      case x: BuildingName => withAttributesToXml(name, x)
@@ -177,14 +170,6 @@ object XalToXmlNext extends XmlExtractor {
      case _ => NodeSeq.Empty
    }
  }
-
-  def toXml(name: String, value: Any): NodeSeq = {
-    value match {
-      case Some(x) => doMatch(name, x)
-      case None => NodeSeq.Empty
-      case _ => doMatch(name, value)
-    }
-  }
 
   def getAttributesOf(obj: Any): MetaData = {
     def getAttributesOf(obj: Any, ndx: Int): MetaData = {
@@ -215,6 +200,7 @@ object XalToXmlNext extends XmlExtractor {
     }
   }
 
+//---------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------
 

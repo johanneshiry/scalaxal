@@ -502,7 +502,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       administrativeAreaName = makeContentSet(nodeSeq \ "AdministrativeAreaName"),
       subAdministrativeArea = makeSubAdministrativeArea(nodeSeq \ "SubAdministrativeArea"),
-      administrativeAreaType = makeAdministrativeAreaType(nodeSeq \ "AdministrativeArea"),
+      administrativeAreaType = makeAdministrativeAreaType(nodeSeq),
       any = Seq.empty,
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
@@ -514,7 +514,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
     if (nodeSeq.isEmpty) None else Some(new SubAdministrativeArea(
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       subAdministrativeAreaName = makeContentSet(nodeSeq \ "SubAdministrativeAreaName"),
-      subAdministrativeAreaType = makeAdministrativeAreaType(nodeSeq \ "AdministrativeArea"),
+      subAdministrativeAreaType = makeAdministrativeAreaType(nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),

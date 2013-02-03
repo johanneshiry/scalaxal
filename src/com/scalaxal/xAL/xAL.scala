@@ -31,6 +31,9 @@
 package com.scalaxal.xAL
 
 import javax.xml.namespace.QName
+import scala.annotation.Annotation
+import annotation.meta.field
+import java.lang.annotation.{RetentionPolicy, Retention}
 
 /**
  * Author: Ringo Wathelet Feb 2013
@@ -54,6 +57,8 @@ VERSION: 2.0 [MAJOR RELEASE] Date of Creation: 01 May 2002
 Last Update: 24 July 2002
 Previous Version: 1.3
   */
+
+class AttributeField() extends scala.annotation.StaticAnnotation
 
 object AddressDetailsTypeSet extends Enumeration {
   type AddressDetailsTypeSet = Value
@@ -100,27 +105,41 @@ object PremiseTypeSet2 extends Enumeration {
   val SubPremise, Firm = Value
 }
 
+
+object Types {
+  type Attrib = AttributeField @field
+}
+import Types._
+
+@Retention(RetentionPolicy.RUNTIME)
 case class XAL(addressDetails: Seq[AddressDetails] = Nil,
                any: Seq[Any] = Nil,
-               version: Option[String] = None,
+               @Retention(RetentionPolicy.RUNTIME)
+               @Attrib version: Option[String] = None,
                attributes: Option[Map[String, QName]] = None) {
 
   def this() = this(Nil, Nil, None, None)
 }
 
+trait ContentType {
+  val content: Option[String]
+  val objectType: Option[String]
+  val code: Option[String]
+  val attributes: Option[Map[String, QName]]
+}
+
 case class Content(content: Option[String] = None,
-                       objectType: Option[String] = None,
-                       code: Option[String] = None,
-                       attributes: Option[Map[String, QName]] = None)
+                   objectType: Option[String] = None,
+                   code: Option[String] = None,
+                   attributes: Option[Map[String, QName]] = None) extends ContentType
 
 case class AddressIdentifier(content: Option[String] = None,
                              identifierType: Option[String] = None,
                              objectType: Option[String] = None,
                              code: Option[String] = None,
-                             attributes: Option[Map[String, QName]] = None)
+                             attributes: Option[Map[String, QName]] = None) extends ContentType
 
-case class SortingCode(objectType: Option[String] = None,
-                       code: Option[String] = None)
+case class SortingCode(objectType: Option[String] = None, code: Option[String] = None)
 
 
 case class PostalServiceElements(addressIdentifier: Seq[AddressIdentifier] = Nil,
@@ -141,7 +160,7 @@ case class PostalServiceElements(addressIdentifier: Seq[AddressIdentifier] = Nil
 case class Address(content: Option[String] = None,
                    objectType: Option[String] = None,
                    code: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType with ContentType {
 
   def this() = this(None, None, None, None)
 }
@@ -342,7 +361,7 @@ trait SubPremiseType
 case class AddressLine(content: Option[String] = None,
                        objectType: Option[String] = None,
                        code: Option[String] = None,
-                       attributes: Option[Map[String, QName]] = None)
+                       attributes: Option[Map[String, QName]] = None) extends ContentType
 
 case class Locality(addressLine: Seq[AddressLine] = Nil,
                     localityName: Seq[Content] = Nil,
@@ -519,7 +538,7 @@ case class PostalCode(addressLine: Seq[AddressLine] = Nil,
 case class PostBoxNumber(content: Option[String] = None,
                          code: Option[String] = None,
                          objectType: Option[String] = None,
-                         attributes: Option[Map[String, QName]] = None)
+                         attributes: Option[Map[String, QName]] = None) extends ContentType
 
 
 case class PostBoxNumberPrefix(content: Option[String] = None,

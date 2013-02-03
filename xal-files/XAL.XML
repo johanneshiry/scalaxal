@@ -25,12 +25,12 @@
 			<AdministrativeArea>
 				<AdministrativeAreaName>NSW</AdministrativeAreaName>
 				<Locality>
-					<LocalityName>Chatswood</LocalityName>
+					<LocalityName Code="somecode">Chatswood</LocalityName>
 					<Thoroughfare Type="Street">
 						<ThoroughfareNumber>67</ThoroughfareNumber>
 						<ThoroughfareName>Archer Street</ThoroughfareName>
 						<Premise Type="Building">
-							<BuildingName>Egis</BuildingName>
+							<BuildingName Type="zBuilding">Egis</BuildingName>
 							<SubPremise Type="LEVEL">
 								<SubPremiseNumber>12</SubPremiseNumber>
 							</SubPremise>
@@ -135,7 +135,7 @@
 						<ThoroughfareNumber>67</ThoroughfareNumber>
 						<ThoroughfareName>Archer Street</ThoroughfareName>
 						<Premise Type="Building">
-							<BuildingName>Egis</BuildingName>
+                            <BuildingName Code="zcode">Egis</BuildingName>
 							<SubPremise Type="LEVEL">
 								<SubPremiseNumber>12</SubPremiseNumber>
 							</SubPremise>

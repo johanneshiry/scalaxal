@@ -33,6 +33,65 @@ package com.scalaxal.io
 import scala.xml._
 import com.scalaxal.xAL._
 import scala.reflect.runtime.universe._
+import com.scalaxal.xAL.ThoroughfareNumberTypeSet._
+import com.scalaxal.xAL.ThoroughfareNumberPrefix
+import com.scalaxal.xAL.Thoroughfare
+import com.scalaxal.xAL.SubPremise
+import com.scalaxal.xAL.ThoroughfareNumber
+import com.scalaxal.xAL.AdministrativeArea
+import com.scalaxal.xAL.PremiseNumberSuffix
+import com.scalaxal.xAL.PostOffice
+import scala.Some
+import com.scalaxal.xAL.PremiseLocation
+import com.scalaxal.xAL.SubPremiseNumber
+import com.scalaxal.xAL.CountryNameCode
+import com.scalaxal.xAL.MailStop
+import com.scalaxal.xAL.Firm
+import com.scalaxal.xAL.AddressDetails
+import com.scalaxal.xAL.PremiseNumber
+import com.scalaxal.xAL.PremiseName
+import com.scalaxal.xAL.PostBoxNumberSuffix
+import com.scalaxal.xAL.PostBoxNumber
+import com.scalaxal.xAL.SortingCode
+import com.scalaxal.xAL.PremiseNumberRangeFrom
+import com.scalaxal.xAL.Premise
+import com.scalaxal.xAL.PremiseNumberPrefix
+import com.scalaxal.xAL.SubPremiseNumberPrefix
+import com.scalaxal.xAL.DependentThoroughfare
+import com.scalaxal.xAL.SubPremiseNumberSuffix
+import com.scalaxal.xAL.ThoroughfareNumberRange
+import com.scalaxal.xAL.PostOfficeNumber
+import com.scalaxal.xAL.PostalCode
+import com.scalaxal.xAL.Department
+import com.scalaxal.xAL.ThoroughfareNumberTypeSet
+import com.scalaxal.xAL.XAL
+import com.scalaxal.xAL.AddressLines
+import com.scalaxal.xAL.PostalServiceElements
+import com.scalaxal.xAL.AddressLine
+import com.scalaxal.xAL.PostalRoute
+import com.scalaxal.xAL.MailStopNumber
+import com.scalaxal.xAL.LargeMailUser
+import com.scalaxal.xAL.PostalCodeNumberExtension
+import com.scalaxal.xAL.PostTownSuffix
+import com.scalaxal.xAL.PremiseNumberRangeTo
+import com.scalaxal.xAL.PostBoxNumberExtension
+import com.scalaxal.xAL.SubPremiseName
+import com.scalaxal.xAL.DependentLocalityNumber
+import com.scalaxal.xAL.Content
+import com.scalaxal.xAL.SubAdministrativeArea
+import com.scalaxal.xAL.PostBox
+import com.scalaxal.xAL.PostBoxNumberPrefix
+import com.scalaxal.xAL.BuildingName
+import com.scalaxal.xAL.PostTown
+import com.scalaxal.xAL.ThoroughfareNumberSuffix
+import com.scalaxal.xAL.Country
+import com.scalaxal.xAL.Locality
+import com.scalaxal.xAL.AddressIdentifier
+import com.scalaxal.xAL.PremiseNumberRange
+import com.scalaxal.xAL.SubPremiseLocation
+import com.scalaxal.xAL.Address
+import com.scalaxal.xAL.LargeMailUserIdentifier
+import com.scalaxal.xAL.DependentLocality
 
 
 /**
@@ -54,6 +113,7 @@ object XalFromXml extends XalExtractor {
   import PremiseTypeSet2._
   import SubPremiseTypeSet._
   import PremiseNumberTypeSet._
+  import ThoroughfareNumberTypeSet._
 
   def makeXAL(nodeSeq: xml.NodeSeq): Option[XAL] = {
     if (nodeSeq.isEmpty) None else
@@ -161,7 +221,7 @@ object XalFromXml extends XalExtractor {
   def makeThoroughfare(nodeSeq: NodeSeq): Option[Thoroughfare] = {
     if (nodeSeq.isEmpty) None else Some(new Thoroughfare(
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
-      thoroughfareTypeSeq = makeThoroughfareTypeSeq(nodeSeq),
+      thoroughfareNumberType = makeThoroughfareNumberTypeSeq(nodeSeq),
       thoroughfareNumberPrefix = makeThoroughfareNumberPrefixSet(nodeSeq \ "ThoroughfareNumberPrefix"),
       thoroughfareNumberSuffix = makeThoroughfareNumberSuffixSet(nodeSeq \ "ThoroughfareNumberSuffix"),
       thoroughfarePreDirection = makeContent(nodeSeq \ "ThoroughfarePreDirection"),
@@ -171,7 +231,7 @@ object XalFromXml extends XalExtractor {
       thoroughfarePostDirection = makeContent(nodeSeq \ "ThoroughfarePostDirection"),
       dependentThoroughfare = makeDependentThoroughfare(nodeSeq \ "DependentThoroughfare"),
       thoroughfareType = makeThoroughfareType(nodeSeq),
-      dependentThoroughfares = makeMode[DependentThoroughfares](nodeSeq \ "@DependentThoroughfare", DependentThoroughfares),
+      dependentThoroughfares = makeMode[DependentThoroughfares](nodeSeq \ "@DependentThoroughfares", DependentThoroughfares),
       dependentThoroughfaresIndicator = getFromNode[String](nodeSeq \ "@DependentThoroughfaresIndicator"),
       dependentThoroughfaresConnector = getFromNode[String](nodeSeq \ "@DependentThoroughfaresConnector"),
       dependentThoroughfaresType = getFromNode[String](nodeSeq \ "@DependentThoroughfaresType"),
@@ -231,12 +291,30 @@ object XalFromXml extends XalExtractor {
       attributes = None))
   }
 
+  def makeThoroughfareNumberFrom(nodeSeq: NodeSeq): Option[ThoroughfareNumberFrom] = {
+    if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumberFrom(
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      thoroughfareNumberPrefix = makeThoroughfareNumberPrefixSet(nodeSeq \ "ThoroughfareNumberPrefix"),
+      thoroughfareNumberType = makeThoroughfareNumberTypeSeq(nodeSeq),
+      thoroughfareNumberSuffix = makeThoroughfareNumberSuffixSet(nodeSeq \ "ThoroughfareNumberSuffix"),
+      code = getFromNode[String](nodeSeq \ "@Code")))
+  }
+
+  def makeThoroughfareNumberTo(nodeSeq: NodeSeq): Option[ThoroughfareNumberTo] = {
+    if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumberTo(
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      thoroughfareNumberPrefix = makeThoroughfareNumberPrefixSet(nodeSeq \ "ThoroughfareNumberPrefix"),
+      thoroughfareNumberType = makeThoroughfareNumberTypeSeq(nodeSeq),
+      thoroughfareNumberSuffix = makeThoroughfareNumberSuffixSet(nodeSeq \ "ThoroughfareNumberSuffix"),
+      code = getFromNode[String](nodeSeq \ "@Code")))
+  }
+
   // TODO deal with mandatory fields
   def makeThoroughfareNumberRange(nodeSeq: NodeSeq): Option[ThoroughfareNumberRange] = {
     if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumberRange(
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
-      thoroughfareNumberFrom = makeContent(nodeSeq \ "ThoroughfareNumberFrom"),   // mandatory
-      thoroughfareNumberTo = makeContent(nodeSeq \ "ThoroughfareNumberTo"),       // mandatory
+      thoroughfareNumberFrom = makeThoroughfareNumberFrom(nodeSeq \ "ThoroughfareNumberFrom"),   // mandatory
+      thoroughfareNumberTo = makeThoroughfareNumberTo(nodeSeq \ "ThoroughfareNumberTo"),       // mandatory
       rangeType = makeMode[RangeType](nodeSeq \ "@RangeType", RangeType),
       separator = getFromNode[String](nodeSeq \ "@SeparatorType"),
       indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
@@ -247,13 +325,28 @@ object XalFromXml extends XalExtractor {
       attributes = None))
   }
 
+  def makeThoroughfareNumberType(nodeSeq: NodeSeq, thoroughfareNumberType: ThoroughfareNumberTypeSet): Option[ThoroughfareNumberType] = {
+    if (nodeSeq.isEmpty) None else {
+      thoroughfareNumberType match {
+        case ThoroughfareNumberTypeSet.ThoroughfareNumber => makeThoroughfareNumber(nodeSeq)
+        case ThoroughfareNumberTypeSet.ThoroughfareNumberRange => makeThoroughfareNumberRange(nodeSeq)
+        case _ => None
+      }
+    }
+  }
+
+  def makeThoroughfareNumberTypeSeq(nodeSeq: NodeSeq): Seq[ThoroughfareNumberType] = {
+    if (nodeSeq.isEmpty) Seq.empty else
+      (ThoroughfareNumberTypeSet.values.flatMap(x => makeThoroughfareNumberType(nodeSeq \ x.toString, x)).toSeq)
+  }
+
   def makeThoroughfareType(nodeSeq: NodeSeq, thoroughfareType: ThoroughfareTypeSet): Option[ThoroughfareType] = {
     if (nodeSeq.isEmpty) None else {
       thoroughfareType match {
         case ThoroughfareTypeSet.PostalCode => makePostalCode(nodeSeq)
         case ThoroughfareTypeSet.Premise => makePremise(nodeSeq)
-        case ThoroughfareTypeSet.ThoroughfareNumber => makeThoroughfareNumber(nodeSeq)
-        case ThoroughfareTypeSet.ThoroughfareNumberRange => makeThoroughfareNumberRange(nodeSeq)
+        case ThoroughfareTypeSet.DependentLocality => makeDependentLocality(nodeSeq)
+        case ThoroughfareTypeSet.Firm => makeFirm(nodeSeq)
         case _ => None
       }
     }
@@ -624,6 +717,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       usageType = getFromNode[String](nodeSeq \ "@UsageType"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
+      connector = getFromNode[String](nodeSeq \ "@Connector"),
       any = Seq.empty,
       attributes = None))
   }
@@ -654,7 +748,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   def makeDependentLocalityNumber(nodeSeq: NodeSeq): Option[DependentLocalityNumber] = {
     if (nodeSeq.isEmpty) None else Some(new DependentLocalityNumber(
       content = getFromNode[String](nodeSeq),
-      nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberNameOccurrence", TypeOccurrence),
+      nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NameNumberOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -703,6 +797,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None else Some(new PostOffice(
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       postOfficeNumber = makePostOfficeNumber(nodeSeq \ "PostOfficeNumber"),
+      postOfficeName = makeContentSet(nodeSeq \ "PostOfficeName"),
       postalRoute = makePostalRoute(nodeSeq\ "PostalRoute"),
       postBox = makePostBox(nodeSeq \ "PostalBox"),
       postalCode = makePostalCode(nodeSeq \ "PostalCode"),

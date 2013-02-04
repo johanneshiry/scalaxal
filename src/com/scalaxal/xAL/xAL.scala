@@ -87,7 +87,12 @@ object LocalityTypeSet extends Enumeration {
 
 object ThoroughfareTypeSet extends Enumeration {
   type ThoroughfareTypeSet = Value
-  val ThoroughfareNumberRange, PostalCode, Premise, ThoroughfareNumber = Value
+  val PostalCode, Premise, DependentLocality, Firm = Value
+}
+
+object ThoroughfareNumberTypeSet extends Enumeration {
+  type ThoroughfareNumberTypeSet = Value
+  val ThoroughfareNumberRange, ThoroughfareNumber = Value
 }
 
 object PremiseTypeSet1 extends Enumeration {
@@ -407,10 +412,21 @@ case object Even extends RangeType {
   override def toString = "Even"
 }
 
+case class ThoroughfareNumberFrom(addressLine: Seq[AddressLine] = Nil,
+                                  thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
+                                  thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
+                                  thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
+                                  code: Option[String] = None)
+
+case class ThoroughfareNumberTo(addressLine: Seq[AddressLine] = Nil,
+                                  thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
+                                  thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
+                                  thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
+                                  code: Option[String] = None)
 
 case class ThoroughfareNumberRange(addressLine: Seq[AddressLine] = Nil,
-                                   thoroughfareNumberFrom: Option[Content],  // mandatory
-                                   thoroughfareNumberTo: Option[Content],    // mandatory
+                                   thoroughfareNumberFrom: Option[ThoroughfareNumberFrom],
+                                   thoroughfareNumberTo: Option[ThoroughfareNumberTo],
                                    rangeType: Option[RangeType] = None,
                                    indicator: Option[String] = None,
                                    separator: Option[String] = None,
@@ -418,7 +434,7 @@ case class ThoroughfareNumberRange(addressLine: Seq[AddressLine] = Nil,
                                    numberRangeOccurrence: Option[NumberOccurrence] = None,
                                    objectType: Option[String] = None,
                                    code: Option[String] = None,
-                                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareType
+                                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType
 
 
 case class DependentThoroughfare(addressLine: Seq[AddressLine] = Nil,
@@ -433,7 +449,7 @@ case class DependentThoroughfare(addressLine: Seq[AddressLine] = Nil,
 
 
 case class Thoroughfare(addressLine: Seq[AddressLine] = Nil,
-                        thoroughfareTypeSeq: Seq[ThoroughfareType] = Nil,
+                        thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
                         thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
                         thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
                         thoroughfarePreDirection: Option[Content] = None,
@@ -455,7 +471,7 @@ case class Thoroughfare(addressLine: Seq[AddressLine] = Nil,
 }
 
 trait ThoroughfareType
-
+trait ThoroughfareNumberType
 
 case class SubAdministrativeArea(addressLine: Seq[AddressLine] = Nil,
                                  subAdministrativeAreaName: Seq[Content] = Nil,
@@ -490,6 +506,7 @@ case class PostOfficeNumber(content: Option[String] = None,
 
 case class PostOffice(addressLine: Seq[AddressLine] = Nil,
                       postOfficeNumber: Option[PostOfficeNumber] = None,  // was Seq but ref indicates (0 or 1)
+                      postOfficeName: Seq[Content] = Nil,
                       postalRoute: Option[PostalRoute] = None,
                       postBox: Option[PostBox] = None,
                       postalCode: Option[PostalCode] = None,
@@ -695,7 +712,7 @@ case class ThoroughfareNumber(content: Option[String] = None,
                               indicatorOccurrence: Option[TypeOccurrence] = None,
                               numberOccurrence: Option[NumberOccurrence] = None,
                               code: Option[String] = None,
-                              attributes: Option[Map[String, QName]] = None) extends ThoroughfareType
+                              attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType
 
 case class PremiseNumber(content: Option[String] = None,
                          numberType: Option[NumberType] = None,

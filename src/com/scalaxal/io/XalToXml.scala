@@ -80,11 +80,11 @@ object XalToXml extends XmlExtractor {
   def adjustLabel(name: String):String = {
     name match {
       case "objectType" | "ObjectType" => "Type"
+      case "XAL" => "xAL"
       case _ => capitalise(name)
     }
   }
 
-  // Note: DependentThoroughfares is both an attribute and a class ---> needs fixing
   // alternative to using annotations, just a basic lookup table, so much easier
   def isAttribute(name: String):Boolean = {
     name match {
@@ -93,11 +93,11 @@ object XalToXml extends XmlExtractor {
       "PremiseDependencyType" | "PremiseDependency" | "Connector" |
       "DependentThoroughfares" | "DependentThoroughfaresIndicator" |
       "DependentThoroughfaresConnector" | "DependentThoroughfaresType" | "IndicatorOccurrence" |
-      "Indicator" | "NumberNameOccurrence" | "NumberOccurrence" | "NumberType" |
+      "Indicator" | "NameNumberOccurrence" | "NumberOccurrence" | "NumberType" |
       "NumberPrefixSeparator" | "NumberSuffixSeparator" | "Version" |
       "IdentifierType" | "Scheme" | "NumberTypeOccurrence" | "NumberExtensionSeparator" |
       "PremiseThoroughfareConnector" | "TypeOccurrence" | "PremiseNumberSeparator" |
-      "RangeType" | "Separator" | "NumberRangeOccurrence" | "NameNumberSeparator" => true
+      "RangeType" | "Separator" | "NumberRangeOccurrence" | "NameNumberSeparator"  => true
       case _ => false
     }
   }

@@ -105,6 +105,10 @@ object PremiseTypeSet2 extends Enumeration {
   val SubPremise, Firm = Value
 }
 
+object PremiseNumberTypeSet extends Enumeration {
+  type PremiseNumberTypeSet = Value
+  val PremiseNumber, PremiseNumberRange = Value
+}
 
 //------------------------------------------------------------------------------------------------
 //-----------------test for using annotations-----------------------------------------------------
@@ -608,19 +612,21 @@ case class PremiseNumberRangeTo(addressLine: Seq[AddressLine] = Nil,
                                 premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil)
 
 
-case class PremiseNumberRange(premiseNumberRangeFrom: PremiseNumberRangeFrom,
-                              premiseNumberRangeTo: PremiseNumberRangeTo,
+case class PremiseNumberRange(premiseNumberRangeFrom: Option[PremiseNumberRangeFrom],
+                              premiseNumberRangeTo: Option[PremiseNumberRangeTo],
                               rangeType: Option[String] = None,
                               indicator: Option[String] = None,
                               separator: Option[String] = None,
                               objectType: Option[String] = None,
-                              indicatorOccurence: Option[TypeOccurrence] = None,
-                              numberRangeOccurence: Option[NumberOccurrence] = None) extends PremiseType
+                              indicatorOccurrence: Option[TypeOccurrence] = None,
+                              numberRangeOccurrence: Option[NumberOccurrence] = None) extends PremiseNumberType
 
 
 case class Premise(addressLine: Seq[AddressLine] = Nil,
                    premiseName: Seq[PremiseName] = Nil,
                    premiseLocation: Seq[PremiseLocation] = Nil,
+                   premiseNumber: Option[PremiseNumber] = None,
+                   premiseNumberRange: Seq[PremiseNumberRange] = Nil,
                    premiseNumberPrefix: Seq[PremiseNumberPrefix] = Nil,
                    premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil,
                    buildingName: Seq[BuildingName] = Nil,
@@ -637,6 +643,7 @@ case class Premise(addressLine: Seq[AddressLine] = Nil,
 
 trait PremiseType
 trait PremiseType2
+trait PremiseNumberType
 
 /** A-12 where 12 is number and A is prefix and "-" is the separator
   */
@@ -716,7 +723,7 @@ case class PremiseNumber(content: Option[String] = None,
                          indicatorOccurrence: Option[TypeOccurrence] = None,
                          numberTypeOccurrence: Option[TypeOccurrence] = None,
                          code: Option[String] = None,
-                         attributes: Option[Map[String, QName]] = None) extends PremiseType
+                         attributes: Option[Map[String, QName]] = None) extends PremiseNumberType
 
 
 case class PremiseNumberPrefix(content: Option[String],

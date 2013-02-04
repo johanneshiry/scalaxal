@@ -125,13 +125,16 @@ object XalToXmlNext extends XmlExtractor {
   // alternative to using annotations, just a basic lookup table
   def isAttribute(name: String):Boolean = {
     name match {
-      case "Code" | "Type" | "TypeOccurrence" | "CurrentStatus" |
-      "AddressType" | "Usage" | "ValidFromDate" | "ValidToDate" |
+      case "objectType" | "ObjectType" |"Code" | "Type" | "TypeOccurrence" | "CurrentStatus" | "UsageType" |
+      "AddressType" | "Usage" | "ValidFromDate" | "ValidToDate" | "AddressDetailsKey" |
       "PremiseDependencyType" | "PremiseDependency" | "Connector" |
       "DependentThoroughfares" | "DependentThoroughfaresIndicator" |
-      "DependentThoroughfaresConnector" | "IndicatorOccurrence" |
-      "Indicator" | "NameNumberOccurrence" | "NumberOccurrence" | "NumberType" |
-      "NumberPrefixSeparator" | "NumberSuffixSeparator"  => true
+      "DependentThoroughfaresConnector" | "DependentThoroughfaresType" | "IndicatorOccurrence" |
+      "Indicator" | "NumberNameOccurrence" | "NumberOccurrence" | "NumberType" |
+      "NumberPrefixSeparator" | "NumberSuffixSeparator" | "Version" |
+      "IdentifierType" | "Scheme" | "NumberTypeOccurrence" | "NumberExtensionSeparator" |
+      "PremiseThoroughfareConnector" | "TypeOccurrence" | "PremiseNumberSeparator" |
+      "RangeType" | "Separator" | "NumberRangeOccurrence" | "NameNumberSeparator" => true
       case _ => false
     }
   }

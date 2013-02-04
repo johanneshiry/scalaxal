@@ -53,6 +53,7 @@ object XalFromXml extends XalExtractor {
   import DependentLocalityTypeSet._
   import PremiseTypeSet2._
   import SubPremiseTypeSet._
+  import PremiseNumberTypeSet._
 
   def makeXAL(nodeSeq: xml.NodeSeq): Option[XAL] = {
     if (nodeSeq.isEmpty) None else
@@ -221,9 +222,9 @@ object XalFromXml extends XalExtractor {
   def makeThoroughfareNumber(nodeSeq: NodeSeq): Option[ThoroughfareNumber] = {
     if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumber(
       content = getFromNode[String](nodeSeq),
-      numberType = makeMode[NumberType](nodeSeq \ "NumberType", NumberType),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
-      numberOccurrence = makeMode[NumberOccurrence](nodeSeq \ "NumberOccurrence", NumberOccurrence),
+      numberType = makeMode[NumberType](nodeSeq \ "@NumberType", NumberType),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      numberOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberOccurrence", NumberOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -236,10 +237,10 @@ object XalFromXml extends XalExtractor {
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       thoroughfareNumberFrom = makeContent(nodeSeq \ "ThoroughfareNumberFrom"),   // mandatory
       thoroughfareNumberTo = makeContent(nodeSeq \ "ThoroughfareNumberTo"),       // mandatory
-      rangeType = makeMode[RangeType](nodeSeq \ "RangeType", RangeType),
+      rangeType = makeMode[RangeType](nodeSeq \ "@RangeType", RangeType),
       separator = getFromNode[String](nodeSeq \ "@SeparatorType"),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
-      numberRangeOccurrence = makeMode[NumberOccurrence](nodeSeq \ "NumberRangeOccurrence", NumberOccurrence),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      numberRangeOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberRangeOccurrence", NumberOccurrence),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -301,11 +302,61 @@ object XalFromXml extends XalExtractor {
     None
   }
 
+  def makePremiseNumberRangeSet(nodeSeq: NodeSeq): Seq[PremiseNumberRange] = {
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumberRange(x) } flatten)
+  }
+
+  def makePremiseNumberSet(nodeSeq: NodeSeq): Seq[PremiseNumber] = {
+    if (nodeSeq.isEmpty) Seq.empty else (nodeSeq collect { case x => makePremiseNumber(x) } flatten)
+  }
+
+  def makePremiseNumberRangeFrom(nodeSeq: NodeSeq): Option[PremiseNumberRangeFrom] = {
+    if (nodeSeq.isEmpty) None else Some(new PremiseNumberRangeFrom(
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      premiseNumberPrefix = makePremiseNumberPrefixSet(nodeSeq \ "PremiseNumberPrefix"),
+      premiseNumber = makePremiseNumberSet(nodeSeq \ "PremiseNumber"),
+      premiseNumberSuffix = makePremiseNumberSuffixSet(nodeSeq \ "PremiseNumberSuffix")))
+  }
+
+  def makePremiseNumberRangeTo(nodeSeq: NodeSeq): Option[PremiseNumberRangeTo] = {
+    if (nodeSeq.isEmpty) None else Some(new PremiseNumberRangeTo(
+      addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
+      premiseNumberPrefix = makePremiseNumberPrefixSet(nodeSeq \ "PremiseNumberPrefix"),
+      premiseNumber = makePremiseNumberSet(nodeSeq \ "PremiseNumber"),
+      premiseNumberSuffix = makePremiseNumberSuffixSet(nodeSeq \ "PremiseNumberSuffix")))
+  }
+
+  def makePremiseNumberRange(nodeSeq: NodeSeq): Option[PremiseNumberRange] = {
+    if (nodeSeq.isEmpty) None else Some(new PremiseNumberRange(
+      premiseNumberRangeFrom = makePremiseNumberRangeFrom(nodeSeq \ "PremiseNumberRangeFrom"),
+      premiseNumberRangeTo = makePremiseNumberRangeTo(nodeSeq \ "PremiseNumberRangeTo"),
+      rangeType = getFromNode[String](nodeSeq \ "@RangeType"),
+      separator = getFromNode[String](nodeSeq \ "@Separator"),
+      objectType = getFromNode[String](nodeSeq \ "@Type"),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      numberRangeOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberOccurrence", NumberOccurrence),
+      indicator = getFromNode[String](nodeSeq \ "@Indicator")))
+  }
+
+  def makePremiseNumber(nodeSeq: NodeSeq): Option[PremiseNumber] = {
+    if (nodeSeq.isEmpty) None else Some(new PremiseNumber(
+      content = getFromNode[String](nodeSeq),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      numberTypeOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberTypeOccurrence", TypeOccurrence),
+      numberType = makeMode[NumberType](nodeSeq \ "@NumberType", NumberType),
+      code = getFromNode[String](nodeSeq \ "@Code"),
+      objectType = getFromNode[String](nodeSeq \ "@Type"),
+      indicator = getFromNode[String](nodeSeq \ "@Indicator"),
+      attributes = None))
+  }
+
   def makePremise(nodeSeq: NodeSeq): Option[Premise] = {
     if (nodeSeq.isEmpty) None else Some(new Premise(
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       premiseName = makePremiseNameSet(nodeSeq \ "PremiseName"),
       premiseLocation = makePremiseLocationSet(nodeSeq \ "PremiseLocation"),
+      premiseNumber = makePremiseNumber(nodeSeq \ "PremiseNumber"),
+      premiseNumberRange = makePremiseNumberRangeSet(nodeSeq \ "PremiseNumberRange"),
       premiseNumberPrefix = makePremiseNumberPrefixSet(nodeSeq \ "PremiseNumberPrefix"),
       premiseNumberSuffix = makePremiseNumberSuffixSet(nodeSeq \ "PremiseNumberSuffix"),
       buildingName = makeBuildingNameSet(nodeSeq \ "BuildingName"),
@@ -341,9 +392,9 @@ object XalFromXml extends XalExtractor {
   def makeSubPremiseNumber(nodeSeq: NodeSeq): Option[SubPremiseNumber] = {
     if (nodeSeq.isEmpty) None else Some(new SubPremiseNumber(
       content = getFromNode[String](nodeSeq),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
-      numberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "NumberTypeOccurrence", TypeOccurrence),
-      premiseNumberSeparator =getFromNode[String](nodeSeq \ "@PremiseNumberSeparator:"),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      numberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberTypeOccurrence", TypeOccurrence),
+      premiseNumberSeparator =getFromNode[String](nodeSeq \ "@PremiseNumberSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -412,7 +463,7 @@ object XalFromXml extends XalExtractor {
     if (nodeSeq.isEmpty) None else Some(new SubPremiseName(
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
+      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -488,7 +539,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   if (nodeSeq.isEmpty) None else Some(new PremiseName(
     content = getFromNode[String](nodeSeq),
     objectType = getFromNode[String](nodeSeq \ "@Type"),
-    typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
+    typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
     code = getFromNode[String](nodeSeq \ "@Code"),
     attributes = None))
 }
@@ -665,7 +716,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None else Some(new PostOfficeNumber(
       content = getFromNode[String](nodeSeq),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "IndicatorOccurrence", TypeOccurrence),
+      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -766,7 +817,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None else Some(new BuildingName(
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "TypeOccurrence", TypeOccurrence),
+      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }

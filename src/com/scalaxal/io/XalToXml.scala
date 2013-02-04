@@ -30,13 +30,18 @@
 
 package com.scalaxal.io
 
+import xml._
+import scala.Predef._
 import com.scalaxal.xAL._
-import xml.{Null, Attribute, NodeSeq, Text}
-import scala.None
-
+import xml.XML._
+import scala.Some
 
 /**
  * @author Ringo Wathelet
+ *
+ * testing some ideas to convert xal objects to xml node sequences.
+ *
+ *
  * Date: 01/02/13
  * Version: 1
  */
@@ -49,125 +54,125 @@ trait XalToXmlSeq[A] {
   def toXml(value: A): Seq[NodeSeq]
 }
 
-/** Factory to convert xal objects instances to scala xml NodeSeq */
+
+/** Factory to convert XAL objects to scala xml NodeSeq */
 object XalToXml extends XmlExtractor {
 
-  // ------------------------------------------------------------    
-  // -----------------------implicit-----------------------------  
-  // ------------------------------------------------------------  
-
-  implicit def StringToXmlText(valueOption: Option[String]): Option[xml.Text] = {
-    valueOption match {
-      case Some(value) => Some(Text(value.trim))
-      case None => None
-    }
-  }
-
-  implicit object AddressDetailsTypeToXml extends XalToXml[Option[AddressDetailsType]] {
-    def toXml(addressDetailsType: Option[AddressDetailsType]): NodeSeq = {
-      if (!addressDetailsType.isDefined) NodeSeq.Empty
-      else
-        addressDetailsType.get match {
-//          case address: Address => getXmlFrom(Option(address))
-//          case addressLines: AddressLines => getXmlFrom(Option(addressLines))
-//          case administrativeArea: AdministrativeArea => getXmlFrom(Option(administrativeArea))
-//          case country: Country => getXmlFrom(Option(country))
-//          case locality: Locality => getXmlFrom(Option(locality))
-//          case thoroughfare: Thoroughfare => getXmlFrom(Option(thoroughfare))
-          case _ => NodeSeq.Empty
-        }
-    }
-  }
-
-  implicit object PostalServiceElementsToXml extends XalToXml[Option[PostalServiceElements]] {
-    def toXml(postalServiceElementsOption: Option[PostalServiceElements]): NodeSeq = {
-      postalServiceElementsOption match {
-        case Some(addressDetails) =>
-          <postalServiceElements
-            Type={if (addressDetails.objectType.isDefined) addressDetails.objectType.get else null} >
-        </postalServiceElements>
-        case None => NodeSeq.Empty
-      }
-    }
-  }
-
-  implicit object AddressDetailsToXml extends XalToXml[Option[AddressDetails]] {
-    def toXml(addressDetailsOption: Option[AddressDetails]): NodeSeq = {
-      addressDetailsOption match {
-        case Some(addressDetails) =>
-          <AddressDetails
-        AddressType={if (addressDetails.addressType.isDefined) addressDetails.addressType.get else null}
-        CurrentStatus={if (addressDetails.currentStatus.isDefined) addressDetails.currentStatus.get else null}
-        ValidFromDate={if (addressDetails.validFromDate.isDefined) addressDetails.validFromDate.get else null}
-        ValidToDate={if (addressDetails.validToDate.isDefined) addressDetails.validToDate.get else null}
-        Usage={if (addressDetails.usage.isDefined) addressDetails.usage.get else null}
-        Code={if (addressDetails.code.isDefined) addressDetails.code.get else null}
-        AddressDetailsKey={if (addressDetails.addressDetailsKey.isDefined) addressDetails.addressDetailsKey.get else null}>
-          {getXmlFrom(addressDetails.postalServiceElements)}
-          {getXmlFrom(addressDetails.addressDetailsType)}
-        </AddressDetails>
-        case None => NodeSeq.Empty
-      }
-    }
-  }
-
-  implicit object AddressDetailsSeqToXml extends XalToXmlSeq[Option[Seq[AddressDetails]]] {
-    def toXml(addressDetailsSet: Option[Seq[AddressDetails]]): Seq[NodeSeq] = {
-      addressDetailsSet match {
-        case Some(iSet) => (iSet collect {
-          case x => getXmlFrom(Option(x.asInstanceOf[AddressDetails]))
-        } filter (x => (x != null) && (x != None)) toSeq)
-        case None => Seq.empty
-      }
-    }
-  }
-
-  implicit object XalToXml extends XalToXml[Option[XAL]] {
+  implicit object XalObjectToXml extends XalToXml[Option[XAL]] {
     def toXml(xalOption: Option[XAL]): NodeSeq = {
       xalOption match {
-        case Some(xal) => <xAL xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"
-          Version={if (xal.version.isDefined) xal.version.get else null}>
-          {getXmlSeqFrom(Option(xal.addressDetails))}
-        </xAL>
+        case Some(xal) => XalToXml.toXml(xal)
         case None => NodeSeq.Empty
       }
     }
   }
 
-  // ------------------------------------------------------------
-  // -----------------------def----------------------------------  
-  // ------------------------------------------------------------  
-
-  /** this is the crux of getting xml from the xal objects */
   def getXmlFrom[A: XalToXml](xal: A) = implicitly[XalToXml[A]].toXml(xal)
 
-  def getXmlSeqFrom[A: XalToXmlSeq](xal: A) = implicitly[XalToXmlSeq[A]].toXml(xal)
+  //---------------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------------
 
-  def getNodeFromFieldName(name: String, objOption: Option[Any]): NodeSeq = {
-    val baseName = if(name.startsWith("xal:")) name.substring(4) else name
-    objOption match {
-      case Some(obj) => {
-        Some(obj.getClass.getDeclaredField(baseName)) match {
-          case Some(field) => {
-            field.setAccessible(true)
-            val fieldValue = field.get(obj)
-            if (fieldValue == null || !fieldValue.isInstanceOf[Option[_]]) NodeSeq.Empty
-            else makeXmlNode(name, fieldValue.asInstanceOf[Option[_]])
-          }
-          case _ => NodeSeq.Empty
-        }
-      }
-      case None => NodeSeq.Empty
+  def capitalise(name: String) = {
+    if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
+  }
+
+  def adjustLabel(name: String):String = {
+    name match {
+      case "objectType" | "ObjectType" => "Type"
+      case _ => capitalise(name)
     }
   }
 
-  def makeXmlNode[_](name: String, value: Option[_]): NodeSeq = {
-    if (value.isDefined) {
-      value.get match {
-        case bool: Boolean => <a> {if (bool) "1" else "0"} </a>.copy(label = name)
-        case _ => <a> {value.get} </a>.copy(label = name)
-      }
-    } else NodeSeq.Empty
+  // Note: DependentThoroughfares is both an attribute and a class ---> needs fixing
+  // alternative to using annotations, just a basic lookup table, so much easier
+  def isAttribute(name: String):Boolean = {
+    name match {
+      case "objectType" | "ObjectType" |"Code" | "Type" | "TypeOccurrence" | "CurrentStatus" | "UsageType" |
+      "AddressType" | "Usage" | "ValidFromDate" | "ValidToDate" | "AddressDetailsKey" |
+      "PremiseDependencyType" | "PremiseDependency" | "Connector" |
+      "DependentThoroughfares" | "DependentThoroughfaresIndicator" |
+      "DependentThoroughfaresConnector" | "DependentThoroughfaresType" | "IndicatorOccurrence" |
+      "Indicator" | "NumberNameOccurrence" | "NumberOccurrence" | "NumberType" |
+      "NumberPrefixSeparator" | "NumberSuffixSeparator" | "Version" |
+      "IdentifierType" | "Scheme" | "NumberTypeOccurrence" | "NumberExtensionSeparator" |
+      "PremiseThoroughfareConnector" | "TypeOccurrence" | "PremiseNumberSeparator" |
+      "RangeType" | "Separator" | "NumberRangeOccurrence" | "NameNumberSeparator" => true
+      case _ => false
+    }
   }
+
+  // the main method
+  def toXml(theObject: Any): NodeSeq = {
+    val result = NodeSeq fromSeq fieldsToXml(theObject)
+    // crude way to remove all Content nodes and re-load as xml
+    loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
+  }
+
+   def fieldsToXml(obj: Any) = {
+     // the fields nodes
+     val fieldsXml = obj.getClass.getDeclaredFields.flatMap { field => {
+         field.setAccessible(true)
+         toXml(adjustLabel(field.getName), field.get(obj)) }
+     }
+     // start the NodeSeq with the class name, then add the fields nodes
+     new Elem(null, adjustLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
+   }
+
+  def toXml(name: String, value: Any): NodeSeq = {
+    value match {
+      case Some(x) => doMatch(name, x)
+      case None => NodeSeq.Empty
+      case x => doMatch(name, x)
+    }
+  }
+
+ def doMatch(name: String, value: Any) = {
+   // do not process the attributes here
+   if(isAttribute(capitalise(name))) NodeSeq.Empty else
+   value match {
+     case x: ContentType => withAttributesToXml(name, x)
+     case x: Seq[_] => x flatMap {v => toXml(name, v)}
+     case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Boolean => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Double => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Any => fieldsToXml(x)
+     case _ => NodeSeq.Empty
+   }
+ }
+
+  def getAttributesOf(obj: Any): MetaData = {
+    def getAttributesOf(obj: Any, ndx: Int): MetaData = {
+      ndx match {
+        case 0 => Null
+        case n if n >= 1 => {
+          val ndxLessOne = n - 1
+          val field = obj.getClass.getDeclaredFields.array(ndxLessOne)
+          field.setAccessible(true)
+          val attribs = getAttributesOf(obj, ndxLessOne)
+          if (!isAttribute(capitalise(field.getName))) attribs else
+            field.get(obj) match {
+              case Some(x) => Attribute(None, adjustLabel(field.getName), Text(x.toString), attribs)
+              case _ => attribs
+            }
+        }
+      }
+    }
+    getAttributesOf(obj, obj.getClass.getDeclaredFields.length)
+  }
+
+  def withAttributesToXml(name: String, obj: Any): Elem = {
+    val field = obj.getClass.getDeclaredField("content")
+    field.setAccessible(true)
+    field.get(obj) match {
+      case Some(x) => new Elem(null, adjustLabel(name), getAttributesOf(obj), TopScope, true, Text(x.toString))
+      case _ => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(""))
+    }
+  }
+
+//---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------
 
 }

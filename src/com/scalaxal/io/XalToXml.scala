@@ -39,7 +39,7 @@ import scala.Some
 /**
  * @author Ringo Wathelet
  *
- * testing some ideas to convert xal objects to xml node sequences.
+ * converts xal objects to xml node sequences.
  *
  *
  * Date: 01/02/13
@@ -50,12 +50,7 @@ trait XalToXml[A] {
   def toXml(value: A): NodeSeq
 }
 
-trait XalToXmlSeq[A] {
-  def toXml(value: A): Seq[NodeSeq]
-}
-
-
-/** Factory to convert XAL objects to scala xml NodeSeq */
+/** Factory to convert an XAL object to scala xml NodeSeq */
 object XalToXml extends XmlExtractor {
 
   implicit object XalObjectToXml extends XalToXml[Option[XAL]] {
@@ -69,15 +64,11 @@ object XalToXml extends XmlExtractor {
 
   def getXmlFrom[A: XalToXml](xal: A) = implicitly[XalToXml[A]].toXml(xal)
 
-  //---------------------------------------------------------------------------------------------------
-  //---------------------------------------------------------------------------------------------------
-  //---------------------------------------------------------------------------------------------------
-
-  def capitalise(name: String) = {
+  private def capitalise(name: String) = {
     if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
   }
 
-  def adjustLabel(name: String):String = {
+  private def adjustLabel(name: String):String = {
     name match {
       case "objectType" | "ObjectType" => "Type"
       case "XAL" => "xAL"
@@ -86,7 +77,7 @@ object XalToXml extends XmlExtractor {
   }
 
   // alternative to using annotations, just a basic lookup table, so much easier
-  def isAttribute(name: String):Boolean = {
+  private def isAttribute(name: String):Boolean = {
     name match {
       case "objectType" | "ObjectType" |"Code" | "Type" | "TypeOccurrence" | "CurrentStatus" | "UsageType" |
       "AddressType" | "Usage" | "ValidFromDate" | "ValidToDate" | "AddressDetailsKey" |
@@ -109,7 +100,7 @@ object XalToXml extends XmlExtractor {
     loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
   }
 
-   def fieldsToXml(obj: Any) = {
+  private def fieldsToXml(obj: Any) = {
      // the fields nodes
      val fieldsXml = obj.getClass.getDeclaredFields.flatMap { field => {
          field.setAccessible(true)
@@ -119,7 +110,7 @@ object XalToXml extends XmlExtractor {
      new Elem(null, adjustLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
    }
 
-  def toXml(name: String, value: Any): NodeSeq = {
+  private def toXml(name: String, value: Any): NodeSeq = {
     value match {
       case Some(x) => doMatch(name, x)
       case None => NodeSeq.Empty
@@ -127,7 +118,7 @@ object XalToXml extends XmlExtractor {
     }
   }
 
- def doMatch(name: String, value: Any) = {
+  private def doMatch(name: String, value: Any) = {
    // do not process the attributes here
    if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
@@ -142,7 +133,7 @@ object XalToXml extends XmlExtractor {
    }
  }
 
-  def getAttributesOf(obj: Any): MetaData = {
+  private def getAttributesOf(obj: Any): MetaData = {
     def getAttributesOf(obj: Any, ndx: Int): MetaData = {
       ndx match {
         case 0 => Null
@@ -162,7 +153,7 @@ object XalToXml extends XmlExtractor {
     getAttributesOf(obj, obj.getClass.getDeclaredFields.length)
   }
 
-  def withAttributesToXml(name: String, obj: Any): Elem = {
+  private def withAttributesToXml(name: String, obj: Any): Elem = {
     val field = obj.getClass.getDeclaredField("content")
     field.setAccessible(true)
     field.get(obj) match {
@@ -170,9 +161,5 @@ object XalToXml extends XmlExtractor {
       case _ => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(""))
     }
   }
-
-//---------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------
 
 }

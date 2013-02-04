@@ -35,9 +35,10 @@ import scala.Predef._
 import scala.reflect.runtime.{universe => ru}
 import com.scalaxal.xAL._
 import java.lang.annotation.{RetentionPolicy, Retention, Annotation}
-import com.scalaxal.xAL.AttributeField
+import xml.XML._
 import scala.Some
 import com.scalaxal.xAL.BuildingName
+
 
 /**
  * @author Ringo Wathelet
@@ -62,7 +63,7 @@ object XalToXmlNext extends XmlExtractor {
   def main(args: Array[String]) {
     println("....XalToXmlNext start...\n")
 
-    val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
+    val xal = new XalFileReader().getXalFromFile("./xal-files/XAL-test.XML")
     XalToXmlNext.toXml(xal.get).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
 
 //    val xal = new TestAClass(version = "23")
@@ -75,28 +76,41 @@ object XalToXmlNext extends XmlExtractor {
   //-----------annotation tests------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------------------
   def annotationTest(xal: TestAClass) {
+    import com.scalaxal.xAL.Types._
 
-    val testClassSymbol = ru.typeOf[xal.type].typeSymbol.asClass
-    println("testClassSymbol="+testClassSymbol)
+//    val testClassSymbol = ru.typeOf[xal.type].typeSymbol.asClass
+//    println("testClassSymbol="+testClassSymbol)
+//
+//    val testAnnotations = testClassSymbol.annotations
+//    println("testAnnotations="+testAnnotations)
+//
+//    val testAnnotationType = ru.typeOf[AttributeField]
+//
+//    println("typeSymbol.annotations="+ru.typeOf[xal.type].typeSymbol.annotations)
+//    println("testAnnotationType="+testAnnotationType+" test="+
+//      testAnnotations.find(a => a.tpe == testAnnotationType).isDefined)
 
-    val testAnnotations = testClassSymbol.annotations
-    println("testAnnotations="+testAnnotations)
+    val fieldAttribute = ru.typeOf[AttributeField].toString
+    println("fieldAttribute="+ fieldAttribute)
 
-    val testAnnotationType = ru.typeOf[AttributeField]
-
-    println("typeSymbol.annotations="+ru.typeOf[xal.type].typeSymbol.annotations)
-    println("testAnnotationType="+testAnnotationType+" test="+
-      testAnnotations.find(a => a.tpe == testAnnotationType).isDefined)
-
-    println("anonanon "+getAnnotations(xal))
-
+    println("isFieldAttribute="+ isFieldAttribute(getAnnotations(xal), fieldAttribute))
   }
 
   def getAnnotations[T: ru.TypeTag](obj: T) = {
-    ru.typeOf[T].members.foldLeft(Nil: List[ru.type#Annotation]) {
+    ru.typeOf[T].members.foldLeft(List.empty[ru.type#Annotation]) {
       case (xs, x) if (x.annotations.isEmpty) => xs
       case (xs, x) => x.annotations ::: xs
     }
+  }
+
+  def isFieldAttribute(theList: List[ru.type#Annotation], label: String): Boolean = {
+    for(x <- theList) if (x.toString.contains(label)) return true
+    false
+  }
+
+  def annotationsContains(theList: List[ru.type#Annotation], label: String): Boolean = {
+    for(x <- theList) if (x.toString.contains(label)) return true
+    false
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -107,12 +121,8 @@ object XalToXmlNext extends XmlExtractor {
     if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
   }
 
-  def deCapitalise(name: String) = {
-    if (!name.isEmpty) name(0).toLower + name.substring(1) else name
-  }
-
   // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
-  def lookupLabel(name: String):String = {
+  def adjustLabel(name: String):String = {
     name match {
       case "objectType" | "ObjectType" => "Type"
       case _ => capitalise(name)
@@ -123,49 +133,53 @@ object XalToXmlNext extends XmlExtractor {
   // alternative to using annotations
   def isAttribute(name: String):Boolean = {
     name match {
-      case "Code" | "ObjectType" | "TypeOccurrence" | "CurrentStatus" |
+      case "Code" | "Type" | "TypeOccurrence" | "CurrentStatus" |
       "AddressType" | "Usage" | "ValidFromDate" | "ValidToDate" |
       "PremiseDependencyType" | "PremiseDependency" | "Connector" |
       "DependentThoroughfares" | "DependentThoroughfaresIndicator" |
       "DependentThoroughfaresConnector" | "IndicatorOccurrence" |
-      "Indicator" | "NameNumberOccurrence" => true
+      "Indicator" | "NameNumberOccurrence" | "NumberOccurrence" | "NumberType" |
+      "NumberPrefixSeparator" | "NumberSuffixSeparator"  => true
       case _ => false
     }
   }
 
   // the main method
   def toXml(theObject: Any): NodeSeq = {
-    NodeSeq fromSeq fieldsToXml(theObject)
+    val result = NodeSeq fromSeq fieldsToXml(theObject)
+    // remove all Content nodes
+    loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
   }
 
    def fieldsToXml(obj: Any) = {
      // the fields nodes
      val fieldsXml = obj.getClass.getDeclaredFields.flatMap { field => {
          field.setAccessible(true)
-         toXml(lookupLabel(field.getName), field.get(obj))
-      }
+         toXml(adjustLabel(field.getName), field.get(obj)) }
      }
      // start the NodeSeq with the class name, then add the fields nodes
-     new Elem(null, lookupLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
+     new Elem(null, adjustLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
    }
 
   def toXml(name: String, value: Any): NodeSeq = {
     value match {
       case Some(x) => doMatch(name, x)
       case None => NodeSeq.Empty
-      case _ => doMatch(name, value)
+      case x => doMatch(name, x)
     }
   }
 
  def doMatch(name: String, value: Any) = {
+   // do not process the attributes here
+   if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
      case x: BuildingName => withAttributesToXml(name, x)
      case x: ContentType => withAttributesToXml(name, x)
      case x: Seq[_] => x flatMap {v => toXml(name, v)}
-     case x: String => new Elem(null, lookupLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Int => new Elem(null, lookupLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Boolean => new Elem(null, lookupLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Double => new Elem(null, lookupLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Boolean => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+     case x: Double => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
      case x: Any => fieldsToXml(x)
      case _ => NodeSeq.Empty
    }
@@ -182,7 +196,7 @@ object XalToXmlNext extends XmlExtractor {
           val attribs = getAttributesOf(obj, ndxLessOne)
           if (!isAttribute(capitalise(field.getName)) || (field.getName.equals("content"))) attribs else
             field.get(obj) match {
-              case Some(x) => Attribute(None, lookupLabel(field.getName), Text(x.toString), attribs)
+              case Some(x) => Attribute(None, adjustLabel(field.getName), Text(x.toString), attribs)
               case _ => attribs
             }
         }
@@ -195,8 +209,8 @@ object XalToXmlNext extends XmlExtractor {
     val field = obj.getClass.getDeclaredField("content")
     field.setAccessible(true)
     field.get(obj) match {
-      case Some(x) => new Elem(null, lookupLabel(name), getAttributesOf(obj), TopScope, true, Text(x.toString))
-      case _ => new Elem(null, lookupLabel(name), Null, TopScope, true, Text(""))
+      case Some(x) => new Elem(null, adjustLabel(name), getAttributesOf(obj), TopScope, true, Text(x.toString))
+      case _ => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(""))
     }
   }
 

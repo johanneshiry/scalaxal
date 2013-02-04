@@ -131,7 +131,7 @@ object XalToXml extends XmlExtractor {
    // do not process the attributes here
    if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
-     case x: ContentType => withAttributesToXml(name, x)
+     case x: Content => withAttributesToXml(name, x)
      case x: Seq[_] => x flatMap {v => toXml(name, v)}
      case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
      case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))

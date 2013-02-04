@@ -118,23 +118,16 @@ case class XAL(addressDetails: Seq[AddressDetails] = Nil,
   def this() = this(Nil, Nil, None, None)
 }
 
-trait ContentType {
-  val content: Option[String]
-  val objectType: Option[String]
-  val code: Option[String]
-  val attributes: Option[Map[String, QName]]
-}
-
 case class Content(content: Option[String] = None,
                    objectType: Option[String] = None,
                    code: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends ContentType
+                   attributes: Option[Map[String, QName]] = None)
 
 case class AddressIdentifier(content: Option[String] = None,
                              identifierType: Option[String] = None,
                              objectType: Option[String] = None,
                              code: Option[String] = None,
-                             attributes: Option[Map[String, QName]] = None) extends ContentType
+                             attributes: Option[Map[String, QName]] = None)
 
 case class SortingCode(objectType: Option[String] = None, code: Option[String] = None)
 
@@ -157,7 +150,7 @@ case class PostalServiceElements(addressIdentifier: Seq[AddressIdentifier] = Nil
 case class Address(content: Option[String] = None,
                    objectType: Option[String] = None,
                    code: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType with ContentType {
+                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
 
   def this() = this(None, None, None, None)
 }
@@ -358,7 +351,7 @@ trait SubPremiseType
 case class AddressLine(content: Option[String] = None,
                        objectType: Option[String] = None,
                        code: Option[String] = None,
-                       attributes: Option[Map[String, QName]] = None) extends ContentType
+                       attributes: Option[Map[String, QName]] = None)
 
 case class Locality(addressLine: Seq[AddressLine] = Nil,
                     localityName: Seq[Content] = Nil,
@@ -535,7 +528,7 @@ case class PostalCode(addressLine: Seq[AddressLine] = Nil,
 case class PostBoxNumber(content: Option[String] = None,
                          code: Option[String] = None,
                          objectType: Option[String] = None,
-                         attributes: Option[Map[String, QName]] = None) extends ContentType
+                         attributes: Option[Map[String, QName]] = None)
 
 
 case class PostBoxNumberPrefix(content: Option[String] = None,

@@ -110,26 +110,14 @@ object PremiseNumberTypeSet extends Enumeration {
   val PremiseNumber, PremiseNumberRange = Value
 }
 
-//------------------------------------------------------------------------------------------------
-//-----------------test for using annotations-----------------------------------------------------
-//------------------------------------------------------------------------------------------------
-object Types {
-  type Attrib = AttributeField @field
-}
-import Types._
-
-@Retention(RetentionPolicy.RUNTIME)
 case class XAL(addressDetails: Seq[AddressDetails] = Nil,
                any: Seq[Any] = Nil,
-               @Retention(RetentionPolicy.RUNTIME)
-               @Attrib version: Option[String] = None,
+               version: Option[String] = None,
                attributes: Option[Map[String, QName]] = None) {
 
   def this() = this(Nil, Nil, None, None)
 }
-//------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------
+
 trait ContentType {
   val content: Option[String]
   val objectType: Option[String]

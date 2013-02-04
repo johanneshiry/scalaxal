@@ -34,7 +34,6 @@ import xml._
 import scala.Predef._
 import scala.reflect.runtime.{universe => ru}
 import com.scalaxal.xAL._
-import java.lang.annotation.{RetentionPolicy, Retention, Annotation}
 import xml.XML._
 import scala.Some
 
@@ -48,11 +47,6 @@ import scala.Some
  * Version: 1
  */
 
-import com.scalaxal.xAL.Types._
-case class TestAClass(@Retention(RetentionPolicy.RUNTIME)
-                      @Attrib
-                      version: String)
-
 /** Factory to convert XAL objects to scala xml NodeSeq */
 object XalToXmlNext extends XmlExtractor {
 
@@ -61,49 +55,10 @@ object XalToXmlNext extends XmlExtractor {
   def main(args: Array[String]) {
     println("....XalToXmlNext start...\n")
 
-    val xal = new XalFileReader().getXalFromFile("./xal-files/XAL-test.XML")
+    val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
     XalToXmlNext.toXml(xal.get).foreach(x => println(new PrettyPrinter(80, 3).format(x)))
 
-//    val xal = new TestAClass(version = "23")
-//    annotationTest(xal)
-
     println("\n....XalToXmlNext done...")
-  }
-
-  //---------------------------------------------------------------------------------------------------
-  //-----------annotation tests------------------------------------------------------------------------
-  //---------------------------------------------------------------------------------------------------
-  def annotationTest(xal: TestAClass) {
-    import com.scalaxal.xAL.Types._
-
-//    val testClassSymbol = ru.typeOf[xal.type].typeSymbol.asClass
-//    println("testClassSymbol="+testClassSymbol)
-//
-//    val testAnnotations = testClassSymbol.annotations
-//    println("testAnnotations="+testAnnotations)
-//
-//    val testAnnotationType = ru.typeOf[AttributeField]
-//
-//    println("typeSymbol.annotations="+ru.typeOf[xal.type].typeSymbol.annotations)
-//    println("testAnnotationType="+testAnnotationType+" test="+
-//      testAnnotations.find(a => a.tpe == testAnnotationType).isDefined)
-
-    val fieldAttribute = ru.typeOf[AttributeField].toString
-    println("fieldAttribute="+ fieldAttribute)
-
-    println("isFieldAttribute="+ isFieldAttribute(getAnnotations(xal), fieldAttribute))
-  }
-
-  def getAnnotations[T: ru.TypeTag](obj: T) = {
-    ru.typeOf[T].members.foldLeft(List.empty[ru.type#Annotation]) {
-      case (xs, x) if (x.annotations.isEmpty) => xs
-      case (xs, x) => x.annotations ::: xs
-    }
-  }
-
-  def isFieldAttribute(theList: List[ru.type#Annotation], label: String): Boolean = {
-    for(x <- theList) if (x.toString.contains(label)) return true
-    false
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -121,8 +76,8 @@ object XalToXmlNext extends XmlExtractor {
     }
   }
 
-  // Note: DependentThoroughfares is both an attribute and a class
-  // alternative to using annotations, just a basic lookup table
+  // Note: DependentThoroughfares is both an attribute and a class ---> needs fixing
+  // alternative to using annotations, just a basic lookup table, so much easier
   def isAttribute(name: String):Boolean = {
     name match {
       case "objectType" | "ObjectType" |"Code" | "Type" | "TypeOccurrence" | "CurrentStatus" | "UsageType" |
@@ -142,7 +97,7 @@ object XalToXmlNext extends XmlExtractor {
   // the main method
   def toXml(theObject: Any): NodeSeq = {
     val result = NodeSeq fromSeq fieldsToXml(theObject)
-    // very crude way to remove all Content nodes
+    // crude way to remove all Content nodes and re-load as xml
     loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
   }
 
@@ -165,7 +120,7 @@ object XalToXmlNext extends XmlExtractor {
   }
 
  def doMatch(name: String, value: Any) = {
-   // do not process (again) the attributes here
+   // do not process the attributes here
    if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
      case x: ContentType => withAttributesToXml(name, x)

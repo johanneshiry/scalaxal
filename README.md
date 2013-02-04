@@ -1,4 +1,3 @@
-
 # scalaxal is an extensible Address Language (xAL) library written in scala.
 
 ## References
@@ -24,5 +23,6 @@ nothing yet
 
 UNDER CONSTRUCTION NOT READY YET
 
+please contribute
 
 Ringo Wathelet

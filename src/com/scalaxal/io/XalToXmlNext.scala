@@ -37,13 +37,11 @@ import com.scalaxal.xAL._
 import java.lang.annotation.{RetentionPolicy, Retention, Annotation}
 import xml.XML._
 import scala.Some
-import com.scalaxal.xAL.BuildingName
-
 
 /**
  * @author Ringo Wathelet
  *
- * private: set of ideas to convert xal objects to xml node sequences.
+ * testing some ideas to convert xal objects to xml node sequences.
  *
  *
  * Date: 01/02/13
@@ -108,11 +106,6 @@ object XalToXmlNext extends XmlExtractor {
     false
   }
 
-  def annotationsContains(theList: List[ru.type#Annotation], label: String): Boolean = {
-    for(x <- theList) if (x.toString.contains(label)) return true
-    false
-  }
-
   //---------------------------------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------------------
   //---------------------------------------------------------------------------------------------------
@@ -121,7 +114,6 @@ object XalToXmlNext extends XmlExtractor {
     if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
   }
 
-  // todo TypeOccurrence, attributes, DependentThoroughfares, RangeType, NumberType, NumberOccurrence
   def adjustLabel(name: String):String = {
     name match {
       case "objectType" | "ObjectType" => "Type"
@@ -129,8 +121,8 @@ object XalToXmlNext extends XmlExtractor {
     }
   }
 
-  // DependentThoroughfares is both an attribute and a class
-  // alternative to using annotations
+  // Note: DependentThoroughfares is both an attribute and a class
+  // alternative to using annotations, just a basic lookup table
   def isAttribute(name: String):Boolean = {
     name match {
       case "Code" | "Type" | "TypeOccurrence" | "CurrentStatus" |
@@ -147,7 +139,7 @@ object XalToXmlNext extends XmlExtractor {
   // the main method
   def toXml(theObject: Any): NodeSeq = {
     val result = NodeSeq fromSeq fieldsToXml(theObject)
-    // remove all Content nodes
+    // very crude way to remove all Content nodes
     loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
   }
 
@@ -170,10 +162,9 @@ object XalToXmlNext extends XmlExtractor {
   }
 
  def doMatch(name: String, value: Any) = {
-   // do not process the attributes here
+   // do not process (again) the attributes here
    if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
-     case x: BuildingName => withAttributesToXml(name, x)
      case x: ContentType => withAttributesToXml(name, x)
      case x: Seq[_] => x flatMap {v => toXml(name, v)}
      case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
@@ -194,7 +185,7 @@ object XalToXmlNext extends XmlExtractor {
           val field = obj.getClass.getDeclaredFields.array(ndxLessOne)
           field.setAccessible(true)
           val attribs = getAttributesOf(obj, ndxLessOne)
-          if (!isAttribute(capitalise(field.getName)) || (field.getName.equals("content"))) attribs else
+          if (!isAttribute(capitalise(field.getName))) attribs else
             field.get(obj) match {
               case Some(x) => Attribute(None, adjustLabel(field.getName), Text(x.toString), attribs)
               case _ => attribs

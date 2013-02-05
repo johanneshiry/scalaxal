@@ -31,8 +31,7 @@
 package com.scalaxal.xAL
 
 import javax.xml.namespace.QName
-import scala.annotation.Annotation
-import annotation.meta.field
+//import scala.reflect.runtime.{universe => ru}
 import java.lang.annotation.{RetentionPolicy, Retention}
 
 /**
@@ -121,7 +120,48 @@ case class XAL(addressDetails: Seq[AddressDetails] = Nil,
                attributes: Option[Map[String, QName]] = None) {
 
   def this() = this(Nil, Nil, None, None)
+
+//------------------------------------------------------------------------------
+//-----------testing some methods-----------------------------------------------
+//------------------------------------------------------------------------------
+
+  /**
+   * returns a copy of the original XAL with the designated fieldName changed to the newValue
+   *
+   * @param fieldName the name of the field to change
+   * @param newValue the new value to be in the filedName
+   * @return a new object with the designated fieldName changed to the newValue
+   */
+  def change(fieldName: String, newValue: Any) = {
+    val theCopy = this.copy()
+    val field = theCopy.getClass.getDeclaredField(fieldName)
+    field.setAccessible(true)
+    field.set(theCopy, newValue)
+    theCopy
+  }
+
+  /**
+   * returns a new object with the newValue added to the designated Seq of fieldName
+   * Note: no check is performed on the type compatibility
+   *
+   * @param fieldName the name of the field to change
+   * @param newValue the new value to be in the fieldName Seq
+   * @tparam A the type of the Seq element
+   * @return a new object with the newValue added to the designated Seq of fieldName
+   */
+  def addTo[A](fieldName: String, newValue: A) = {
+    val theCopy = this.copy()
+    val field = theCopy.getClass.getDeclaredField(fieldName)
+    field.setAccessible(true)
+    val theSeq = field.get(theCopy).asInstanceOf[Seq[A]] // assume ok
+    val newSeq = if (theSeq == Nil) (Seq.empty :+ newValue) else (theSeq :+ newValue)
+    field.set(theCopy, newSeq)
+    theCopy
+  }
 }
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 case class Content(content: Option[String] = None,
                    objectType: Option[String] = None,

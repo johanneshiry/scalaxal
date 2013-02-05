@@ -29,25 +29,7 @@ object TestReadWrite {
 //    xal.get.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
     }
 
-//    testMethods
-
     println("\n....XAL TestReadWrite done...")
   }
-
-  def testMethods() {
-    println("\n")
-
-    val xal1 = XAL(version = Some("23"))
-    println("xal1="+xal1)
-
-    val xal2 = xal1 change("version", Some("45"))
-    println("xal2="+xal2)
-
-    val address = new AddressDetails(addressType = Some("new address"))
-
-    val xal3 = xal2 addTo("addressDetails", address) addTo("any", "xxx")
-    println("xal3="+xal3)
-  }
-
 
 }

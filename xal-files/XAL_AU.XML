@@ -3,14 +3,14 @@
 <!-- XMLification of COMPLEX AUSTRALIAN ADDRESSES -->
 <!-- Examples in this document were taken from:
      "FINAL DRAFT AUSTRALIAN/NEW ZEALAND STANDARD:
-     Geographic Information – Rural and Urban Addressing".
+     Geographic Information ï¿½ Rural and Urban Addressing".
      This draft Standard was prepared by the Street Address 
      Working Group of the Intergovernmental Committee on 
      Surveying and Mapping. -->
 
 <!DOCTYPE xAL SYSTEM "xAL.dtd">
-<xAL> 
- 
+<xAL>
+
 <!-- ***************** AIRPORT ************************* -->
 <!--
 Warehouse 2

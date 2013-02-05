@@ -118,7 +118,7 @@ object XalToXml extends XmlExtractor {
   }
 
   private def fieldsToXml(obj: Any) = {
-     // the fields nodes
+     // the fields nodes to xml
      val fieldsXml = obj.getClass.getDeclaredFields.flatMap { field => {
          field.setAccessible(true)
          toXml(adjustLabel(field.getName), field.get(obj)) }
@@ -139,7 +139,7 @@ object XalToXml extends XmlExtractor {
    // do not process the attributes here
    if(isAttribute(capitalise(name))) NodeSeq.Empty else
    value match {
-     case x: Content => elemWithAttributes(name, x)
+     case x: Content => getContentElem(name, x)
      case x: Seq[_] => x flatMap {v => toXml(name, v)}
      case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
      case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
@@ -158,19 +158,19 @@ object XalToXml extends XmlExtractor {
           val ndxLessOne = n - 1
           val field = obj.getClass.getDeclaredFields.array(ndxLessOne)
           field.setAccessible(true)
-          val attribs = getAttributesOf(obj, ndxLessOne)
-          if (!isAttribute(capitalise(field.getName))) attribs else
+          if (!isAttribute(capitalise(field.getName))) getAttributesOf(obj, ndxLessOne) else
             field.get(obj) match {
-              case Some(x) => Attribute(None, adjustLabel(field.getName), Text(x.toString), attribs)
-              case _ => attribs
+              case Some(x) => Attribute(None, adjustLabel(field.getName), Text(x.toString), getAttributesOf(obj, ndxLessOne))
+              case _ => getAttributesOf(obj, ndxLessOne)
             }
         }
       }
     }
+
     getAttributesOf(obj, obj.getClass.getDeclaredFields.length)
   }
 
-  private def elemWithAttributes(name: String, obj: Any): Elem = {
+  private def getContentElem(name: String, obj: Any): Elem = {
     val field = obj.getClass.getDeclaredField("content")
     field.setAccessible(true)
     field.get(obj) match {

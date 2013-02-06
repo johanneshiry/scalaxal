@@ -123,7 +123,7 @@ object XalToXml extends XmlExtractor {
          field.setAccessible(true)
          toXml(adjustLabel(field.getName), field.get(obj)) }
      }
-     // start the NodeSeq with the class name, then add any other child fields nodes
+     // create the NodeSeq with the class name, then add any other child fields nodes
      new Elem(null, adjustLabel(obj.getClass.getSimpleName), getAttributesOf(obj), TopScope, true, fieldsXml: _*)
    }
 

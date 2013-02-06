@@ -15,8 +15,8 @@ The scalaxal library is in 2 major parts:
 
 See the OASIS xAL Standard v2.0
 
-1) https://www.oasis-open.org/committees/ciq/ciq.html
-2) https://www.oasis-open.org/committees/ciq/download.html
+- 1) https://www.oasis-open.org/committees/ciq/ciq.html
+- 2) https://www.oasis-open.org/committees/ciq/download.html
 
 Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 

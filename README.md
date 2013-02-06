@@ -21,7 +21,7 @@ nothing yet
 
 ## Status
 
-UNDER CONSTRUCTION 
+Very little testing has been done.
 
 please contribute
 

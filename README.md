@@ -9,19 +9,24 @@
 
 The scalaxal library is in 2 major parts:
 - 1) package com.scalaxal.xAL, the set of xAL classes
-- 2) package com.scalakml.io, the simple reading and writing of xAL from/to xml
+- 2) package com.scalakml.io, the reading and writing of xAL from/to xml
 
 ## Documentation
 
-nothing yet
+See the OASIS xAL Standard v2.0
+
+1) https://www.oasis-open.org/committees/ciq/ciq.html
+2) https://www.oasis-open.org/committees/ciq/download.html
+
+Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
 # Usage
 
-nothing yet
+no examples yet
 
 ## Status
 
-Very little testing has been done.
+Tested only on the XAL.XML and XAL_AU.XML example files from OASIS, included here in the xal-files directory.
 
 please contribute
 

@@ -20,9 +20,24 @@ See the OASIS xAL Standard v2.0
 
 Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
+In addition to the classes are the helper methods: 
+
+- With (fieldName: String, newValue: Any)  for simple fields, e.g. With("objectType", Some("Building")
+- addTo \[A\](fieldName: String, newValue: A) for Seq[A] fields, e.g. addTo("addressLines", new AddressLine())
+
+These methods return a new object with the specified fieldName changed to newValue, all other fields are the same as before. 
+Note: "objectType" represents the "Type" attribute.
+
+For example:
+
+- AddressDetails() With("addressDetailsType", Some(newAddressLines))
+
+returns a new copy of the AddressDetails object with a newAddressLines as the addressDetailsType, 
+all other fields are the same as before. 
+
 # Usage
 
-no examples yet
+
 
 ## Status
 

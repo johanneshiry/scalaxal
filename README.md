@@ -25,7 +25,7 @@ These methods return a new object with the specified field name changed. For exa
 
 - AddressDetails() With("addressDetailsType", Some(newAddressLines))
 
-returns a new copy of the AddressDetails object with a new newAddressLines as the addressDetailsType, 
+returns a new copy of the AddressDetails object with a newAddressLines as the addressDetailsType, 
 all other fields are the same as before. See the examples.
 
 # Usage

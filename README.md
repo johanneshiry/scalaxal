@@ -20,6 +20,13 @@ See the OASIS xAL Standard v2.0
 
 Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
+In addition to the base classes are the helper methods: With(..) and addTo(..). 
+These methods return a new object with the specified field name changed. For example:
+
+kml With("feature", Some(placemark))
+returns a new copy of the kml object with a new placemark as the feature, 
+all other fields are the same as before. See the examples.
+
 # Usage
 
 no examples yet

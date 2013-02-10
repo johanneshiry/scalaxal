@@ -101,7 +101,18 @@ object PremiseNumberTypeSet extends Enumeration {
 case class XAL(addressDetails: Seq[AddressDetails] = Nil,
                any: Seq[Any] = Nil,
                version: Option[String] = None,
-               attributes: Option[Map[String, QName]] = None)
+               attributes: Option[Map[String, QName]] = None) {
+
+  /**
+   * returns a new XAL object with value added to addressDetails sequence
+   * @param value the AddressDetails to add to addressDetails
+   * @return a new XAL object with value added to the addressDetails sequence
+   */
+  def addToAddressDetails(value: AddressDetails) = {
+    this.copy(addressDetails = if (addressDetails == Nil) (Seq.empty :+ value) else (addressDetails :+ value))
+  }
+
+}
 
 
 case class Content(content: Option[String] = None,
@@ -129,7 +140,26 @@ case class PostalServiceElements(addressIdentifier: Seq[AddressIdentifier] = Nil
                                  supplementaryPostalServiceData: Seq[Content] = Nil,
                                  any: Seq[Any] = Nil,
                                  objectType: Option[String] = None,
-                                 attributes: Option[Map[String, QName]] = None)
+                                 attributes: Option[Map[String, QName]] = None) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressIdentifier(value: AddressIdentifier) = {
+    this.copy(addressIdentifier = if (addressIdentifier == Nil) (Seq.empty :+ value) else (addressIdentifier :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSupplementaryPostalServiceData(value: Content) = {
+    this.copy(supplementaryPostalServiceData = if (supplementaryPostalServiceData == Nil) (Seq.empty :+ value) else (supplementaryPostalServiceData :+ value))
+  }
+}
 
 
 case class Address(content: Option[String] = None,
@@ -148,7 +178,34 @@ case class Country(addressLine: Seq[AddressLine] = Nil,
                    countryName: Seq[Content] = Nil,
                    countryType: Option[CountryType] = None,
                    any: Seq[Any] = Nil,
-                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType
+                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToCountryNameCode(value: CountryNameCode) = {
+    this.copy(countryNameCode = if (countryNameCode == Nil) (Seq.empty :+ value) else (countryNameCode :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToCountryName(value: Content) = {
+    this.copy(countryName = if (countryName == Nil) (Seq.empty :+ value) else (countryName :+ value))
+  }
+
+}
 
 trait CountryType
 
@@ -168,7 +225,18 @@ trait AddressDetailsType
 
 case class AddressLines(addressLines: Seq[AddressLine] = Nil,
                         any: Seq[Any] = Nil,
-                        attributes: Option[Map[String, QName]] = None) extends AddressDetailsType
+                        attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+
+  /**
+   * returns a new object with value added to addressLines sequence
+   * @param value the AddressLine to add to addressLines
+   * @return a new AddressLines object with value added to the addressLines sequence
+   */
+  def addToAddressLines(value: AddressLine) = {
+    this.copy(addressLines = if (addressLines == Nil) (Seq.empty :+ value) else (addressLines :+ value))
+  }
+
+}
 
 trait TypeOccurrence
 
@@ -215,7 +283,26 @@ case class DependentLocality(addressLine: Seq[AddressLine] = Nil,
                              usageType: Option[String] = None,
                              connector: Option[String] = None,
                              indicator: Option[String] = None,
-                             attributes: Option[Map[String, QName]] = None) extends ThoroughfareType
+                             attributes: Option[Map[String, QName]] = None) extends ThoroughfareType  {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToDependentLocalityName(value: Content) = {
+    this.copy(dependentLocalityName = if (dependentLocalityName == Nil) (Seq.empty :+ value) else (dependentLocalityName :+ value))
+  }
+}
 
 
 trait DependentLocalityType
@@ -227,7 +314,34 @@ case class Firm(addressLine: Seq[AddressLine] = Nil,
                     postalCode: Option[PostalCode] = None,
                     any: Seq[Any] = Nil,
                     objectType: Option[String] = None,
-                    attributes: Option[Map[String, QName]] = None) extends ThoroughfareType with PremiseType with PremiseType2
+                    attributes: Option[Map[String, QName]] = None) extends ThoroughfareType with PremiseType with PremiseType2 {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToFirmName(value: Content) = {
+    this.copy(firmName = if (firmName == Nil) (Seq.empty :+ value) else (firmName :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToDepartment(value: Department) = {
+    this.copy(department = if (department == Nil) (Seq.empty :+ value) else (department :+ value))
+  }
+}
 
 case class LargeMailUserIdentifier(content: Option[String] = None,
                                    objectType: Option[String] = None,
@@ -245,7 +359,36 @@ case class LargeMailUser(addressLine: Seq[AddressLine] = Nil,
                              postalCode: Option[PostalCode] = None,
                              any: Seq[Any] = Nil,
                              objectType: Option[String] = None,
-                             attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType
+                             attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToLargeMailUserName(value: Content) = {
+    this.copy(largeMailUserName = if (largeMailUserName == Nil) (Seq.empty :+ value) else (largeMailUserName :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToBuildingName(value: BuildingName) = {
+    this.copy(buildingName = if (buildingName == Nil) (Seq.empty :+ value) else (buildingName :+ value))
+  }
+
+}
 
 
 case class MailStopNumber(content: Option[String] = None,
@@ -258,7 +401,18 @@ case class MailStop(addressLine: Seq[AddressLine] = Nil,
                         mailStopNumber: Option[MailStopNumber] = None,
                         any: Seq[Any] = Nil,
                         objectType: Option[String] = None,
-                        attributes: Option[Map[String, QName]] = None)
+                        attributes: Option[Map[String, QName]] = None)  {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+}
 
 
 case class PostalRoute(addressLine: Seq[AddressLine] = Nil,
@@ -267,7 +421,18 @@ case class PostalRoute(addressLine: Seq[AddressLine] = Nil,
                            postBox: Option[PostBox] = None,
                            any: Seq[Any] = Nil,
                            objectType: Option[String] = None,
-                           attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType
+                           attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+}
 
 case class SubPremiseName(content: Option[String] = None,
                           objectType: Option[String] = None,
@@ -314,7 +479,59 @@ case class SubPremise(addressLine: Seq[AddressLine] = Nil,
                           subPremise: Option[SubPremise] = None,
                           any: Seq[Any] = Nil,
                           objectType: Option[String] = None,
-                          attributes: Option[Map[String, QName]] = None) extends PremiseType with PremiseType2
+                          attributes: Option[Map[String, QName]] = None) extends PremiseType with PremiseType2 {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSubPremiseName(value: SubPremiseName) = {
+    this.copy(subPremiseName = if (subPremiseName == Nil) (Seq.empty :+ value) else (subPremiseName :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSubPremiseType(value: SubPremiseType) = {
+    this.copy(subPremiseType = if (subPremiseType == Nil) (Seq.empty :+ value) else (subPremiseType :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSubPremiseNumberPrefix(value: SubPremiseNumberPrefix) = {
+    this.copy(subPremiseNumberPrefix = if (subPremiseNumberPrefix == Nil) (Seq.empty :+ value) else (subPremiseNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSubPremiseNumberSuffix(value: SubPremiseNumberSuffix) = {
+    this.copy(subPremiseNumberSuffix = if (subPremiseNumberSuffix == Nil) (Seq.empty :+ value) else (subPremiseNumberSuffix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToBuildingName(value: BuildingName) = {
+    this.copy(buildingName = if (buildingName == Nil) (Seq.empty :+ value) else (buildingName :+ value))
+  }
+
+}
 
 trait SubPremiseType
 
@@ -335,7 +552,26 @@ case class Locality(addressLine: Seq[AddressLine] = Nil,
                     objectType: Option[String] = None,
                     usageType: Option[String] = None,
                     indicator: Option[String] = None,
-                    attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType with AdministrativeAreaType
+                    attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType with AdministrativeAreaType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToLocalityName(value: Content) = {
+    this.copy(localityName = if (localityName == Nil) (Seq.empty :+ value) else (localityName :+ value))
+  }
+
+}
 trait LocalityType
 
 trait DependentThoroughfares
@@ -378,14 +614,81 @@ case class ThoroughfareNumberFrom(addressLine: Seq[AddressLine] = Nil,
                                   thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
                                   thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
                                   thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
-                                  code: Option[String] = None)
+                                  code: Option[String] = None) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberType(value: ThoroughfareNumberType) = {
+    this.copy(thoroughfareNumberType = if (thoroughfareNumberType == Nil) (Seq.empty :+ value) else (thoroughfareNumberType :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberPrefix(value: ThoroughfareNumberPrefix) = {
+    this.copy(thoroughfareNumberPrefix = if (thoroughfareNumberPrefix == Nil) (Seq.empty :+ value) else (thoroughfareNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberSuffix(value: ThoroughfareNumberSuffix) = {
+    this.copy(thoroughfareNumberSuffix = if (thoroughfareNumberSuffix == Nil) (Seq.empty :+ value) else (thoroughfareNumberSuffix :+ value))
+  }
+}
 
 
 case class ThoroughfareNumberTo(addressLine: Seq[AddressLine] = Nil,
                                   thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
                                   thoroughfareNumberPrefix: Seq[ThoroughfareNumberPrefix] = Nil,
                                   thoroughfareNumberSuffix: Seq[ThoroughfareNumberSuffix] = Nil,
-                                  code: Option[String] = None)
+                                  code: Option[String] = None) {
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberType(value: ThoroughfareNumberType) = {
+    this.copy(thoroughfareNumberType = if (thoroughfareNumberType == Nil) (Seq.empty :+ value) else (thoroughfareNumberType :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberPrefix(value: ThoroughfareNumberPrefix) = {
+    this.copy(thoroughfareNumberPrefix = if (thoroughfareNumberPrefix == Nil) (Seq.empty :+ value) else (thoroughfareNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberSuffix(value: ThoroughfareNumberSuffix) = {
+    this.copy(thoroughfareNumberSuffix = if (thoroughfareNumberSuffix == Nil) (Seq.empty :+ value) else (thoroughfareNumberSuffix :+ value))
+  }
+}
 
 
 case class ThoroughfareNumberRange(addressLine: Seq[AddressLine] = Nil,
@@ -398,7 +701,17 @@ case class ThoroughfareNumberRange(addressLine: Seq[AddressLine] = Nil,
                                    numberRangeOccurrence: Option[NumberOccurrence] = None,
                                    objectType: Option[String] = None,
                                    code: Option[String] = None,
-                                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType
+                                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+}
 
 case class DependentThoroughfare(addressLine: Seq[AddressLine] = Nil,
                                  thoroughfarePreDirection: Option[Content] = None,
@@ -408,7 +721,24 @@ case class DependentThoroughfare(addressLine: Seq[AddressLine] = Nil,
                                  thoroughfarePostDirection: Option[Content] = None,
                                  any: Seq[Any] = Nil,
                                  objectType: Option[String] = None,
-                                 attributes: Option[Map[String, QName]] = None)
+                                 attributes: Option[Map[String, QName]] = None) {
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareName(value: Content) = {
+    this.copy(thoroughfareName = if (thoroughfareName == Nil) (Seq.empty :+ value) else (thoroughfareName :+ value))
+  }
+}
 
 case class Thoroughfare(addressLine: Seq[AddressLine] = Nil,
                         thoroughfareNumberType: Seq[ThoroughfareNumberType] = Nil,
@@ -427,7 +757,49 @@ case class Thoroughfare(addressLine: Seq[AddressLine] = Nil,
                         dependentThoroughfaresIndicator: Option[String] = None,
                         dependentThoroughfaresConnector: Option[String] = None,
                         dependentThoroughfaresType: Option[String] = None,
-                        attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType
+                        attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberType(value: ThoroughfareNumberType) = {
+    this.copy(thoroughfareNumberType = if (thoroughfareNumberType == Nil) (Seq.empty :+ value) else (thoroughfareNumberType :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberPrefix(value: ThoroughfareNumberPrefix) = {
+    this.copy(thoroughfareNumberPrefix = if (thoroughfareNumberPrefix == Nil) (Seq.empty :+ value) else (thoroughfareNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareNumberSuffix(value: ThoroughfareNumberSuffix) = {
+    this.copy(thoroughfareNumberSuffix = if (thoroughfareNumberSuffix == Nil) (Seq.empty :+ value) else (thoroughfareNumberSuffix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToThoroughfareName(value: Content) = {
+    this.copy(thoroughfareName = if (thoroughfareName == Nil) (Seq.empty :+ value) else (thoroughfareName :+ value))
+  }
+}
 
 trait ThoroughfareType
 trait ThoroughfareNumberType
@@ -439,7 +811,25 @@ case class SubAdministrativeArea(addressLine: Seq[AddressLine] = Nil,
                                  objectType: Option[String] = None,
                                  usageType: Option[String] = None,
                                  indicator: Option[String] = None,
-                                 attributes: Option[Map[String, QName]] = None)
+                                 attributes: Option[Map[String, QName]] = None) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToSubAdministrativeAreaName(value: Content) = {
+    this.copy(subAdministrativeAreaName = if (subAdministrativeAreaName == Nil) (Seq.empty :+ value) else (subAdministrativeAreaName :+ value))
+  }
+}
 
 case class AdministrativeArea(addressLine: Seq[AddressLine] = Nil,
                               administrativeAreaName: Seq[Content] = Nil,
@@ -449,7 +839,26 @@ case class AdministrativeArea(addressLine: Seq[AddressLine] = Nil,
                               objectType: Option[String] = None,
                               usageType: Option[String] = None,
                               indicator: Option[String] = None,
-                              attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType
+                              attributes: Option[Map[String, QName]] = None) extends CountryType with AddressDetailsType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAdministrativeAreaName(value: Content) = {
+    this.copy(administrativeAreaName = if (administrativeAreaName == Nil) (Seq.empty :+ value) else (administrativeAreaName :+ value))
+  }
+
+}
 
 trait AdministrativeAreaType
 
@@ -468,7 +877,26 @@ case class PostOffice(addressLine: Seq[AddressLine] = Nil,
                       any: Seq[Any] = Nil,
                       objectType: Option[String] = None,
                       indicator: Option[String] = None,
-                      attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType with AdministrativeAreaType
+                      attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType with AdministrativeAreaType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPostOfficeName(value: Content) = {
+    this.copy(postOfficeName = if (postOfficeName == Nil) (Seq.empty :+ value) else (postOfficeName :+ value))
+  }
+
+}
 
 case class PostalCodeNumberExtension(content: Option[String] = None,
                                      objectType: Option[String] = None,
@@ -484,7 +912,25 @@ case class PostTown(addressLine: Seq[AddressLine] = Nil,
                     postTownName: Seq[Content] = Nil,
                     postTownSuffix: Option[PostTownSuffix] = None,
                     objectType: Option[String] = None,
-                    attributes: Option[Map[String, QName]] = None)
+                    attributes: Option[Map[String, QName]] = None) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPostTownName(value: Content) = {
+    this.copy(postTownName = if (postTownName == Nil) (Seq.empty :+ value) else (postTownName :+ value))
+  }
+}
 
 
 case class PostalCode(addressLine: Seq[AddressLine] = Nil,
@@ -493,7 +939,33 @@ case class PostalCode(addressLine: Seq[AddressLine] = Nil,
                       postTown: Option[PostTown] = None,
                       any: Seq[Any] = Nil,
                       objectType: Option[String] = None,
-                      attributes: Option[Map[String, QName]] = None) extends ThoroughfareType with AdministrativeAreaType
+                      attributes: Option[Map[String, QName]] = None) extends ThoroughfareType with AdministrativeAreaType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPostalCodeNumber(value: Content) = {
+    this.copy(postalCodeNumber = if (postalCodeNumber == Nil) (Seq.empty :+ value) else (postalCodeNumber :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPostalCodeNumberExtension(value: PostalCodeNumberExtension) = {
+    this.copy(postalCodeNumberExtension = if (postalCodeNumberExtension == Nil) (Seq.empty :+ value) else (postalCodeNumberExtension :+ value))
+  }
+}
 
 case class PostBoxNumber(content: Option[String] = None,
                          code: Option[String] = None,
@@ -526,7 +998,18 @@ case class PostBox(addressLine: Seq[AddressLine] = Nil,
                    any: Seq[Any] = Nil,
                    objectType: Option[String] = None,
                    indicator: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType
+                   attributes: Option[Map[String, QName]] = None) extends DependentLocalityType with LocalityType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+
+}
 
 case class Department(addressLine: Seq[AddressLine] = Nil,
                       departmentName: Seq[Content] = Nil,
@@ -534,7 +1017,25 @@ case class Department(addressLine: Seq[AddressLine] = Nil,
                       postalCode: Option[PostalCode] = None,
                       any: Seq[Any] = Nil,
                       objectType: Option[String] = None,
-                      attributes: Option[Map[String, QName]] = None)
+                      attributes: Option[Map[String, QName]] = None) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToDepartmentName(value: Content) = {
+    this.copy(departmentName = if (departmentName == Nil) (Seq.empty :+ value) else (departmentName :+ value))
+  }
+}
 
 case class PremiseName(content: Option[String] = None,
                        objectType: Option[String] = None,
@@ -549,13 +1050,81 @@ case class PremiseLocation(content: Option[String] = None,
 case class PremiseNumberRangeFrom(addressLine: Seq[AddressLine] = Nil,
                                   premiseNumberPrefix: Seq[PremiseNumberPrefix] = Nil,
                                   premiseNumber: Seq[PremiseNumber] = Nil,
-                                  premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil)
+                                  premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberPrefix(value: PremiseNumberPrefix) = {
+    this.copy(premiseNumberPrefix = if (premiseNumberPrefix == Nil) (Seq.empty :+ value) else (premiseNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberSuffix(value: PremiseNumberSuffix) = {
+    this.copy(premiseNumberSuffix = if (premiseNumberSuffix == Nil) (Seq.empty :+ value) else (premiseNumberSuffix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumber(value: PremiseNumber) = {
+    this.copy(premiseNumber = if (premiseNumber == Nil) (Seq.empty :+ value) else (premiseNumber :+ value))
+  }
+}
 
 
 case class PremiseNumberRangeTo(addressLine: Seq[AddressLine] = Nil,
                                 premiseNumberPrefix: Seq[PremiseNumberPrefix] = Nil,
                                 premiseNumber: Seq[PremiseNumber] = Nil,
-                                premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil)
+                                premiseNumberSuffix: Seq[PremiseNumberSuffix] = Nil) {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberPrefix(value: PremiseNumberPrefix) = {
+    this.copy(premiseNumberPrefix = if (premiseNumberPrefix == Nil) (Seq.empty :+ value) else (premiseNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberSuffix(value: PremiseNumberSuffix) = {
+    this.copy(premiseNumberSuffix = if (premiseNumberSuffix == Nil) (Seq.empty :+ value) else (premiseNumberSuffix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumber(value: PremiseNumber) = {
+    this.copy(premiseNumber = if (premiseNumber == Nil) (Seq.empty :+ value) else (premiseNumber :+ value))
+  }
+}
 
 
 case class PremiseNumberRange(premiseNumberRangeFrom: Option[PremiseNumberRangeFrom],
@@ -584,7 +1153,76 @@ case class Premise(addressLine: Seq[AddressLine] = Nil,
                    premiseDependency: Option[String] = None,
                    premiseDependencyType: Option[String] = None,
                    premiseThoroughfareConnector: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareType
+                   attributes: Option[Map[String, QName]] = None) extends ThoroughfareType {
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseFirmOrSubPremiseType(value: PremiseType2) = {
+    this.copy(premiseFirmOrSubPremiseType = if (premiseFirmOrSubPremiseType == Nil) (Seq.empty :+ value) else (premiseFirmOrSubPremiseType :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseLocation(value: PremiseLocation) = {
+    this.copy(premiseLocation = if (premiseLocation == Nil) (Seq.empty :+ value) else (premiseLocation :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseName(value: PremiseName) = {
+    this.copy(premiseName = if (premiseName == Nil) (Seq.empty :+ value) else (premiseName :+ value))
+  }
+
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToAddressLine(value: AddressLine) = {
+    this.copy(addressLine = if (addressLine == Nil) (Seq.empty :+ value) else (addressLine :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberPrefix(value: PremiseNumberPrefix) = {
+    this.copy(premiseNumberPrefix = if (premiseNumberPrefix == Nil) (Seq.empty :+ value) else (premiseNumberPrefix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberSuffix(value: PremiseNumberSuffix) = {
+    this.copy(premiseNumberSuffix = if (premiseNumberSuffix == Nil) (Seq.empty :+ value) else (premiseNumberSuffix :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToBuildingName(value: BuildingName) = {
+    this.copy(buildingName = if (buildingName == Nil) (Seq.empty :+ value) else (buildingName :+ value))
+  }
+  /**
+   * returns a new object with value added to the sequence
+   * @param value to add
+   * @return a new object with value added to the sequence
+   */
+  def addToPremiseNumberRange(value: PremiseNumberRange) = {
+    this.copy(premiseNumberRange = if (premiseNumberRange == Nil) (Seq.empty :+ value) else (premiseNumberRange :+ value))
+  }
+}
 
 trait PremiseType
 trait PremiseType2

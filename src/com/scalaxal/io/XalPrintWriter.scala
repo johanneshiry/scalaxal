@@ -62,7 +62,7 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
                      doctype: dtd.DocType = null) {
 
 // TODO maybe default should be to null device or None
-  def this(fileName: Option[String]) = this(writer = Some(if (fileName.isDefined) new PrintWriter(new File(fileName.get)) else new PrintWriter(System.out)))
+  def this(fileName: Option[String]) = this(Some(if (fileName.isDefined) new PrintWriter(new File(fileName.get)) else new PrintWriter(System.out)))
 
   def this(fileName: String) = this(Option(fileName))
 

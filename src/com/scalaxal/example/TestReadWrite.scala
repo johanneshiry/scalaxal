@@ -55,23 +55,28 @@ object TestReadWrite {
     if (xal.isDefined) {
 
       // create a new AddressLines and add a new AddressLine
-      val newAddressLines = AddressLines() addTo("addressLines", new AddressLine(Some("a new address line")))
+      val newAddressLines = AddressLines()
+//        .copy(any = if (any == Nil) (Seq.empty :+ value) else (any :+ new AddressLine(Some("xx a new address line"))))
+//      addToAddressLines(new AddressLine(Some("xx a new address line")))
+
+
+      val newAddressDetails = AddressDetails().copy(addressDetailsType = Some(newAddressLines))
 
       // create a new AddressDetails with the newAddressLines
-      val newAddressDetails = AddressDetails() With("addressDetailsType", Some(newAddressLines))
+//      val newAddressDetails = AddressDetails() With("addressDetailsType", Some(newAddressLines))
 
       // create a new xal object with the new AddressDetails
-      val newXal = xal.get addTo("addressDetails", newAddressDetails)
+//      val newXal = xal.get addTo("addressDetails", newAddressDetails)
 
       //          "./xal-files/scalaxal-XAL.XML"
-      new XalPrintWriter().write(Option(newXal), new PrettyPrinter(80, 3))
+//      new XalPrintWriter().write(Option(newXal), new PrettyPrinter(80, 3))
 
       // write the AddressDetails
       //      xal.get.addressDetails.foreach(x =>
       //        XalToXml.toXml(x).foreach(z => println(new PrettyPrinter(80, 3).format(z))))
 
       // write the AddressDetails
-      //    xal.get.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
+   //   newXal.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
     }
 
     println("\n....XAL TestReadWrite test2 done...")

@@ -173,6 +173,7 @@ case class CountryNameCode(content: Option[String] = None,
                            attributes: Option[Map[String, QName]] = None)
 
 
+
 case class Country(addressLine: Seq[AddressLine] = Nil,
                    countryNameCode: Seq[CountryNameCode] = Nil,
                    countryName: Seq[Content] = Nil,

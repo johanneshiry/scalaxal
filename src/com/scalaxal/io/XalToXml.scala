@@ -83,9 +83,7 @@ object XalToXml extends XmlExtractor {
    * @return
    */
   def toXml(theObject: Any): NodeSeq = {
-    val result = NodeSeq fromSeq fieldsToXml(theObject)
-    // crude way to remove all Content nodes and re-load as xml
-    loadString(result.toString().replace("<Content>", "").replace("</Content>", ""))
+    NodeSeq fromSeq fieldsToXml(theObject)
   }
 
   private def capitalise(name: String) = {
@@ -136,19 +134,24 @@ object XalToXml extends XmlExtractor {
   }
 
   private def doMatch(name: String, value: Any) = {
-   // do not process the attributes here
-   if(isAttribute(capitalise(name))) NodeSeq.Empty else
-   value match {
-     case x: Content => getContentElem(name, x)
-     case x: Seq[_] => x flatMap {v => toXml(name, v)}
-     case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Boolean => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Double => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
-     case x: Any => fieldsToXml(x)
-     case _ => NodeSeq.Empty
-   }
- }
+    // "content" field name gives an atom node
+    if (name.equals("Content")) new Atom(value.toString)
+    else {
+      // do not process the attributes here
+      if (isAttribute(capitalise(name))) NodeSeq.Empty
+      else
+        value match {
+          case x: Content => getContentElem(name, x)
+          case x: Seq[_] => x flatMap { v => toXml(name, v) }
+          case x: String => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+          case x: Int => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+          case x: Boolean => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+          case x: Double => new Elem(null, adjustLabel(name), Null, TopScope, true, Text(x.toString))
+          case x: Any => fieldsToXml(x)
+          case _ => NodeSeq.Empty
+        }
+    }
+  }
 
   private def getAttributesOf(obj: Any): MetaData = {
     def getAttributesOf(obj: Any, ndx: Int): MetaData = {

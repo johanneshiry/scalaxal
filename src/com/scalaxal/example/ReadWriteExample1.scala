@@ -2,6 +2,7 @@ package com.scalaxal.example
 
 import com.scalaxal.io.{XalPrintWriter, XalFileReader, XalFromXml}
 import xml.PrettyPrinter
+import com.scalaxal.xAL.XAL
 
 /**
  * Author: Ringo Wathelet

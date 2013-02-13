@@ -72,7 +72,7 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
    * @param value the xal element option
    * @param pretty the pretty printer to use, default null
    */
-  def write[A: XalToXml](value: A, pretty: PrettyPrinter = null) = {
+  def write(value: Any, pretty: PrettyPrinter = null) = {
     if (writer.isDefined) {
      xmlExtractor match {
        case Some(extractor) => {

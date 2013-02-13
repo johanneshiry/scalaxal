@@ -34,7 +34,7 @@ import xml._
 import scala.Predef._
 import com.scalaxal.xAL._
 import xml.XML._
-import scala.Some
+import scala.{Option, Some}
 
 /**
  * @author Ringo Wathelet
@@ -53,19 +53,13 @@ trait XalToXml[A] {
 /** Factory to convert XAL objects to scala xml NodeSeq */
 object XalToXml extends XmlExtractor {
 
-  implicit object XalObjectToXml extends XalToXml[Option[XAL]] {
-    def toXml(xalOption: Option[XAL]): NodeSeq = {
-      xalOption match {
-        case Some(xal) => XalToXml.toXml(xal)
-        case None => NodeSeq.Empty
-      }
-    }
-  }
+  def apply(obj: Any) = toXml(obj)
 
-  implicit object AddressDetailsToXml extends XalToXml[Option[AddressDetails]] {
-    def toXml(addressDetailsOption: Option[AddressDetails]): NodeSeq = {
-      addressDetailsOption match {
-        case Some(addressDetails) => XalToXml.toXml(addressDetails)
+  implicit object AnyToXml extends XalToXml[Any] {
+    def toXml(obj: Any): NodeSeq = {
+      val objOption = if (obj.isInstanceOf[Option[_]]) obj else Option(obj)
+      objOption match {
+        case Some(x) => XalToXml(x)
         case None => NodeSeq.Empty
       }
     }
@@ -82,8 +76,10 @@ object XalToXml extends XmlExtractor {
    * @param theObject
    * @return
    */
+
   def toXml(theObject: Any): NodeSeq = {
-    NodeSeq fromSeq fieldsToXml(theObject)
+    if ((theObject == Null) || (theObject == Nil)) NodeSeq.Empty
+    else (NodeSeq fromSeq fieldsToXml(theObject))
   }
 
   private def capitalise(name: String) = {

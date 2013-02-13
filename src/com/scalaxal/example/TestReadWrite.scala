@@ -32,14 +32,14 @@ object TestReadWrite {
       val newXal = xal.get.copy(addressDetails = (xal.get.addressDetails :+ newAddressDetails))
 
       //          "./xal-files/scalaxal-XAL.XML"
-      new XalPrintWriter().write(Option(newXal), new PrettyPrinter(80, 3))
+//      new XalPrintWriter().write(Option(newXal), new PrettyPrinter(80, 3))
 
       // write the AddressDetails
 //      xal.get.addressDetails.foreach(x =>
 //        XalToXml.toXml(x).foreach(z => println(new PrettyPrinter(80, 3).format(z))))
 
       // write the AddressDetails
-//    xal.get.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
+    xal.get.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
     }
 
     println("\n....XAL TestReadWrite test1 done...")
@@ -70,7 +70,7 @@ object TestReadWrite {
       //        XalToXml.toXml(x).foreach(z => println(new PrettyPrinter(80, 3).format(z))))
 
       // write the AddressDetails
-   //   newXal.addressDetails.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
+ //     newAddressLines.addressLines.foreach(x => new XalPrintWriter().write(Option(x), new PrettyPrinter(80, 3)))
     }
 
     println("\n....XAL TestReadWrite test2 done...")

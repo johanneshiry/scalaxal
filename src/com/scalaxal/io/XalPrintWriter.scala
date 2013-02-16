@@ -61,13 +61,13 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
                      xmlDecl: Boolean = true,
                      doctype: dtd.DocType = null) {
 
-// TODO maybe default should be to null device or None
   def this(fileName: Option[String]) = this(Some(if (fileName.isDefined) new PrintWriter(new File(fileName.get)) else new PrintWriter(System.out)))
 
   def this(fileName: String) = this(Option(fileName))
 
   /**
-   * writes the xal element to xml
+   * writes the xal element to xml.
+   * Note the "writer" is not closed here.
    *
    * @param value the xal element option
    * @param pretty the pretty printer to use, default null

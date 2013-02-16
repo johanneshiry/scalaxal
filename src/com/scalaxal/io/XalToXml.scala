@@ -73,13 +73,16 @@ object XalToXml extends XmlExtractor {
   /**
    * converts any xal object into a xml node sequence
    *
-   * @param theObject
+   * @param obj
    * @return
    */
 
-  def toXml(theObject: Any): NodeSeq = {
-    if ((theObject == Null) || (theObject == Nil)) NodeSeq.Empty
-    else (NodeSeq fromSeq fieldsToXml(theObject))
+  def toXml(obj: Any): NodeSeq = {
+    val objOption = if (obj.isInstanceOf[Option[_]]) obj else Option(obj)
+    objOption match {
+      case Some(x) => (NodeSeq fromSeq fieldsToXml(obj))
+      case None => NodeSeq.Empty
+    }
   }
 
   private def capitalise(name: String) = {
@@ -112,7 +115,7 @@ object XalToXml extends XmlExtractor {
   }
 
   private def fieldsToXml(obj: Any) = {
-     // the fields nodes to xml
+     // the obj fields nodes to xml
      val fieldsXml = obj.getClass.getDeclaredFields.flatMap { field => {
          field.setAccessible(true)
          toXml(adjustLabel(field.getName), field.get(obj)) }
@@ -130,7 +133,7 @@ object XalToXml extends XmlExtractor {
   }
 
   private def doMatch(name: String, value: Any) = {
-    // "content" field name gives an atom node
+    // special case, the "content" field name gives an Atom node
     if (name.equals("Content")) new Atom(value.toString)
     else {
       // do not process the attributes here
@@ -150,9 +153,10 @@ object XalToXml extends XmlExtractor {
   }
 
   private def getAttributesOf(obj: Any): MetaData = {
+
     def getAttributesOf(obj: Any, ndx: Int): MetaData = {
       ndx match {
-        case 0 => Null
+        case n if n <= 0 => Null
         case n if n >= 1 => {
           val ndxLessOne = n - 1
           val field = obj.getClass.getDeclaredFields.array(ndxLessOne)
@@ -169,6 +173,7 @@ object XalToXml extends XmlExtractor {
     getAttributesOf(obj, obj.getClass.getDeclaredFields.length)
   }
 
+  // deals with the Content class objects
   private def getContentElem(name: String, obj: Any): Elem = {
     val field = obj.getClass.getDeclaredField("content")
     field.setAccessible(true)

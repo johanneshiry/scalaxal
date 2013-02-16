@@ -15,7 +15,11 @@ object ReadWriteExample1 {
     println("....XAL ReadWriteExample1 start...\n")
 
     val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
-    if (xal.isDefined) new XalPrintWriter().write(xal, new PrettyPrinter(80, 3))
+    if (xal.isDefined) {
+      val writer = new XalPrintWriter()
+      writer.write(xal, new PrettyPrinter(80, 3))
+      writer.close()
+    }
 
     println("\n....XAL ReadWriteExample1 done...")
   }

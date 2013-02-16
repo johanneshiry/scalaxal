@@ -63,7 +63,9 @@ object TestReadWrite {
       val newXal = xal.get addToAddressDetails (newAddressDetails)
 
       //          "./xal-files/scalaxal-XAL.XML"
-      new XalPrintWriter().write(Option(newXal), new PrettyPrinter(80, 3))
+      val writer = new XalPrintWriter()
+      writer.write(Option(newXal), new PrettyPrinter(80, 3))
+      writer.close()
 
       // write the AddressDetails
       //      xal.get.addressDetails.foreach(x =>

@@ -2,7 +2,8 @@
 
 ## References
  
-- 1) The Organization for the Advancement of Structured Information Standards [OASIS], https://www.oasis-open.org/committees/ciq/
+- 1) The Organization for the Advancement of Structured Information Standards [OASIS], 
+ https://www.oasis-open.org/committees/ciq/
 - 2) Extensible Address Language (xAL) Standard Description Document for W3C DTD/Schema Version 2.0
 
 ## Packages

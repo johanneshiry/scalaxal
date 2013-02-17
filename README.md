@@ -24,7 +24,20 @@ Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
 ## Usage
 
-to do
+    object ReadWriteExample1 {
+      def main(args: Array[String]) {
+       println("....XAL ReadWriteExample1 start...\n")
+
+       val xal = new XalFileReader().getXalFromFile("./xal-files/XAL.XML")
+       if (xal.isDefined) {
+         val writer = new XalPrintWriter()
+         writer.write(xal, new PrettyPrinter(80, 3))
+         writer.close()
+       }
+
+      println("\n....XAL ReadWriteExample1 done...")
+     }
+    }
 
 ## Status
 

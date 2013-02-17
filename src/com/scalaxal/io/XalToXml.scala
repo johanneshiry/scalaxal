@@ -65,6 +65,7 @@ object XalToXml extends XmlExtractor {
     }
   }
 
+
   def getXmlFrom[A: XalToXml](xal: A) = implicitly[XalToXml[A]].toXml(xal)
 
 //-----------------------------------------------------------------------------------------

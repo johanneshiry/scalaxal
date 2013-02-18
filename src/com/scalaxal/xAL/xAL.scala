@@ -103,6 +103,8 @@ case class XAL(addressDetails: Seq[AddressDetails] = Nil,
                version: Option[String] = None,
                attributes: Option[Map[String, QName]] = None) {
 
+  def this(addressDetails: AddressDetails) = this(Seq.empty :+ addressDetails)
+
   /**
    * returns a new XAL object with value added to addressDetails sequence
    * @param value the AddressDetails to add to addressDetails
@@ -118,13 +120,21 @@ case class XAL(addressDetails: Seq[AddressDetails] = Nil,
 case class Content(content: Option[String] = None,
                    objectType: Option[String] = None,
                    code: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None)
+                   attributes: Option[Map[String, QName]] = None) {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class AddressIdentifier(content: Option[String] = None,
                              identifierType: Option[String] = None,
                              objectType: Option[String] = None,
                              code: Option[String] = None,
-                             attributes: Option[Map[String, QName]] = None)
+                             attributes: Option[Map[String, QName]] = None) {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class SortingCode(objectType: Option[String] = None, code: Option[String] = None)
 
@@ -165,13 +175,20 @@ case class PostalServiceElements(addressIdentifier: Seq[AddressIdentifier] = Nil
 case class Address(content: Option[String] = None,
                    objectType: Option[String] = None,
                    code: Option[String] = None,
-                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType
+                   attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class CountryNameCode(content: Option[String] = None,
                            scheme: Option[String] = None,
                            code: Option[String] = None,
-                           attributes: Option[Map[String, QName]] = None)
+                           attributes: Option[Map[String, QName]] = None) {
 
+  def this(content: String) = this(Option(content))
+
+}
 
 
 case class Country(addressLine: Seq[AddressLine] = Nil,
@@ -180,6 +197,13 @@ case class Country(addressLine: Seq[AddressLine] = Nil,
                    countryType: Option[CountryType] = None,
                    any: Seq[Any] = Nil,
                    attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+
+  def this(addressLine: AddressLine) = this(Seq.empty :+ addressLine)
+  def this(addressLine: AddressLine, countryName: String) =
+    this((Seq.empty :+ addressLine), Nil, (Seq.empty :+ new Content(countryName)))
+  def this(addressLine: AddressLine, countryName: String, countryNameCode: String) =
+    this((Seq.empty :+ addressLine), (Seq.empty :+ new CountryNameCode(countryNameCode)),
+      (Seq.empty :+ new Content(countryName)))
 
   /**
    * returns a new object with value added to the sequence
@@ -227,6 +251,7 @@ trait AddressDetailsType
 case class AddressLines(addressLines: Seq[AddressLine] = Nil,
                         any: Seq[Any] = Nil,
                         attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+  def this(addressLine: AddressLine) = this(Seq.empty :+ addressLine)
 
   /**
    * returns a new object with value added to addressLines sequence
@@ -262,13 +287,21 @@ case class BuildingName(content: Option[String] = None,
                         objectType: Option[String] = None,
                         typeOccurrence: Option[TypeOccurrence] = None,
                         code: Option[String] = None,
-                        attributes: Option[Map[String, QName]] = None)
+                        attributes: Option[Map[String, QName]] = None) {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 
 case class DependentLocalityNumber(content: Option[String] = None,
                                    nameNumberOccurrence: Option[TypeOccurrence] = None,
                                    code: Option[String] = None,
-                                   attributes: Option[Map[String, QName]] = None)
+                                   attributes: Option[Map[String, QName]] = None) {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 
 case class DependentLocality(addressLine: Seq[AddressLine] = Nil,
@@ -285,6 +318,8 @@ case class DependentLocality(addressLine: Seq[AddressLine] = Nil,
                              connector: Option[String] = None,
                              indicator: Option[String] = None,
                              attributes: Option[Map[String, QName]] = None) extends ThoroughfareType  {
+
+  def this(addressLine: AddressLine) = this(Seq.empty :+ addressLine)
 
   /**
    * returns a new object with value added to the sequence
@@ -348,7 +383,11 @@ case class LargeMailUserIdentifier(content: Option[String] = None,
                                    objectType: Option[String] = None,
                                    indicator: Option[String] = None,
                                    code: Option[String] = None,
-                                   attributes: Option[Map[String, QName]] = None)
+                                   attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class LargeMailUser(addressLine: Seq[AddressLine] = Nil,
                              largeMailUserName: Seq[Content] = Nil,
@@ -395,7 +434,11 @@ case class LargeMailUser(addressLine: Seq[AddressLine] = Nil,
 case class MailStopNumber(content: Option[String] = None,
                           nameNumberSeparator: Option[String] = None,
                           code: Option[String] = None,
-                          attributes: Option[Map[String, QName]] = None)
+                          attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class MailStop(addressLine: Seq[AddressLine] = Nil,
                         mailStopName: Option[Content] = None,
@@ -439,12 +482,20 @@ case class SubPremiseName(content: Option[String] = None,
                           objectType: Option[String] = None,
                           typeOccurrence: Option[TypeOccurrence] = None,
                           code: Option[String] = None,
-                          attributes: Option[Map[String, QName]] = None)
+                          attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 
 
 case class SubPremiseLocation(content: Option[String] = None,
-                              code: Option[String] = None) extends SubPremiseType
+                              code: Option[String] = None) extends SubPremiseType  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class SubPremiseNumber(content: Option[String] = None,
                             indicator: Option[String] = None,
@@ -453,20 +504,32 @@ case class SubPremiseNumber(content: Option[String] = None,
                             premiseNumberSeparator: Option[String] = None,
                             objectType: Option[String] = None,
                             code: Option[String] = None,
-                            attributes: Option[Map[String, QName]] = None) extends SubPremiseType
+                            attributes: Option[Map[String, QName]] = None) extends SubPremiseType  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 
 case class SubPremiseNumberPrefix(content: Option[String] = None,
                                   numberPrefixSeparator: Option[String] = None,
                                   objectType: Option[String] = None,
                                   code: Option[String] = None,
-                                  attributes: Option[Map[String, QName]] = None)
+                                  attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class SubPremiseNumberSuffix(content: Option[String] = None,
                                   numberSuffixSeparator: Option[String] = None,
                                   objectType: Option[String] = None,
                                   code: Option[String] = None,
-                                  attributes: Option[Map[String, QName]] = None)
+                                  attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class SubPremise(addressLine: Seq[AddressLine] = Nil,
                           subPremiseName: Seq[SubPremiseName] = Nil,
@@ -540,7 +603,11 @@ trait SubPremiseType
 case class AddressLine(content: Option[String] = None,
                        objectType: Option[String] = None,
                        code: Option[String] = None,
-                       attributes: Option[Map[String, QName]] = None)
+                       attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class Locality(addressLine: Seq[AddressLine] = Nil,
                     localityName: Seq[Content] = Nil,
@@ -867,7 +934,11 @@ case class PostOfficeNumber(content: Option[String] = None,
                             indicator: Option[String] = None,
                             indicatorOccurrence: Option[TypeOccurrence] = None,
                             code: Option[String] = None,
-                            attributes: Option[Map[String, QName]] = None)
+                            attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostOffice(addressLine: Seq[AddressLine] = Nil,
                       postOfficeNumber: Option[PostOfficeNumber] = None,  // was Seq but ref indicates (0 or 1)
@@ -903,11 +974,19 @@ case class PostalCodeNumberExtension(content: Option[String] = None,
                                      objectType: Option[String] = None,
                                      numberExtensionSeparator: Option[String] = None,
                                      code: Option[String] = None,
-                                     attributes: Option[Map[String, QName]] = None)
+                                     attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostTownSuffix(content: Option[String] = None,
                           code: Option[String] = None,
-                          attributes: Option[Map[String, QName]] = None)
+                          attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostTown(addressLine: Seq[AddressLine] = Nil,
                     postTownName: Seq[Content] = Nil,
@@ -971,23 +1050,39 @@ case class PostalCode(addressLine: Seq[AddressLine] = Nil,
 case class PostBoxNumber(content: Option[String] = None,
                          code: Option[String] = None,
                          objectType: Option[String] = None,
-                         attributes: Option[Map[String, QName]] = None)
+                         attributes: Option[Map[String, QName]] = None)   {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 
 case class PostBoxNumberPrefix(content: Option[String] = None,
                                numberPrefixSeparator: Option[String] = None,
                                code: Option[String] = None,
-                               attributes: Option[Map[String, QName]] = None)
+                               attributes: Option[Map[String, QName]] = None) {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostBoxNumberSuffix(content: Option[String] = None,
                                numberSuffixSeparator: Option[String] = None,
                                code: Option[String] = None,
-                               attributes: Option[Map[String, QName]] = None)
+                               attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostBoxNumberExtension(content: Option[String] = None,
                                   numberExtensionSeparator: Option[String] = None,
                                   code: Option[String] = None,
-                                  attributes: Option[Map[String, QName]] = None)
+                                  attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PostBox(addressLine: Seq[AddressLine] = Nil,
                    postBoxNumber: PostBoxNumber,
@@ -1042,11 +1137,19 @@ case class PremiseName(content: Option[String] = None,
                        objectType: Option[String] = None,
                        typeOccurrence: Option[TypeOccurrence] = None,
                        code: Option[String] = None,
-                       attributes: Option[Map[String, QName]] = None)
+                       attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PremiseLocation(content: Option[String] = None,
                            code: Option[String] = None,
-                           attributes: Option[Map[String, QName]] = None) extends PremiseType
+                           attributes: Option[Map[String, QName]] = None) extends PremiseType  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PremiseNumberRangeFrom(addressLine: Seq[AddressLine] = Nil,
                                   premiseNumberPrefix: Seq[PremiseNumberPrefix] = Nil,
@@ -1235,13 +1338,21 @@ case class ThoroughfareNumberPrefix(content: Option[String] = None,
                                     numberPrefixSeparator: Option[String] = None,
                                     objectType: Option[String] = None,
                                     code: Option[String] = None,
-                                    attributes: Option[Map[String, QName]] = None)
+                                    attributes: Option[Map[String, QName]] = None)   {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class ThoroughfareNumberSuffix(content: Option[String] = None,
                                     numberSuffixSeparator: Option[String] = None,
                                     objectType: Option[String] = None,
                                     code: Option[String] = None,
-                                    attributes: Option[Map[String, QName]] = None)
+                                    attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 trait NumberType
 
 object NumberType {
@@ -1296,7 +1407,11 @@ case class ThoroughfareNumber(content: Option[String] = None,
                               indicatorOccurrence: Option[TypeOccurrence] = None,
                               numberOccurrence: Option[NumberOccurrence] = None,
                               code: Option[String] = None,
-                              attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType
+                              attributes: Option[Map[String, QName]] = None) extends ThoroughfareNumberType  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PremiseNumber(content: Option[String] = None,
                          numberType: Option[NumberType] = None,
@@ -1305,19 +1420,31 @@ case class PremiseNumber(content: Option[String] = None,
                          indicatorOccurrence: Option[TypeOccurrence] = None,
                          numberTypeOccurrence: Option[TypeOccurrence] = None,
                          code: Option[String] = None,
-                         attributes: Option[Map[String, QName]] = None) extends PremiseNumberType
+                         attributes: Option[Map[String, QName]] = None) extends PremiseNumberType   {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PremiseNumberPrefix(content: Option[String],
                                numberPrefixSeparator: Option[String] = None,
                                objectType: Option[String] = None,
                                code: Option[String] = None,
-                               attributes: Option[Map[String, QName]] = None)
+                               attributes: Option[Map[String, QName]] = None)   {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class PremiseNumberSuffix(content: Option[String] = None,
                                numberSuffixSeparator: Option[String] = None,
                                objectType: Option[String] = None,
                                code: Option[String] = None,
-                               attributes: Option[Map[String, QName]] = None)
+                               attributes: Option[Map[String, QName]] = None)  {
+
+  def this(content: String) = this(Option(content))
+
+}
 
 case class GrPostal(code: Option[String] = None)
 

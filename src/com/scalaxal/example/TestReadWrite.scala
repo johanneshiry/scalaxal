@@ -54,10 +54,8 @@ object TestReadWrite {
 
     if (xal.isDefined) {
 
-      // create a new AddressLines and add a new AddressLine
-      val newAddressLines = AddressLines() addToAddressLines (new AddressLine(Option("a new address line")))
-
-      val newAddressDetails = AddressDetails().copy(addressDetailsType = Option(newAddressLines))
+      // create a new AddressDetails
+      val newAddressDetails = new AddressDetails(new AddressLines(new AddressLine("a new address line")))
 
       // create a new xal object with the new AddressDetails
       val newXal = xal.get addToAddressDetails (newAddressDetails)

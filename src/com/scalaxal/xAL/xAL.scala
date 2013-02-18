@@ -123,7 +123,7 @@ case class Content(content: Option[String] = None,
                    attributes: Option[Map[String, QName]] = None) {
 
   def this(content: String) = this(Option(content))
-
+  def this(content: String, objectType: String, code: String) = this(Option(content),Option(objectType),Option(code))
 }
 
 case class AddressIdentifier(content: Option[String] = None,
@@ -178,6 +178,7 @@ case class Address(content: Option[String] = None,
                    attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
 
   def this(content: String) = this(Option(content))
+  def this(content: String, objectType: String, code: String) = this(Option(content),Option(objectType),Option(code))
 
 }
 
@@ -244,13 +245,18 @@ case class AddressDetails(postalServiceElements: Option[PostalServiceElements] =
                           code: Option[String] = None,
                           addressDetailsKey: Option[String] = None,
                           attributes: Option[Map[String, QName]] = None,
-                          any: Seq[Any] = Nil)
+                          any: Seq[Any] = Nil)     {
+
+  def this(addressDetailsType: AddressDetailsType) = this(None, Option(addressDetailsType))
+
+}
 
 trait AddressDetailsType
 
 case class AddressLines(addressLines: Seq[AddressLine] = Nil,
                         any: Seq[Any] = Nil,
                         attributes: Option[Map[String, QName]] = None) extends AddressDetailsType {
+
   def this(addressLine: AddressLine) = this(Seq.empty :+ addressLine)
 
   /**
@@ -937,7 +943,7 @@ case class PostOfficeNumber(content: Option[String] = None,
                             attributes: Option[Map[String, QName]] = None)  {
 
   def this(content: String) = this(Option(content))
-
+  def this(content: String, indicator: String) = this(Option(content), Option(indicator))
 }
 
 case class PostOffice(addressLine: Seq[AddressLine] = Nil,
@@ -1020,6 +1026,8 @@ case class PostalCode(addressLine: Seq[AddressLine] = Nil,
                       any: Seq[Any] = Nil,
                       objectType: Option[String] = None,
                       attributes: Option[Map[String, QName]] = None) extends ThoroughfareType with AdministrativeAreaType {
+
+  def this(postalCodeNumber: Content) = this(Nil, (Seq.empty :+ postalCodeNumber))
 
   /**
    * returns a new object with value added to the sequence

@@ -1,5 +1,13 @@
 # scalaxal an extensible Address Language (xAL) library written in scala.
 
+
+## Overview
+
+The extensible Address Language (xAL) is a unified hierarchical address format developed
+by the OASIS technical committee using xml. The scalaxal library represents addresses,
+as specified by the standard, as scala objects. It also provides for reading addresses
+in xml format into scalaxal objects, and writing scalaxal objects to xml format.
+
 ## References
  
 - 1) The Organization for the Advancement of Structured Information Standards [OASIS], 

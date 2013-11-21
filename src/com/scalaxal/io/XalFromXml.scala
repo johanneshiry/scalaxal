@@ -34,7 +34,9 @@ import scala.xml._
 import com.scalaxal.xAL._
 import scala.reflect.runtime.universe._
 import scala.Some
-
+import scala.language.postfixOps
+import scala.language.implicitConversions
+import scala.language.reflectiveCalls
 
 /**
  * @author Ringo Wathelet
@@ -59,7 +61,7 @@ object XalFromXml extends XalExtractor {
   def makeXAL(nodeSeq: xml.NodeSeq): Option[XAL] = {
     if (nodeSeq.isEmpty) None else
       (nodeSeq \\ "xAL") match {
-        case x if (x.isEmpty) => None
+        case x if x.isEmpty => None
         case x => Some(new XAL(addressDetails = makeAddressDetailsSet(x \ "AddressDetails"),
           any = Seq.empty,
           version = getFromNode[String](nodeSeq \ "@Version"),
@@ -70,7 +72,7 @@ object XalFromXml extends XalExtractor {
   def getFromNode[A: TypeTag](nodeSeq: NodeSeq): Option[A] = {
     if (nodeSeq.isEmpty) None else {
       val node = nodeSeq.text.trim
-      if(node.isEmpty) None else {
+      if(node.isEmpty) None else
         typeOf[A] match {
           case x if x == typeOf[String] => Some(node).asInstanceOf[Option[A]]
           case x if x == typeOf[Double] => try { Some(node.toDouble).asInstanceOf[Option[A]] } catch { case _: Throwable => None }
@@ -82,14 +84,7 @@ object XalFromXml extends XalExtractor {
           }
           case _ => None
         }
-      }
     }
-  }
-
-  type ModeType[A] = { def fromString(value: String): A }
-
-  def makeMode[A](nodeSeq: NodeSeq, mode: ModeType[A]): Option[A] = {
-    (getFromNode[String](nodeSeq)).map(mode.fromString(_))
   }
 
   def makeAddressDetailsSet(nodeSeq: NodeSeq): Seq[AddressDetails] = {
@@ -124,7 +119,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeAddressDetailsType(nodeSeq: NodeSeq, addressType: AddressDetailsTypeSet): Option[AddressDetailsType] = {
-   if (nodeSeq.isEmpty) None else {
+   if (nodeSeq.isEmpty) None else
      addressType match {
           case AddressDetailsTypeSet.Address => makeAddress(nodeSeq)
           case AddressDetailsTypeSet.AddressLines => makeAddressLines(nodeSeq)
@@ -134,7 +129,6 @@ object XalFromXml extends XalExtractor {
           case AddressDetailsTypeSet.Thoroughfare => makeThoroughfare(nodeSeq)
           case _ => None
         }
-      }
     }
 
   def makeCountryNameCode(nodeSeq: NodeSeq): Option[CountryNameCode] = {
@@ -172,7 +166,7 @@ object XalFromXml extends XalExtractor {
       thoroughfarePostDirection = makeContent(nodeSeq \ "ThoroughfarePostDirection"),
       dependentThoroughfare = makeDependentThoroughfare(nodeSeq \ "DependentThoroughfare"),
       thoroughfareType = makeThoroughfareType(nodeSeq),
-      dependentThoroughfares = makeMode[DependentThoroughfares](nodeSeq \ "@DependentThoroughfares", DependentThoroughfares),
+      dependentThoroughfares = getFromNode[String](nodeSeq \ "@DependentThoroughfares").map(DependentThoroughfares.fromString(_)),
       dependentThoroughfaresIndicator = getFromNode[String](nodeSeq \ "@DependentThoroughfaresIndicator"),
       dependentThoroughfaresConnector = getFromNode[String](nodeSeq \ "@DependentThoroughfaresConnector"),
       dependentThoroughfaresType = getFromNode[String](nodeSeq \ "@DependentThoroughfaresType"),
@@ -223,9 +217,9 @@ object XalFromXml extends XalExtractor {
   def makeThoroughfareNumber(nodeSeq: NodeSeq): Option[ThoroughfareNumber] = {
     if (nodeSeq.isEmpty) None else Some(new ThoroughfareNumber(
       content = getFromNode[String](nodeSeq),
-      numberType = makeMode[NumberType](nodeSeq \ "@NumberType", NumberType),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
-      numberOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberOccurrence", NumberOccurrence),
+      numberType = getFromNode[String](nodeSeq \ "@NumberType").map(NumberType.fromString(_)),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
+      numberOccurrence = getFromNode[String](nodeSeq \ "@NumberOccurrence").map(NumberOccurrence.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -256,10 +250,10 @@ object XalFromXml extends XalExtractor {
       addressLine = makeAddressLineSet(nodeSeq \ "AddressLine"),
       thoroughfareNumberFrom = makeThoroughfareNumberFrom(nodeSeq \ "ThoroughfareNumberFrom"),   // mandatory
       thoroughfareNumberTo = makeThoroughfareNumberTo(nodeSeq \ "ThoroughfareNumberTo"),       // mandatory
-      rangeType = makeMode[RangeType](nodeSeq \ "@RangeType", RangeType),
+      rangeType = getFromNode[String](nodeSeq \ "@RangeType").map(RangeType.fromString(_)),
       separator = getFromNode[String](nodeSeq \ "@SeparatorType"),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
-      numberRangeOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberRangeOccurrence", NumberOccurrence),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
+      numberRangeOccurrence = getFromNode[String](nodeSeq \ "@NumberRangeOccurrence").map(NumberOccurrence.fromString(_)),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -267,13 +261,12 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeThoroughfareNumberType(nodeSeq: NodeSeq, thoroughfareNumberType: ThoroughfareNumberTypeSet): Option[ThoroughfareNumberType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       thoroughfareNumberType match {
         case ThoroughfareNumberTypeSet.ThoroughfareNumber => makeThoroughfareNumber(nodeSeq)
         case ThoroughfareNumberTypeSet.ThoroughfareNumberRange => makeThoroughfareNumberRange(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeThoroughfareNumberTypeSeq(nodeSeq: NodeSeq): Seq[ThoroughfareNumberType] = {
@@ -282,7 +275,7 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeThoroughfareType(nodeSeq: NodeSeq, thoroughfareType: ThoroughfareTypeSet): Option[ThoroughfareType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       thoroughfareType match {
         case ThoroughfareTypeSet.PostalCode => makePostalCode(nodeSeq)
         case ThoroughfareTypeSet.Premise => makePremise(nodeSeq)
@@ -290,7 +283,6 @@ object XalFromXml extends XalExtractor {
         case ThoroughfareTypeSet.Firm => makeFirm(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeThoroughfareTypeSeq(nodeSeq: NodeSeq): Seq[ThoroughfareType] = {
@@ -315,14 +307,13 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeCountryType(nodeSeq: NodeSeq, countryType: CountryTypeSet): Option[CountryType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       countryType match {
         case CountryTypeSet.AdministrativeArea => makeAdministrativeArea(nodeSeq)
         case CountryTypeSet.Locality => makeLocality(nodeSeq)
         case CountryTypeSet.Thoroughfare => makeThoroughfare(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeCountryType(nodeSeq: NodeSeq): Option[CountryType] = {
@@ -367,17 +358,17 @@ object XalFromXml extends XalExtractor {
       rangeType = getFromNode[String](nodeSeq \ "@RangeType"),
       separator = getFromNode[String](nodeSeq \ "@Separator"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
-      numberRangeOccurrence = makeMode[NumberOccurrence](nodeSeq \ "@NumberOccurrence", NumberOccurrence),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
+      numberRangeOccurrence = getFromNode[String](nodeSeq \ "@NumberOccurrence").map(NumberOccurrence.fromString(_)),
       indicator = getFromNode[String](nodeSeq \ "@Indicator")))
   }
 
   def makePremiseNumber(nodeSeq: NodeSeq): Option[PremiseNumber] = {
     if (nodeSeq.isEmpty) None else Some(new PremiseNumber(
       content = getFromNode[String](nodeSeq),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
-      numberTypeOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberTypeOccurrence", TypeOccurrence),
-      numberType = makeMode[NumberType](nodeSeq \ "@NumberType", NumberType),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
+      numberTypeOccurrence = getFromNode[String](nodeSeq \ "@NumberTypeOccurrence").map(TypeOccurrence.fromString(_)),
+      numberType = getFromNode[String](nodeSeq \ "@NumberType").map(NumberType.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
@@ -426,8 +417,8 @@ object XalFromXml extends XalExtractor {
   def makeSubPremiseNumber(nodeSeq: NodeSeq): Option[SubPremiseNumber] = {
     if (nodeSeq.isEmpty) None else Some(new SubPremiseNumber(
       content = getFromNode[String](nodeSeq),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
-      numberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NumberTypeOccurrence", TypeOccurrence),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
+      numberOccurrence = getFromNode[String](nodeSeq \ "@NumberTypeOccurrence").map(TypeOccurrence.fromString(_)),
       premiseNumberSeparator =getFromNode[String](nodeSeq \ "@PremiseNumberSeparator"),
       code = getFromNode[String](nodeSeq \ "@Code"),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
@@ -458,13 +449,12 @@ object XalFromXml extends XalExtractor {
   }
 
   def makeSubPremiseType(nodeSeq: NodeSeq, premiseType: SubPremiseTypeSet): Option[SubPremiseType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       premiseType match {
         case SubPremiseTypeSet.SubPremiseLocation => makeSubPremiseLocation(nodeSeq)
         case SubPremiseTypeSet.SubPremiseNumber => makeSubPremiseNumber(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeSubPremiseNumberPrefix(nodeSeq: NodeSeq): Option[SubPremiseNumberPrefix] = {
@@ -497,7 +487,7 @@ object XalFromXml extends XalExtractor {
     if (nodeSeq.isEmpty) None else Some(new SubPremiseName(
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
+      typeOccurrence = getFromNode[String](nodeSeq \ "@TypeOccurrence").map(TypeOccurrence.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -523,13 +513,12 @@ object XalFromXml extends XalExtractor {
   }
 
   def makePremiseType2(nodeSeq: NodeSeq, premiseType: PremiseTypeSet2): Option[PremiseType2] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       premiseType match {
         case PremiseTypeSet2.Firm => makeFirm(nodeSeq)
         case PremiseTypeSet2.SubPremise => makeSubPremise(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makePremiseLocation(nodeSeq: NodeSeq): Option[PremiseLocation] = {
@@ -573,7 +562,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   if (nodeSeq.isEmpty) None else Some(new PremiseName(
     content = getFromNode[String](nodeSeq),
     objectType = getFromNode[String](nodeSeq \ "@Type"),
-    typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
+    typeOccurrence = getFromNode[String](nodeSeq \ "@TypeOccurrence").map(TypeOccurrence.fromString(_)),
     code = getFromNode[String](nodeSeq \ "@Code"),
     attributes = None))
 }
@@ -608,14 +597,13 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   }
 
   def makeAdministrativeAreaType(nodeSeq: NodeSeq, addminType: AdministrativeAreaTypeSet): Option[AdministrativeAreaType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       addminType match {
         case AdministrativeAreaTypeSet.Locality => makeLocality(nodeSeq)
         case AdministrativeAreaTypeSet.PostalCode => makePostalCode(nodeSeq)
         case AdministrativeAreaTypeSet.PostOffice => makePostOffice(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeAdministrativeAreaType(nodeSeq: NodeSeq): Option[AdministrativeAreaType] = {
@@ -675,7 +663,7 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
   }
 
   def makeDependentLocalityType(nodeSeq: NodeSeq, localType: DependentLocalityTypeSet): Option[DependentLocalityType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       localType match {
         case DependentLocalityTypeSet.LargeMailUser => makeLargeMailUser(nodeSeq)
         case DependentLocalityTypeSet.PostalRoute => makePostalRoute(nodeSeq)
@@ -683,13 +671,12 @@ def makePremiseName(nodeSeq: NodeSeq): Option[PremiseName] = {
         case DependentLocalityTypeSet.PostOffice => makePostOffice(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeDependentLocalityNumber(nodeSeq: NodeSeq): Option[DependentLocalityNumber] = {
     if (nodeSeq.isEmpty) None else Some(new DependentLocalityNumber(
       content = getFromNode[String](nodeSeq),
-      nameNumberOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@NameNumberOccurrence", TypeOccurrence),
+      nameNumberOccurrence = getFromNode[String](nodeSeq \ "@NameNumberOccurrence").map(TypeOccurrence.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -752,7 +739,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None else Some(new PostOfficeNumber(
       content = getFromNode[String](nodeSeq),
       indicator = getFromNode[String](nodeSeq \ "@Indicator"),
-      indicatorOccurrence = makeMode[TypeOccurrence](nodeSeq \ "@IndicatorOccurrence", TypeOccurrence),
+      indicatorOccurrence = getFromNode[String](nodeSeq \ "@IndicatorOccurrence").map(TypeOccurrence.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -853,7 +840,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
     if (nodeSeq.isEmpty) None else Some(new BuildingName(
       content = getFromNode[String](nodeSeq),
       objectType = getFromNode[String](nodeSeq \ "@Type"),
-      typeOccurrence = makeMode[TypeOccurrence](nodeSeq \  "@TypeOccurrence", TypeOccurrence),
+      typeOccurrence = getFromNode[String](nodeSeq \ "@TypeOccurrence").map(TypeOccurrence.fromString(_)),
       code = getFromNode[String](nodeSeq \ "@Code"),
       attributes = None))
   }
@@ -902,7 +889,7 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
   }
 
   def makeLocalityType(nodeSeq: NodeSeq, localType: LocalityTypeSet): Option[LocalityType] = {
-    if (nodeSeq.isEmpty) None else {
+    if (nodeSeq.isEmpty) None else
       localType match {
         case LocalityTypeSet.PostOffice => makePostOffice(nodeSeq)
         case LocalityTypeSet.PostBox => makePostBox(nodeSeq)
@@ -910,7 +897,6 @@ def makePostalCodeNumberExtension(nodeSeq: NodeSeq): Option[PostalCodeNumberExte
         case LocalityTypeSet.LargeMailUser => makeLargeMailUser(nodeSeq)
         case _ => None
       }
-    }
   }
 
   def makeLocalityType(nodeSeq: NodeSeq): Option[LocalityType] = {

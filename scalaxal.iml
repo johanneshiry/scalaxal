@@ -5,6 +5,7 @@
       <configuration>
         <option name="compilerLibraryLevel" value="Project" />
         <option name="compilerLibraryName" value="lib" />
+        <option name="compilerOptions" value="-feature" />
       </configuration>
     </facet>
   </component>

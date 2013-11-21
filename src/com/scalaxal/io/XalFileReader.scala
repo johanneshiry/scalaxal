@@ -68,12 +68,11 @@ class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
    * @param source xAL input source, such as a file, a file name, a file descriptor
    * @return a xAL root element option
    */
-  def loadXal(source: InputSource): Option[XAL] = {
-    Some(loadXML(source, parser)) match {
+  def loadXal(source: InputSource): Option[XAL] = Some(loadXML(source, parser)) match {
       case Some(nodeSeq) => getXal(nodeSeq)
       case _ => None
     }
-  }
+
 
   /**
    * get a sequence of Xal root element options from the input kmz file
@@ -130,11 +129,10 @@ class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
    * @param nodeSeq the xml node sequence
    * @return a Xal root element option
    */
-  private def getXal(nodeSeq: scala.xml.NodeSeq): Option[XAL] = {
-    xalExtractor match {
+  private def getXal(nodeSeq: scala.xml.NodeSeq): Option[XAL] = xalExtractor match {
       case Some(extractor) => extractor.makeXAL(nodeSeq)
       case _ => None
     }
-  }
+
 }
 

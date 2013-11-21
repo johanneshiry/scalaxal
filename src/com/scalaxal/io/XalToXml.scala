@@ -33,14 +33,15 @@ package com.scalaxal.io
 import xml._
 import scala.Predef._
 import com.scalaxal.xAL._
-import xml.XML._
+import scala.language.postfixOps
+import scala.language.implicitConversions
+import scala.language.reflectiveCalls
 import scala.{Option, Some}
 
 /**
  * @author Ringo Wathelet
  *
  * converts xal objects to xml node sequences.
- *
  *
  * Date: 01/02/13
  * Version: 1
@@ -86,9 +87,8 @@ object XalToXml extends XmlExtractor {
     }
   }
 
-  private def capitalise(name: String) = {
-    if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
-  }
+  private def capitalise(name: String) = if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
+
 
   private def adjustLabel(name: String):String = {
     name match {

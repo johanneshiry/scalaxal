@@ -73,7 +73,7 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
    * @param pretty the pretty printer to use, default null
    */
   def write(value: Any, pretty: PrettyPrinter = null) = {
-    if (writer.isDefined) {
+    if (writer.isDefined)
      xmlExtractor match {
        case Some(extractor) => {
          if (pretty == null)
@@ -85,7 +85,7 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
        }
        case None => Unit
      }
-    }
+
   }
 
   def close() = if (writer.isDefined) writer.get.close()

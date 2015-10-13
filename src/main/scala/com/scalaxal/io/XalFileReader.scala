@@ -34,7 +34,7 @@ import com.scalaxal.xAL._
 import org.xml.sax.InputSource
 import scala.xml.XML._
 import scala.xml.{NodeSeq, XML}
-import java.io.{ InputStream, Reader, StringReader, File, FileDescriptor, FileInputStream }
+import java.io.{ File, FileDescriptor }
 import scala.xml.Source._
 import scala.language.postfixOps
 /**
@@ -73,7 +73,6 @@ class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
       case _ => None
     }
 
-
   /**
    * get a sequence of Xal root element options from the input kmz file
    * @param file the input kmz file
@@ -83,9 +82,9 @@ class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
     import scala.collection.JavaConversions._
     if (!file.getName.toLowerCase.endsWith(".zip")) Seq.empty
     else {
-      (new java.util.zip.ZipFile(file).entries.
+      new java.util.zip.ZipFile(file).entries.
         filter(_.getName.toLowerCase.endsWith(".xml")).
-        collect { case xmlFile => getXalFromFile(xmlFile.getName) } toSeq)
+        collect { case xmlFile => getXalFromFile(xmlFile.getName) } toSeq
     }
   }
 

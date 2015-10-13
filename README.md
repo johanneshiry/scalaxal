@@ -45,6 +45,7 @@ Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
 ## Status
 
+Stable. 
 Tested only on the XAL.XML and XAL_AU.XML example files from OASIS, included here in the xal-files directory.
 
 Ringo Wathelet

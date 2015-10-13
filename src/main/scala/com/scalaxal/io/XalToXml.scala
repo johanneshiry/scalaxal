@@ -36,7 +36,6 @@ import com.scalaxal.xAL._
 import scala.language.postfixOps
 import scala.language.implicitConversions
 import scala.language.reflectiveCalls
-import scala.{Option, Some}
 
 /**
  * @author Ringo Wathelet
@@ -87,8 +86,7 @@ object XalToXml extends XmlExtractor {
     }
   }
 
-  private def capitalise(name: String) = if (!name.isEmpty) name(0).toUpper + name.substring(1) else name
-
+  private def capitalise(name: String) = if (!name.isEmpty) name(0).toUpper.toString + name.substring(1) else name
 
   private def adjustLabel(name: String):String = {
     name match {

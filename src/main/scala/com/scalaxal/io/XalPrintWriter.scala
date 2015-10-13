@@ -76,14 +76,14 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
   def write(value: Any, pretty: PrettyPrinter = null) = {
     if (writer.isDefined)
      xmlExtractor match {
-       case Some(extractor) => {
+       case Some(extractor) =>
          if (pretty == null)
            extractor.getXmlFrom(value).foreach(x => XML.write(writer.get, x, encoding, xmlDecl, doctype))
          else
            extractor.getXmlFrom(value).foreach(x => XML.write(writer.get, XML.loadString(pretty.format(x)), encoding, xmlDecl, doctype))
 
          writer.get.flush()
-       }
+
        case None => Unit
      }
 

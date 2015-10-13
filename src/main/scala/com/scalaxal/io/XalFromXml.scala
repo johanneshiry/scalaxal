@@ -33,7 +33,6 @@ package com.scalaxal.io
 import scala.xml._
 import com.scalaxal.xAL._
 import scala.reflect.runtime.universe._
-import scala.Some
 import scala.language.postfixOps
 import scala.language.implicitConversions
 import scala.language.reflectiveCalls

@@ -18,7 +18,7 @@ in xml format into scalaxal objects, and writing scalaxal objects to xml format.
 
 The scalaxal library is in 2 major parts:
 - 1) package com.scalaxal.xAL, the set of xAL classes
-- 2) package com.scalakml.io, the reading and writing of xAL from/to xml
+- 2) package com.scalaxal.io, the reading and writing of xAL from/to xml
 
 ## Documentation
 

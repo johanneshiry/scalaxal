@@ -1,22 +1,21 @@
-# scalaxal an extensible Address Language (xAL) library written in scala.
+# **scalaxal** an extensible Address Language (xAL) library written in scala.
 
 
 ## Overview
 
 The extensible Address Language (xAL) is a unified hierarchical address format developed
-by the OASIS technical committee using xml. The scalaxal library represents addresses,
+by the OASIS technical committee using xml. This **scalaxal** library represents addresses,
 as specified by the standard, as scala objects. It also provides for reading addresses
-in xml format into scalaxal objects, and writing scalaxal objects to xml format.
+in xml format into **scalaxal** objects, and writing **scalaxal** objects to xml format.
 
 ## References
  
-- 1) The Organization for the Advancement of Structured Information Standards [OASIS], 
- https://www.oasis-open.org/committees/ciq/
+- 1) The Organization for the Advancement of Structured Information Standards [OASIS](https://www.oasis-open.org/committees/ciq/)
 - 2) Extensible Address Language (xAL) Standard Description Document for W3C DTD/Schema Version 2.0
 
 ## Packages
 
-The scalaxal library is in 2 major parts:
+The **scalaxal** library is in 2 major parts:
 - 1) package com.scalaxal.xAL, the set of xAL classes
 - 2) package com.scalaxal.io, the reading and writing of xAL from/to xml
 
@@ -28,7 +27,22 @@ See the OASIS xAL Standard v2.0
 - 2) https://www.oasis-open.org/committees/ciq/download.html
 
 Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
- 
+  
+## Installation
+
+Add the following dependency to build.sbt:
+
+    libraryDependencies += "com.github.workingDog" % "scalaxal_2.11" % "1.0"
+
+To compile and generate a jar file from the source:
+
+    sbt package
+
+The jar file (scalaxal-1.0.jar) will be in the "./target/scala-2.11/sbt-0.13" directory.
+
+## Dependencies
+
+**scalaxal** depends on the standard [Scala XML library](https://github.com/scala/scala-xml)  
 
 ## Usage
 
@@ -46,6 +60,5 @@ Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 ## Status
 
 Stable. 
-Tested only on the XAL.XML and XAL_AU.XML example files from OASIS, included here in the xal-files directory.
+Tested on the XAL.XML and XAL_AU.XML example files from OASIS, included here in the xal-files directory.
 
-Ringo Wathelet

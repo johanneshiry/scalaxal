@@ -16,4 +16,3 @@ homepage := Some(url("https://github.com/workingDog/scalaxal"))
 
 licenses := Seq("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-

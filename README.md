@@ -38,7 +38,7 @@ To compile and generate a jar file from the source:
 
     sbt package
 
-The jar file (scalaxal-1.0.jar) will be in the "./target/scala-2.11/sbt-0.13" directory.
+The jar file (scalaxal_2.11-1.0.jar) will be in the "./target/scala-2.11/sbt-0.13" directory.
 
 ## Dependencies
 

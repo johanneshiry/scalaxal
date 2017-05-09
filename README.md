@@ -48,10 +48,6 @@ The jar file (scalaxal_2.12-1.2-SNAPSHOT.jar) will be in the "./target/scala-2.1
 
 **scalaxal** depends on the standard [Scala XML library](https://github.com/scala/scala-xml)  
 
-Version 1.0 requires scala-2.11.x. 
-
-Version 1.1 and above require scala-2.12.x. 
-
 ## Usage
 
     object ReadWriteExample1 {

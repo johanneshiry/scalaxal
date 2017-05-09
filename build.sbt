@@ -7,7 +7,7 @@ version := (version in ThisBuild).value
 
 scalaVersion := "2.11.11"
 
-//crossScalaVersions := Seq("2.11.11", "2.12.2")
+crossScalaVersions := Seq("2.11.11", "2.12.2")
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % "2.12.2",

@@ -36,13 +36,13 @@ Also the OASIS xAL Standard v2.0 in pdf is included here in the doc directory.
 
 Add the following dependency to build.sbt:
 
-    libraryDependencies += "com.github.workingDog" %% "scalaxal" % "1.1"
+    libraryDependencies += "com.github.workingDog" %% "scalaxal" % "1.2"
 
 To compile and generate a jar file from the source:
 
     sbt package
 
-The jar file (scalaxal_2.12-1.2-SNAPSHOT.jar) will be in the "./target/scala-2.12" directory.
+The jar file (scalaxal_2.12-1.3-SNAPSHOT.jar) will be in the "./target/scala-2.12" directory.
 
 ## Dependencies
 

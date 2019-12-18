@@ -84,7 +84,7 @@ class XalPrintWriter(writer: Option[PrintWriter] = Some(new PrintWriter(System.o
 
          writer.get.flush()
 
-       case None => Unit
+       case None => ()
      }
 
   }

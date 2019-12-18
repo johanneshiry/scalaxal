@@ -79,10 +79,10 @@ class XalFileReader(xalExtractor: Option[XalExtractor] = Some(XalFromXml),
    * @return a sequence of Xal root element options
    */
   def getXalFromZipFile(file: File): Seq[Option[XAL]] = {
-    import scala.collection.JavaConversions._
+    import scala.jdk.CollectionConverters._
     if (!file.getName.toLowerCase.endsWith(".zip")) Seq.empty
     else {
-      new java.util.zip.ZipFile(file).entries.
+      new java.util.zip.ZipFile(file).entries.asScala.
         filter(_.getName.toLowerCase.endsWith(".xml")).
         collect { case xmlFile => getXalFromFile(xmlFile.getName) } toSeq
     }

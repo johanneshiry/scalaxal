@@ -273,7 +273,7 @@ object XalFromXml extends XalExtractor {
 
   def makeThoroughfareNumberTypeSeq(nodeSeq: NodeSeq): Seq[ThoroughfareNumberType] = {
     if (nodeSeq.isEmpty) Seq.empty else
-      (ThoroughfareNumberTypeSet.values.flatMap(x => makeThoroughfareNumberType(nodeSeq \ x.toString, x)).toSeq)
+      (ThoroughfareNumberTypeSet.values.unsorted.flatMap(x => makeThoroughfareNumberType(nodeSeq \ x.toString, x)).toSeq)
   }
 
   def makeThoroughfareType(nodeSeq: NodeSeq, thoroughfareType: ThoroughfareTypeSet): Option[ThoroughfareType] = {
@@ -289,7 +289,7 @@ object XalFromXml extends XalExtractor {
 
   def makeThoroughfareTypeSeq(nodeSeq: NodeSeq): Seq[ThoroughfareType] = {
     if (nodeSeq.isEmpty) Seq.empty else
-      (ThoroughfareTypeSet.values.flatMap(x => makeThoroughfareTypes(nodeSeq \ x.toString, x)).toSeq.flatten)
+      (ThoroughfareTypeSet.values.unsorted.flatMap(x => makeThoroughfareTypes(nodeSeq \ x.toString, x)).toSeq.flatten)
   }
 
   def makeThoroughfareType(nodeSeq: NodeSeq): Option[ThoroughfareType] = {
@@ -447,7 +447,7 @@ object XalFromXml extends XalExtractor {
 
   def makeSubPremiseTypeSet(nodeSeq: NodeSeq): Seq[SubPremiseType] = {
     if (nodeSeq.isEmpty) Seq.empty else
-      (SubPremiseTypeSet.values.flatMap(x => makeSubPremiseType(nodeSeq \ x.toString, x)).toSeq)
+      (SubPremiseTypeSet.values.unsorted.flatMap(x => makeSubPremiseType(nodeSeq \ x.toString, x)).toSeq)
   }
 
   def makeSubPremiseType(nodeSeq: NodeSeq, premiseType: SubPremiseTypeSet): Option[SubPremiseType] = {
@@ -511,7 +511,7 @@ object XalFromXml extends XalExtractor {
 
   def makePremiseType2Set(nodeSeq: NodeSeq): Seq[PremiseType2] = {
     if (nodeSeq.isEmpty) Seq.empty else
-      (PremiseTypeSet2.values.flatMap(x => makePremiseType2(nodeSeq \ x.toString, x)).toSeq)
+      (PremiseTypeSet2.values.unsorted.flatMap(x => makePremiseType2(nodeSeq \ x.toString, x)).toSeq)
   }
 
   def makePremiseType2(nodeSeq: NodeSeq, premiseType: PremiseTypeSet2): Option[PremiseType2] = {

@@ -5,13 +5,13 @@ name := "scalaxal"
 
 version := (version in ThisBuild).value
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.13.0"
 
-crossScalaVersions := Seq("2.12.6")
+crossScalaVersions := Seq("2.13.0")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-reflect" % "2.12.6",
-  "org.scala-lang.modules" %% "scala-xml" % "1.1.0")
+  "org.scala-lang" % "scala-reflect" % "2.13.0",
+  "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1")
 
 homepage := Some(url("https://github.com/workingDog/scalaxal"))
 
